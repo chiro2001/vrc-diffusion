@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "modelVersion": 1021740377,
+  "classifierFreeGuidance": true,
+  "device": "NVIDIA GeForce RTX 5080",
+  "graphicsApi": "Direct3D11",
+  "seconds": 0.13007059999999998,
+  "comparisons": [
+    {
+      "name": "layer 0",
+      "maxAbs": 1.430511474609375E-06,
+      "rmse": 2.49354613725831E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 1",
+      "maxAbs": 3.0994415283203125E-06,
+      "rmse": 3.1568884894347061E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 2",
+      "maxAbs": 3.9339065551757813E-06,
+      "rmse": 4.0743152038751757E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 3",
+      "maxAbs": 3.5762786865234375E-06,
+      "rmse": 4.6094675637323744E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 4",
+      "maxAbs": 3.2186508178710938E-06,
+      "rmse": 4.1189881898185219E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 5",
+      "maxAbs": 3.1590461730957031E-06,
+      "rmse": 3.807481949591146E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 6",
+      "maxAbs": 4.0531158447265625E-06,
+      "rmse": 3.7851257073752733E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 7",
+      "maxAbs": 5.6028366088867188E-06,
+      "rmse": 3.7344291351473569E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 8",
+      "maxAbs": 2.8014183044433594E-06,
+      "rmse": 2.7492499166063655E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 9",
+      "maxAbs": 4.76837158203125E-06,
+      "rmse": 6.2093460701088154E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "layer 10",
+      "maxAbs": 2.6226043701171875E-06,
+      "rmse": 6.475592926303241E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "initial fixture copy",
+      "maxAbs": 0.0,
+      "rmse": 0.0,
+      "nonfinite": 0
+    },
+    {
+      "name": "DDIM step 1",
+      "maxAbs": 5.0663948059082031E-06,
+      "rmse": 7.255498922538073E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "DDIM step 16",
+      "maxAbs": 7.8082084655761719E-06,
+      "rmse": 9.19898903561836E-07,
+      "nonfinite": 0
+    },
+    {
+      "name": "DDIM step 32",
+      "maxAbs": 4.45246696472168E-05,
+      "rmse": 1.8128050264153596E-06,
+      "nonfinite": 0
+    }
+  ]
+}

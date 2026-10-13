@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "numericMaxAbs": 4.452467E-05,
+  "highSeedNoiseDifference": 5.696431,
+  "controls": [
+    "class",
+    "seed",
+    "paused noise initialization",
+    "generate",
+    "pause",
+    "operator step",
+    "denoise step",
+    "resume",
+    "reset",
+    "stale snapshot rejection"
+  ],
+  "status": "COMPLETE  · shared 32/32  · local 32/32\nt=0  · operator 0/23  · CONTROL [1] Local Player\n"
+}
