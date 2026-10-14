@@ -1,8 +1,8 @@
 # VRChat Diffusion Lab
 
-在 VRChat world 中观察并运行类别条件 MNIST 扩散模型。Udon 调度 fragment shader，通过 `VRCGraphics.Blit` 把算子结果写入本机 GPU 的 RFloat RenderTexture；各玩家同步生成配置和进度，各自在本机计算图像。
+在 VRChat world 中观察并运行 MNIST 与 SD1.x 动漫扩散模型。Udon 调度 fragment shader，通过 `VRCGraphics.Blit` 把算子结果写入本机 GPU 的 RenderTexture（MNIST 用 RFloat，SD 用 RGBA8 打包整数与 ARGBHalf）；各玩家同步生成配置和进度，各自在本机计算图像。
 
-当前有两种可选模型：保留的 32×32 Legacy 小型模型，以及默认选中的 MIT TeaPearce 28×28 预训练模型。模型原生推理尺寸和输出显示尺寸分开标注；选择 32、64 或 128 输出只会最近邻放大，不会增加原生细节。完整架构、数据格式和同步边界见[模型设计](docs/model-design.md)。
+MNIST 面板有两种可选模型：保留的 32×32 Legacy 小型模型，以及默认选中的 MIT TeaPearce 28×28 预训练模型。模型原生推理尺寸和输出显示尺寸分开标注；选择 32、64 或 128 输出只会最近邻放大，不会增加原生细节。完整架构、数据格式和同步边界见[模型设计](docs/model-design.md)。
 
 Unity 工程位于 Windows 主机 `192.168.101.5` 的 `D:\Projects\VRChatProjects2\vrc-diffusion`，Linux 工作区是 Git 镜像。项目使用 Unity 2022.3.22f1 与 VRChat Worlds SDK 3.10.5。
 
@@ -22,6 +22,7 @@ Unity 工程位于 Windows 主机 `192.168.101.5` 的 `D:\Projects\VRChatProject
 | --- | ---: | ---: | ---: | --- |
 | Legacy MNIST 32 | 32×32 | 146,177 | 11 个卷积层 | 32 步、[-1, 1]、预测裁剪 |
 | TeaPearce MNIST 28 | 28×28 | 6,585,601 | 27 个算子 | 64 步、CFG=3、[0, 1]、不裁剪预测 |
+| Counterfeit-V3.0（独立 SD 面板） | 256 / 384 / 512 原生 | 908,529,552 推理权重 | U-Net 609 / VAE 119 节点 | 20 步、CFG=7.5、DDIM、W8A8 Conv/Linear |
 
 Tea 权重来自 [TeaPearce/Conditional_Diffusion_MNIST](https://github.com/TeaPearce/Conditional_Diffusion_MNIST)，许可为 MIT；checkpoint commit、SHA-256 和导出图版本见[模型设计](docs/model-design.md)与[预训练调研](docs/pretrained-research.md)。本项目没有在这轮工作中重新训练该模型。
 
@@ -60,4 +61,8 @@ Legacy 保留作对比，不建议作为默认模型；旧版本样本曾有大�
 
 更多资料：[多人控制与追赶](docs/multiplayer-design.md)、[教学板设计](docs/teaching-design.md)、[射线 UI 参考](docs/ui-reference.md)、[预训练模型调研](docs/pretrained-research.md)。
 
-W8A8 算子原型与复现步骤见 [低精度计算验证](docs/w8a8.md)。独立验证场景已在 PlayMode 通过真实 Udon/VRCGraphics 的卷积、重量化、线性层和精确整数读回；它使用 SM5 的 INT32 乘加，尚未接入 SD 模型或证明统一提速。
+W8A8 算子原型与复现步骤见 [低精度计算验证](docs/w8a8.md)。独立验证场景已在 PlayMode 通过真实 Udon/VRCGraphics 的卷积、重量化、线性层和精确整数读回。SD 演示站现已接入 Counterfeit-V3.0：全部 U-Net / VAE 卷积和线性层走 W8A8 / INT32，其他算子混合浮点。256×256、20 步真实 Udon 生成约 92–112 秒，后者包含中间 VAE 解码与内部纹理展示；尚未证明相对浮点 Shader 的统一提速。
+
+SD 面板位于原面板左侧：先申请控制权，选择肖像 / 海岸 / 咖啡馆 / 猫、原生 256 / 384 / 512、步数和 seed，再生成。共享配置和暂停状态，各访客按“本地推理”主动启用自己 GPU 的计算。细节开关控制真实 INT8 / FP16 内存和模块高亮；VAE 预览开关控制额外的中间 RGB 解码。两者为本地选择，不改动共享生成配置。文本条件来自完整提示词预设，当前未实现自由文本 CLIP。模型许可为 CreativeML Open RAIL-M，详见[模型来源](docs/sd-model-source.md)、[后端说明](docs/sd-shader-backend.md)。
+
+SD 实测与图像：[256 去噪序列](results/sd/trajectory-256.png)、[512 最终图](results/sd/playmode-512.png)、[512 去噪序列](results/sd/trajectory-512.png)、[地图截图](results/sd/world-512.png)、[八组质量样本](results/sd/quality-w8a8-512.png)、[浮点/W8A8 对照](results/sd/quality-float-vs-w8a8-512.png)。原生 512×512 / 20 步实测 357.74 秒，包含中间 VAE 预览与部分细节展示；测试使用每帧至多 32 次提交和 8 ms CPU 提交预算，默认设置更保守。真实多客户端网络、SD Android 版与 SDK 构建/上传尚未验证。

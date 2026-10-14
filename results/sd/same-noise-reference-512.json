@@ -1,0 +1,11 @@
+{
+  "initialSource": "Actual Udon/VRCGraphics initial latent",
+  "initialSHA256": "6ea4dd1fa438da6236b524efa4709211d39a72c8cd38f40ab7d63844bd16b7a9",
+  "seed": 3456,
+  "size": 512,
+  "steps": 20,
+  "latentRMSE": 0.6881735324859619,
+  "referenceRMS": 0.8897942900657654,
+  "latentMaxAbs": 3.705322265625,
+  "note": "Full trajectory amplifies per-forward arithmetic differences; image details differ."
+}

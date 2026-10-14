@@ -1,0 +1,91 @@
+{
+  "source": "Counterfeit-V3.0 fix checkpoint, explicit W8A8 graph",
+  "samples": [
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 1234,
+      "preset": 0,
+      "quantized": true,
+      "seconds": 204.6089271181263,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 2345,
+      "preset": 0,
+      "quantized": true,
+      "seconds": 200.3252487629652,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 1234,
+      "preset": 1,
+      "quantized": true,
+      "seconds": 207.78337512305006,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 2345,
+      "preset": 1,
+      "quantized": true,
+      "seconds": 201.69381500594318,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 1234,
+      "preset": 2,
+      "quantized": true,
+      "seconds": 198.1412590011023,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 2345,
+      "preset": 2,
+      "quantized": true,
+      "seconds": 198.80195833509788,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 1234,
+      "preset": 3,
+      "quantized": true,
+      "seconds": 202.82950794696808,
+      "checks": {}
+    },
+    {
+      "size": 512,
+      "steps": 20,
+      "seed": 2345,
+      "preset": 3,
+      "quantized": true,
+      "seconds": 200.98431443795562,
+      "checks": {}
+    }
+  ],
+  "floatReference": {
+    "size": 512,
+    "steps": 20,
+    "seed": 1234,
+    "preset": 0,
+    "quantized": false,
+    "seconds": 171.89177055610344,
+    "checks": {},
+    "device": "cpu",
+    "threads": 4,
+    "computeMode": "FP16 weights/activations with FP32 convolution accumulation and FP16 writeback",
+    "note": "CPU mixed-accumulation reference; not native CPU FP16 convolution."
+  },
+  "floatCPUPrecision": "F32 conv accumulation, F16 writeback"
+}

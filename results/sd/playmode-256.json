@@ -1,0 +1,9 @@
+{
+  "seed": 2345,
+  "steps": 20,
+  "elapsed": 111.540016,
+  "width": 256,
+  "height": 256,
+  "finite": true,
+  "source": "Actual Udon, integer Conv/Linear, full VAE"
+}

@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Node164
+  m_Shader: {fileID: 4800000, guid: e752469eda8f34c4e8c92491d8c756b9, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _A:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _B:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _C:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OldStats:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Packed:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Params:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Partial:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Previous:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Scores:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Stats:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tile:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Weights:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AShift: 10
+    - _Activation: 0
+    - _BC: 0
+    - _BH: 0
+    - _BShift: 10
+    - _BW: 0
+    - _CShift: 10
+    - _Chunks: 1
+    - _Count: 368640
+    - _Epsilon: 0.00001
+    - _FirstBlock: 1
+    - _Groups: 0
+    - _Heads: 0
+    - _InC: 10240
+    - _InH: 12
+    - _InW: 12
+    - _Kernel: 0
+    - _KeyBlock: 64
+    - _KeyRows: 0
+    - _KeyStart: 0
+    - _Multiplier: 1
+    - _Offset: 0
+    - _OldStatsShift: 10
+    - _Op: 7
+    - _OutC: 5120
+    - _OutCount: 184320
+    - _OutH: 12
+    - _OutW: 12
+    - _OutputShift: 10
+    - _PackedShift: 10
+    - _Padding: 0
+    - _ParamShift: 10
+    - _PartialShift: 10
+    - _PreviousShift: 10
+    - _ScoreShift: 10
+    - _StatsShift: 10
+    - _Stride: 0
+    - _TileCount: 8192
+    - _TileShift: 7
+    - _WeightHeight: 1
+    - _WeightLayout: 0
+    - _WeightShift: 10
+    m_Colors: []
+  m_BuildTextureStacks: []

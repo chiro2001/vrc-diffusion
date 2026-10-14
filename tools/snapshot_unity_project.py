@@ -13,6 +13,7 @@ import uuid
 
 from unity_project_common import pipeline, checked_pwsh
 from unity_remote import DEFAULT_HOST, DEFAULT_PROJECT, pwsh_literal
+from sync_windows_git import parse_preserve_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_TMP = Path.home() / "tmp/vrc-diffusion"
@@ -35,10 +36,29 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).digest() if path.is_file() else None
 
 
+def validate_preserved_snapshot(root, unpacked, baseline_head, files):
+    """Keep audited Editor-only edits out of the mirror without losing either copy."""
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    if head != baseline_head:
+        raise RuntimeError("Preserve manifest must name the current local HEAD.")
+    for path, expected in files.items():
+        if not any(path == base or path.startswith(base + "/") for base in (*TREES, *MANIFESTS)):
+            raise RuntimeError("Preserved path is outside snapshot scope: " + path)
+        original = subprocess.check_output(["git", "show", baseline_head + ":" + path], cwd=root)
+        if digest(root / path) != hashlib.sha256(original).digest():
+            raise RuntimeError("Local preserved path has edits: " + path)
+        if digest(unpacked / path) != bytes.fromhex(expected):
+            raise RuntimeError("Editor preserved path changed after audit: " + path)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host", default=DEFAULT_HOST)
     parser.add_argument("--project-path", default=DEFAULT_PROJECT)
+    parser.add_argument("--preserve-dirty-manifest", type=Path,
+                        help="Leave exact audited Editor-only tracked edits out of this snapshot; verify both copies before copying anything.")
+    parser.add_argument("--remote-temp-root",
+                        help="Optional Windows temporary directory for the snapshot archive.")
     parser.add_argument(
         "--accept-editor-file",
         action="append",
@@ -56,6 +76,14 @@ def main():
     options = parser.parse_args()
     accepted = set(options.accept_editor_file)
     removals = set(options.accept_editor_removal)
+    preserve_head, preserved = None, {}
+    if options.preserve_dirty_manifest is not None:
+        preserve_head, preserved = parse_preserve_manifest(json.loads(options.preserve_dirty_manifest.read_text(encoding="utf-8")))
+        if set(preserved) & (accepted | removals):
+            parser.error("A preserved path cannot also be adopted or removed.")
+        remote_head = checked_pwsh(f"& git -C {pwsh_literal(options.project_path)} rev-parse HEAD", options.host).strip()
+        if remote_head != preserve_head:
+            raise RuntimeError("Preserve manifest must name the current Editor HEAD.")
     for option_name, paths in (
         ("--accept-editor-file", accepted),
         ("--accept-editor-removal", removals),
@@ -91,8 +119,10 @@ def main():
     TASK_TMP.mkdir(parents=True, exist_ok=True)
     name = "unity-snapshot-" + uuid.uuid4().hex + ".tgz"
     paths = (*TREES, *MANIFESTS)
+    temp_root = (f"$taskRoot = {pwsh_literal(options.remote_temp_root)}; " if options.remote_temp_root
+                 else "$taskRoot = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'tmp\\vrc-diffusion'; ")
     remote_archive = checked_pwsh(
-        "$taskRoot = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'tmp\\vrc-diffusion'; "
+        temp_root +
         "New-Item -ItemType Directory -Path $taskRoot -Force | Out-Null; "
         f"$archive = Join-Path $taskRoot {pwsh_literal(name)}; "
         f"$project = {pwsh_literal(options.project_path)}; "
@@ -117,6 +147,8 @@ def main():
             unpacked = stage / "project"
             with tarfile.open(archive, "r:gz") as tar:
                 tar.extractall(unpacked, filter="data")
+            if preserved:
+                validate_preserved_snapshot(ROOT, unpacked, preserve_head, preserved)
 
             changed = set()
             if (ROOT / ".git").exists():
@@ -156,6 +188,7 @@ def main():
                 path
                 for path in changed
                 if path
+                and path not in preserved
                 and any(path == base or path.startswith(base + "/") for base in mirrored)
                 and digest(ROOT / path) != digest(unpacked / path)
             ]
@@ -190,11 +223,15 @@ def main():
             for base in TREES:
                 source, target = unpacked / base, ROOT / base
                 for old in target.rglob("*") if target.exists() else ():
+                    if old.relative_to(ROOT).as_posix() in preserved:
+                        continue
                     if old.is_file() and not (source / old.relative_to(target)).is_file():
                         old.unlink()
                         removed += 1
                 for file in source.rglob("*") if source.exists() else ():
                     if not file.is_file():
+                        continue
+                    if file.relative_to(unpacked).as_posix() in preserved:
                         continue
                     destination = target / file.relative_to(source)
                     if digest(file) != digest(destination):
@@ -202,6 +239,8 @@ def main():
                         shutil.copy2(file, destination)
                         copied += 1
             for path in MANIFESTS:
+                if path in preserved:
+                    continue
                 source, destination = unpacked / path, ROOT / path
                 if source.is_file():
                     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -221,6 +260,7 @@ def main():
                         "adoptedEditorFiles": adopted,
                         "scenePaths": [scene["path"] for scene in scenes["result"]],
                         "preservedUnityMeta": True,
+                        "preservedEditorOnlyPaths": sorted(preserved),
                     },
                     indent=2,
                 )

@@ -1,0 +1,1612 @@
+[
+  {
+    "name": "unet.conv_in",
+    "maxAbs": 0.0016186311841011047,
+    "rmse": 0.0004162352706771344
+  },
+  {
+    "name": "unet.conv_out",
+    "maxAbs": 0.0009101806208491325,
+    "rmse": 0.0004903911030851305
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.proj_in",
+    "maxAbs": 0.0008845292031764984,
+    "rmse": 0.000345102627761662
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.proj_out",
+    "maxAbs": 0.0007330235093832016,
+    "rmse": 0.00030010665068402886
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0016570836305618286,
+    "rmse": 0.0005937482346780598
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0010585039854049683,
+    "rmse": 0.0003622710064519197
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0018301010131835938,
+    "rmse": 0.0006010296638123691
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0012089274823665619,
+    "rmse": 0.0003893400134984404
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0013132095336914062,
+    "rmse": 0.0004662547435145825
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0008974457159638405,
+    "rmse": 0.00012519281881395727
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0012941136956214905,
+    "rmse": 0.00046633349847979844
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0007824935019016266,
+    "rmse": 0.00018152732809539884
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.003596752882003784,
+    "rmse": 0.0004156327049713582
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0012553073465824127,
+    "rmse": 0.00044314347906038165
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.proj_in",
+    "maxAbs": 0.0015398189425468445,
+    "rmse": 0.0003668189747259021
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.proj_out",
+    "maxAbs": 0.0011130571365356445,
+    "rmse": 0.00043057798757217824
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0017137899994850159,
+    "rmse": 0.0006207277183420956
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0013264268636703491,
+    "rmse": 0.00037059473106637597
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0016031945124268532,
+    "rmse": 0.0005937963142059743
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0011084824800491333,
+    "rmse": 0.00041889247950166464
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.001859108917415142,
+    "rmse": 0.0004679870035033673
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0013475418090820312,
+    "rmse": 0.00014239117444958538
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.001220703125,
+    "rmse": 0.00039404022390954196
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0012894272804260254,
+    "rmse": 0.0001611507177585736
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0017012953758239746,
+    "rmse": 0.0003842746955342591
+  },
+  {
+    "name": "unet.down_blocks.0.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0012524202466011047,
+    "rmse": 0.0004724995233118534
+  },
+  {
+    "name": "unet.down_blocks.0.downsamplers.0.conv",
+    "maxAbs": 0.00123677309602499,
+    "rmse": 0.00032826815731823444
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.0.conv1",
+    "maxAbs": 0.002696990966796875,
+    "rmse": 0.0005681071197614074
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.0.conv2",
+    "maxAbs": 0.001365363597869873,
+    "rmse": 0.0004365767235867679
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.0.time_emb_proj",
+    "maxAbs": 0.0033841473050415516,
+    "rmse": 0.0003696088388096541
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.1.conv1",
+    "maxAbs": 0.002208529505878687,
+    "rmse": 0.000678923272062093
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.1.conv2",
+    "maxAbs": 0.0014974037185311317,
+    "rmse": 0.0005343789816834033
+  },
+  {
+    "name": "unet.down_blocks.0.resnets.1.time_emb_proj",
+    "maxAbs": 0.0008329106494784355,
+    "rmse": 0.00015113413974177092
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.proj_in",
+    "maxAbs": 0.001686885952949524,
+    "rmse": 0.0004134773917030543
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.proj_out",
+    "maxAbs": 0.0008334964513778687,
+    "rmse": 0.00032810887205414474
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.001959368586540222,
+    "rmse": 0.0005837772041559219
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.001539335586130619,
+    "rmse": 0.00036963174352422357
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0016652494668960571,
+    "rmse": 0.0005617266870103776
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0010442063212394714,
+    "rmse": 0.00036033522337675095
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0010565798729658127,
+    "rmse": 0.000429035717388615
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.002089492976665497,
+    "rmse": 0.00016571581363677979
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.001125546172261238,
+    "rmse": 0.00042551051592454314
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0007028654217720032,
+    "rmse": 0.00018957628344651312
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0019300542771816254,
+    "rmse": 0.00041612767381593585
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0017877966165542603,
+    "rmse": 0.0004932160954922438
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.proj_in",
+    "maxAbs": 0.0022444836795330048,
+    "rmse": 0.0004205098666716367
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.proj_out",
+    "maxAbs": 0.0012120604515075684,
+    "rmse": 0.0003942476469092071
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0019406303763389587,
+    "rmse": 0.000547749106772244
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0030604079365730286,
+    "rmse": 0.0003665986005216837
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0014831051230430603,
+    "rmse": 0.0005504523869603872
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.000988457351922989,
+    "rmse": 0.00035189464688301086
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0012896079570055008,
+    "rmse": 0.00037492584669962525
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0035343021154403687,
+    "rmse": 0.00016209323075599968
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0011237449944019318,
+    "rmse": 0.00036381607060320675
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0008687898516654968,
+    "rmse": 0.0001628506724955514
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.004093676805496216,
+    "rmse": 0.0004131391760893166
+  },
+  {
+    "name": "unet.down_blocks.1.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0033468306064605713,
+    "rmse": 0.0005040833493694663
+  },
+  {
+    "name": "unet.down_blocks.1.downsamplers.0.conv",
+    "maxAbs": 0.0013761520385742188,
+    "rmse": 0.00029122031992301345
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.0.conv1",
+    "maxAbs": 0.0057508815079927444,
+    "rmse": 0.0007096098852343857
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.0.conv2",
+    "maxAbs": 0.0015172287821769714,
+    "rmse": 0.0005205525667406619
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.0.conv_shortcut",
+    "maxAbs": 0.001126687042415142,
+    "rmse": 0.00021161326731089503
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.0.time_emb_proj",
+    "maxAbs": 0.004465479403734207,
+    "rmse": 0.00029015939799137414
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.1.conv1",
+    "maxAbs": 0.0036746039986610413,
+    "rmse": 0.0008924773428589106
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.1.conv2",
+    "maxAbs": 0.0017894008196890354,
+    "rmse": 0.0006038889405317605
+  },
+  {
+    "name": "unet.down_blocks.1.resnets.1.time_emb_proj",
+    "maxAbs": 0.0012235641479492188,
+    "rmse": 0.00015986703510861844
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.proj_in",
+    "maxAbs": 0.0030948310159146786,
+    "rmse": 0.0004411119734868407
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.proj_out",
+    "maxAbs": 0.0008004270493984222,
+    "rmse": 0.0003043755132239312
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.002061259001493454,
+    "rmse": 0.000518088520038873
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.002494029700756073,
+    "rmse": 0.00036137684946879745
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0019668228924274445,
+    "rmse": 0.0005218056030571461
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0014499425888061523,
+    "rmse": 0.000308271060930565
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0012216642498970032,
+    "rmse": 0.00033800245728343725
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0010708775371313095,
+    "rmse": 0.00018701788212638348
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0008364398963749409,
+    "rmse": 0.0002896777295973152
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0006288550794124603,
+    "rmse": 0.0002437264920445159
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0020014233887195587,
+    "rmse": 0.00039951925282366574
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.00390625,
+    "rmse": 0.0004547756689134985
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.proj_in",
+    "maxAbs": 0.0036013163626194,
+    "rmse": 0.0004526642442215234
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.proj_out",
+    "maxAbs": 0.000892038457095623,
+    "rmse": 0.0003009506326634437
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0023212432861328125,
+    "rmse": 0.0004862051864620298
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0026105642318725586,
+    "rmse": 0.0003783298598136753
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.002257823944091797,
+    "rmse": 0.0004943360108882189
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.001021258533000946,
+    "rmse": 0.0003487455833237618
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0017039384692907333,
+    "rmse": 0.0003749137104023248
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.002718709409236908,
+    "rmse": 0.00020163500448688865
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0009913407266139984,
+    "rmse": 0.00033346202690154314
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0007174033671617508,
+    "rmse": 0.0002515417290851474
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0016568396240472794,
+    "rmse": 0.00040857322164811194
+  },
+  {
+    "name": "unet.down_blocks.2.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.004140295088291168,
+    "rmse": 0.0004518155474215746
+  },
+  {
+    "name": "unet.down_blocks.2.downsamplers.0.conv",
+    "maxAbs": 0.0015859452541917562,
+    "rmse": 0.00023712140682619065
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.0.conv1",
+    "maxAbs": 0.009248510003089905,
+    "rmse": 0.0007088625570759177
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.0.conv2",
+    "maxAbs": 0.002187578473240137,
+    "rmse": 0.00048324448289349675
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.0.conv_shortcut",
+    "maxAbs": 0.0017650928348302841,
+    "rmse": 0.00018166280642617494
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.0.time_emb_proj",
+    "maxAbs": 0.008263174444437027,
+    "rmse": 0.0003226976841688156
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.1.conv1",
+    "maxAbs": 0.004554808139801025,
+    "rmse": 0.0007199253886938095
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.1.conv2",
+    "maxAbs": 0.0019679032266139984,
+    "rmse": 0.00048032068298198283
+  },
+  {
+    "name": "unet.down_blocks.2.resnets.1.time_emb_proj",
+    "maxAbs": 0.0018997788429260254,
+    "rmse": 0.0001598508533788845
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.0.conv1",
+    "maxAbs": 0.0028213150799274445,
+    "rmse": 0.0005501722334884107
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.0.conv2",
+    "maxAbs": 0.0026427730917930603,
+    "rmse": 0.0005132132791914046
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.0.time_emb_proj",
+    "maxAbs": 0.0011906065046787262,
+    "rmse": 0.00013547297567129135
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.1.conv1",
+    "maxAbs": 0.0031699533574283123,
+    "rmse": 0.0005216168938204646
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.1.conv2",
+    "maxAbs": 0.003123365342617035,
+    "rmse": 0.0005360633367672563
+  },
+  {
+    "name": "unet.down_blocks.3.resnets.1.time_emb_proj",
+    "maxAbs": 0.0006704558618366718,
+    "rmse": 0.00011600386642385274
+  },
+  {
+    "name": "unet.mid_block.attentions.0.proj_in",
+    "maxAbs": 0.002657189965248108,
+    "rmse": 0.0003948987869080156
+  },
+  {
+    "name": "unet.mid_block.attentions.0.proj_out",
+    "maxAbs": 0.0010463688522577286,
+    "rmse": 0.00032750985701568425
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0010969527065753937,
+    "rmse": 0.00028900845791213214
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.002961467020213604,
+    "rmse": 0.00035108745214529335
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0014256760478019714,
+    "rmse": 0.0003356265078764409
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0008607432246208191,
+    "rmse": 0.00031586684053763747
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0017330143600702286,
+    "rmse": 0.000315403682179749
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0015150662511587143,
+    "rmse": 0.0002722358622122556
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0008045108988881111,
+    "rmse": 0.00025376889971084893
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0008586975745856762,
+    "rmse": 0.00031121086794883013
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.001248757354915142,
+    "rmse": 0.00035768025554716587
+  },
+  {
+    "name": "unet.mid_block.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0012047234922647476,
+    "rmse": 0.00041167825111187994
+  },
+  {
+    "name": "unet.mid_block.resnets.0.conv1",
+    "maxAbs": 0.002529473975300789,
+    "rmse": 0.0005051546031609178
+  },
+  {
+    "name": "unet.mid_block.resnets.0.conv2",
+    "maxAbs": 0.002352616749703884,
+    "rmse": 0.000493941071908921
+  },
+  {
+    "name": "unet.mid_block.resnets.0.time_emb_proj",
+    "maxAbs": 0.0012421496212482452,
+    "rmse": 0.0001297460257774219
+  },
+  {
+    "name": "unet.mid_block.resnets.1.conv1",
+    "maxAbs": 0.0031555667519569397,
+    "rmse": 0.00044351935503073037
+  },
+  {
+    "name": "unet.mid_block.resnets.1.conv2",
+    "maxAbs": 0.003652021288871765,
+    "rmse": 0.0005100764101371169
+  },
+  {
+    "name": "unet.mid_block.resnets.1.time_emb_proj",
+    "maxAbs": 0.0007068603299558163,
+    "rmse": 0.00012459220306482166
+  },
+  {
+    "name": "unet.time_embedding.linear_1",
+    "maxAbs": 0.0009285062551498413,
+    "rmse": 9.013966337079182e-05
+  },
+  {
+    "name": "unet.time_embedding.linear_2",
+    "maxAbs": 0.0011887738946825266,
+    "rmse": 5.619756848318502e-05
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.0.conv1",
+    "maxAbs": 0.0031312056817114353,
+    "rmse": 0.0005348048871383071
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.0.conv2",
+    "maxAbs": 0.0033443481661379337,
+    "rmse": 0.0007012766436673701
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.0.conv_shortcut",
+    "maxAbs": 0.0011192832607775927,
+    "rmse": 0.00015971304674167186
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.0.time_emb_proj",
+    "maxAbs": 0.0005926899611949921,
+    "rmse": 0.00010375741112511605
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.1.conv1",
+    "maxAbs": 0.004363533109426498,
+    "rmse": 0.0006115914438851178
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.1.conv2",
+    "maxAbs": 0.0034035518765449524,
+    "rmse": 0.0007129109581001103
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.1.conv_shortcut",
+    "maxAbs": 0.0009217150509357452,
+    "rmse": 0.00011403686221456155
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.1.time_emb_proj",
+    "maxAbs": 0.001127348281443119,
+    "rmse": 0.00012690189760178328
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.2.conv1",
+    "maxAbs": 0.005443572998046875,
+    "rmse": 0.000668529246468097
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.2.conv2",
+    "maxAbs": 0.002070147544145584,
+    "rmse": 0.00042289867997169495
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.2.conv_shortcut",
+    "maxAbs": 0.00043217220809310675,
+    "rmse": 7.033671136014163e-05
+  },
+  {
+    "name": "unet.up_blocks.0.resnets.2.time_emb_proj",
+    "maxAbs": 0.0010866480879485607,
+    "rmse": 0.00012332467304077
+  },
+  {
+    "name": "unet.up_blocks.0.upsamplers.0.conv",
+    "maxAbs": 0.0010032355785369873,
+    "rmse": 0.00016498524928465486
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.proj_in",
+    "maxAbs": 0.0035592615604400635,
+    "rmse": 0.00046121299965307117
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.proj_out",
+    "maxAbs": 0.0010282257571816444,
+    "rmse": 0.0004063447704538703
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.003102400340139866,
+    "rmse": 0.0004521676164586097
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.002601921558380127,
+    "rmse": 0.0004263748705852777
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0021266192197799683,
+    "rmse": 0.0004567613359540701
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.001325051300227642,
+    "rmse": 0.00040564348455518484
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0015238355845212936,
+    "rmse": 0.0004047387919854373
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.004626777023077011,
+    "rmse": 0.0002683079510461539
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0011964291334152222,
+    "rmse": 0.0003618963819462806
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0008125603199005127,
+    "rmse": 0.00031551867141388357
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0014479029923677444,
+    "rmse": 0.0004162189143244177
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0020175278186798096,
+    "rmse": 0.0004947530687786639
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.proj_in",
+    "maxAbs": 0.004066772758960724,
+    "rmse": 0.00046253271284513175
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.proj_out",
+    "maxAbs": 0.0010148882865905762,
+    "rmse": 0.0004026607784908265
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.003097172826528549,
+    "rmse": 0.0005267905653454363
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0029022954404354095,
+    "rmse": 0.0004006665840279311
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0020405910909175873,
+    "rmse": 0.0005021855467930436
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0009643081575632095,
+    "rmse": 0.0003724597627297044
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0013427734375,
+    "rmse": 0.000424727302743122
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.005943000316619873,
+    "rmse": 0.00029714309494011104
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0011028079316020012,
+    "rmse": 0.00037708113086409867
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.000955536961555481,
+    "rmse": 0.0003612652071751654
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.001938946545124054,
+    "rmse": 0.0004239084373693913
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0031637363135814667,
+    "rmse": 0.000499234301969409
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.proj_in",
+    "maxAbs": 0.0042743980884552,
+    "rmse": 0.0004478598712012172
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.proj_out",
+    "maxAbs": 0.0009119231253862381,
+    "rmse": 0.0003819202829618007
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.002351235132664442,
+    "rmse": 0.0004783553013112396
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.00639188289642334,
+    "rmse": 0.00040769405313767493
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.001705620437860489,
+    "rmse": 0.00047923505189828575
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0012319982051849365,
+    "rmse": 0.0003726764698512852
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.001431923359632492,
+    "rmse": 0.0004187336890026927
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.007119486108422279,
+    "rmse": 0.00026255962438881397
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.001010201871395111,
+    "rmse": 0.0003719585947692394
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0009768009185791016,
+    "rmse": 0.0003327562881167978
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0023717209696769714,
+    "rmse": 0.0004203711578156799
+  },
+  {
+    "name": "unet.up_blocks.1.attentions.2.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.004225373268127441,
+    "rmse": 0.0004662600113078952
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.0.conv1",
+    "maxAbs": 0.0069427490234375,
+    "rmse": 0.0008647881331853569
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.0.conv2",
+    "maxAbs": 0.0090789794921875,
+    "rmse": 0.0008018242078833282
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.0.conv_shortcut",
+    "maxAbs": 0.0018314160406589508,
+    "rmse": 0.00034959593904204667
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.0.time_emb_proj",
+    "maxAbs": 0.0017216596752405167,
+    "rmse": 0.00018624888616614044
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.1.conv1",
+    "maxAbs": 0.010680191218852997,
+    "rmse": 0.0009766642469912767
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.1.conv2",
+    "maxAbs": 0.0051629990339279175,
+    "rmse": 0.0007627091836184263
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.1.conv_shortcut",
+    "maxAbs": 0.0022623855620622635,
+    "rmse": 0.00020963636052329093
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.1.time_emb_proj",
+    "maxAbs": 0.0013098528143018484,
+    "rmse": 0.00015504556358791888
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.2.conv1",
+    "maxAbs": 0.014176014810800552,
+    "rmse": 0.000995911774225533
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.2.conv2",
+    "maxAbs": 0.0027103424072265625,
+    "rmse": 0.0005993475206196308
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.2.conv_shortcut",
+    "maxAbs": 0.0007898225449025631,
+    "rmse": 0.00015891662042122334
+  },
+  {
+    "name": "unet.up_blocks.1.resnets.2.time_emb_proj",
+    "maxAbs": 0.002135269343852997,
+    "rmse": 0.0001797933509806171
+  },
+  {
+    "name": "unet.up_blocks.1.upsamplers.0.conv",
+    "maxAbs": 0.002216339111328125,
+    "rmse": 0.00033750501461327076
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.proj_in",
+    "maxAbs": 0.0037025995552539825,
+    "rmse": 0.0004922201042063534
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.proj_out",
+    "maxAbs": 0.0015477463603019714,
+    "rmse": 0.0006291329045780003
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0015025697648525238,
+    "rmse": 0.0005169752985239029
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.001820361241698265,
+    "rmse": 0.00045888940803706646
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0013235434889793396,
+    "rmse": 0.0004897227045148611
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0012550652027130127,
+    "rmse": 0.00047818978782743216
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.001555795781314373,
+    "rmse": 0.00047285700566135347
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.002551943063735962,
+    "rmse": 0.00021467039186973125
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0011227820068597794,
+    "rmse": 0.0004489854909479618
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0012889467179775238,
+    "rmse": 0.0004505205142777413
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0017647333443164825,
+    "rmse": 0.0004320406587794423
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0016984045505523682,
+    "rmse": 0.0005963582079857588
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.proj_in",
+    "maxAbs": 0.002470239996910095,
+    "rmse": 0.0004567313881125301
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.proj_out",
+    "maxAbs": 0.0012867841869592667,
+    "rmse": 0.0005098051624372602
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.002043001353740692,
+    "rmse": 0.0006205136305652559
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.001980997622013092,
+    "rmse": 0.0004119805234950036
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.001395639032125473,
+    "rmse": 0.0005481758271344006
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0010721981525421143,
+    "rmse": 0.0004338076105341315
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0011024735867977142,
+    "rmse": 0.00039722182555124164
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0028824694454669952,
+    "rmse": 0.0001891561405500397
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0009527727961540222,
+    "rmse": 0.0003984588256571442
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.001057663932442665,
+    "rmse": 0.00031321265851147473
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0017839670181274414,
+    "rmse": 0.0004216468660160899
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0019790753722190857,
+    "rmse": 0.0005284767830744386
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.proj_in",
+    "maxAbs": 0.0019513238221406937,
+    "rmse": 0.0004249053599778563
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.proj_out",
+    "maxAbs": 0.0011236220598220825,
+    "rmse": 0.00046023676986806095
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.001789964735507965,
+    "rmse": 0.0005568498163484037
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.002175159752368927,
+    "rmse": 0.0004206863814033568
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0016164705157279968,
+    "rmse": 0.0005224746419116855
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.001225993037223816,
+    "rmse": 0.00041453519952483475
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0009464954491704702,
+    "rmse": 0.0003956514992751181
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0036543598398566246,
+    "rmse": 0.00016828638035804033
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0010561607778072357,
+    "rmse": 0.0003988198295701295
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0007867291569709778,
+    "rmse": 0.00027775796479545534
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0024404376745224,
+    "rmse": 0.00041187406168319285
+  },
+  {
+    "name": "unet.up_blocks.2.attentions.2.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0022337734699249268,
+    "rmse": 0.0005049969186075032
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.0.conv1",
+    "maxAbs": 0.00887298583984375,
+    "rmse": 0.001436398015357554
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.0.conv2",
+    "maxAbs": 0.004381075501441956,
+    "rmse": 0.0012733936309814453
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.0.conv_shortcut",
+    "maxAbs": 0.003158358857035637,
+    "rmse": 0.0006363691645674407
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.0.time_emb_proj",
+    "maxAbs": 0.001126505434513092,
+    "rmse": 0.0001874944573501125
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.1.conv1",
+    "maxAbs": 0.005055103451013565,
+    "rmse": 0.0011445429408922791
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.1.conv2",
+    "maxAbs": 0.00409848615527153,
+    "rmse": 0.001003007055260241
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.1.conv_shortcut",
+    "maxAbs": 0.001521313562989235,
+    "rmse": 0.00032775357249192894
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.1.time_emb_proj",
+    "maxAbs": 0.0008902959525585175,
+    "rmse": 0.00015341147081926465
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.2.conv1",
+    "maxAbs": 0.004727095365524292,
+    "rmse": 0.0009676949121057987
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.2.conv2",
+    "maxAbs": 0.002218170091509819,
+    "rmse": 0.0007820457103662193
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.2.conv_shortcut",
+    "maxAbs": 0.0008544921875,
+    "rmse": 0.00016721940482966602
+  },
+  {
+    "name": "unet.up_blocks.2.resnets.2.time_emb_proj",
+    "maxAbs": 0.0010414950083941221,
+    "rmse": 0.00016250554472208023
+  },
+  {
+    "name": "unet.up_blocks.2.upsamplers.0.conv",
+    "maxAbs": 0.0011339187622070312,
+    "rmse": 0.0003441215376369655
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.proj_in",
+    "maxAbs": 0.001825287938117981,
+    "rmse": 0.0003972920239903033
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.proj_out",
+    "maxAbs": 0.0017464756965637207,
+    "rmse": 0.0006214159075170755
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0020232796669006348,
+    "rmse": 0.0007243888103403151
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0016191154718399048,
+    "rmse": 0.00044901325600221753
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0016926378011703491,
+    "rmse": 0.0006260497029870749
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0016952864825725555,
+    "rmse": 0.0005090085323899984
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0018781498074531555,
+    "rmse": 0.0005491808988153934
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.001384945586323738,
+    "rmse": 0.0001562276011100039
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0012894272804260254,
+    "rmse": 0.0004200799739919603
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0012391533236950636,
+    "rmse": 0.00015866101603023708
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.0013571977615356445,
+    "rmse": 0.00039035064401105046
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.0.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.001492723822593689,
+    "rmse": 0.0005201470339670777
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.proj_in",
+    "maxAbs": 0.0017798729240894318,
+    "rmse": 0.00039498243131674826
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.proj_out",
+    "maxAbs": 0.0014569740742444992,
+    "rmse": 0.0005378260393626988
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.002447158098220825,
+    "rmse": 0.0007894939044490457
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0025490596890449524,
+    "rmse": 0.0004054896126035601
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.0020300187170505524,
+    "rmse": 0.0007456179009750485
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0013609156012535095,
+    "rmse": 0.00045557584962807596
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.002071831375360489,
+    "rmse": 0.0005119735724292696
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.002063751220703125,
+    "rmse": 0.00014828663552179933
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.0013716071844100952,
+    "rmse": 0.0004287812043912709
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0013057077303528786,
+    "rmse": 0.00018639893096406013
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.002318374812602997,
+    "rmse": 0.0003850814246106893
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.1.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0014879107475280762,
+    "rmse": 0.0005149046774022281
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.proj_in",
+    "maxAbs": 0.001917921006679535,
+    "rmse": 0.0003735657664947212
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.proj_out",
+    "maxAbs": 0.0017492938786745071,
+    "rmse": 0.0005296689923852682
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_k",
+    "maxAbs": 0.0031155571341514587,
+    "rmse": 0.0008949384791776538
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_out.0",
+    "maxAbs": 0.0018723555840551853,
+    "rmse": 0.0003769778413698077
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_q",
+    "maxAbs": 0.00200046319514513,
+    "rmse": 0.000690729939378798
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_v",
+    "maxAbs": 0.0013298019766807556,
+    "rmse": 0.0004081914376001805
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_k",
+    "maxAbs": 0.0020454004406929016,
+    "rmse": 0.0005111489444971085
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_out.0",
+    "maxAbs": 0.0019161198288202286,
+    "rmse": 0.00013218802632763982
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_q",
+    "maxAbs": 0.001449134200811386,
+    "rmse": 0.00040958294994197786
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_v",
+    "maxAbs": 0.0011299904435873032,
+    "rmse": 0.00018510615336708724
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.ff.net.0.proj",
+    "maxAbs": 0.001670297235250473,
+    "rmse": 0.0003966545045841485
+  },
+  {
+    "name": "unet.up_blocks.3.attentions.2.transformer_blocks.0.ff.net.2",
+    "maxAbs": 0.0015765801072120667,
+    "rmse": 0.0005380232469178736
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.0.conv1",
+    "maxAbs": 0.007188601419329643,
+    "rmse": 0.0011410071747377515
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.0.conv2",
+    "maxAbs": 0.00375979021191597,
+    "rmse": 0.0009257241617888212
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.0.conv_shortcut",
+    "maxAbs": 0.0019898898899555206,
+    "rmse": 0.00038138084346428514
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.0.time_emb_proj",
+    "maxAbs": 0.0007408622186630964,
+    "rmse": 0.00015786061703693122
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.1.conv1",
+    "maxAbs": 0.0034845303744077682,
+    "rmse": 0.0009185472154058516
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.1.conv2",
+    "maxAbs": 0.0023813024163246155,
+    "rmse": 0.0007366761565208435
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.1.conv_shortcut",
+    "maxAbs": 0.0012476183474063873,
+    "rmse": 0.0002979252894874662
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.1.time_emb_proj",
+    "maxAbs": 0.0009408785263076425,
+    "rmse": 0.0001471883151680231
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.2.conv1",
+    "maxAbs": 0.003188846632838249,
+    "rmse": 0.000858581333886832
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.2.conv2",
+    "maxAbs": 0.0020886510610580444,
+    "rmse": 0.0006412590737454593
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.2.conv_shortcut",
+    "maxAbs": 0.001077546738088131,
+    "rmse": 0.0003159059560857713
+  },
+  {
+    "name": "unet.up_blocks.3.resnets.2.time_emb_proj",
+    "maxAbs": 0.0012522721663117409,
+    "rmse": 0.0001940889487741515
+  },
+  {
+    "name": "vae.decoder.conv_in",
+    "maxAbs": 0.0028972625732421875,
+    "rmse": 0.0006180646014399827
+  },
+  {
+    "name": "vae.decoder.conv_out",
+    "maxAbs": 0.00025206804275512695,
+    "rmse": 0.0001378902670694515
+  },
+  {
+    "name": "vae.decoder.mid_block.attentions.0.key",
+    "maxAbs": 0.0013704076409339905,
+    "rmse": 0.00046674348413944244
+  },
+  {
+    "name": "vae.decoder.mid_block.attentions.0.proj_attn",
+    "maxAbs": 0.0011339560151100159,
+    "rmse": 0.0002916380763053894
+  },
+  {
+    "name": "vae.decoder.mid_block.attentions.0.query",
+    "maxAbs": 0.0013379603624343872,
+    "rmse": 0.0004522018425632268
+  },
+  {
+    "name": "vae.decoder.mid_block.attentions.0.value",
+    "maxAbs": 0.000764261931180954,
+    "rmse": 0.0003095160936936736
+  },
+  {
+    "name": "vae.decoder.mid_block.resnets.0.conv1",
+    "maxAbs": 0.005580633878707886,
+    "rmse": 0.0007789282244630158
+  },
+  {
+    "name": "vae.decoder.mid_block.resnets.0.conv2",
+    "maxAbs": 0.0019211957696825266,
+    "rmse": 0.00048057333333417773
+  },
+  {
+    "name": "vae.decoder.mid_block.resnets.1.conv1",
+    "maxAbs": 0.005521997809410095,
+    "rmse": 0.0007319319993257523
+  },
+  {
+    "name": "vae.decoder.mid_block.resnets.1.conv2",
+    "maxAbs": 0.001887042075395584,
+    "rmse": 0.0004924837267026305
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.0.conv1",
+    "maxAbs": 0.005116857588291168,
+    "rmse": 0.0007809941889718175
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.0.conv2",
+    "maxAbs": 0.0029044561088085175,
+    "rmse": 0.0005354568129405379
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.1.conv1",
+    "maxAbs": 0.004573822021484375,
+    "rmse": 0.0007875090232118964
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.1.conv2",
+    "maxAbs": 0.0027038082480430603,
+    "rmse": 0.000499142799526453
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.2.conv1",
+    "maxAbs": 0.005320721305906773,
+    "rmse": 0.0008243633201345801
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.resnets.2.conv2",
+    "maxAbs": 0.0021028295159339905,
+    "rmse": 0.0005022272234782577
+  },
+  {
+    "name": "vae.decoder.up_blocks.0.upsamplers.0.conv",
+    "maxAbs": 0.0015317960642278194,
+    "rmse": 0.0002998560084961355
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.0.conv1",
+    "maxAbs": 0.004268616437911987,
+    "rmse": 0.0007608479936607182
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.0.conv2",
+    "maxAbs": 0.004134921357035637,
+    "rmse": 0.000729323539417237
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.1.conv1",
+    "maxAbs": 0.004146784543991089,
+    "rmse": 0.0007755082915537059
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.1.conv2",
+    "maxAbs": 0.0030366182327270508,
+    "rmse": 0.0006984603824093938
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.2.conv1",
+    "maxAbs": 0.00444619357585907,
+    "rmse": 0.0007494724122807384
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.resnets.2.conv2",
+    "maxAbs": 0.0023506954312324524,
+    "rmse": 0.0006407151813618839
+  },
+  {
+    "name": "vae.decoder.up_blocks.1.upsamplers.0.conv",
+    "maxAbs": 0.000855693593621254,
+    "rmse": 0.0003308893647044897
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.0.conv1",
+    "maxAbs": 0.003914421424269676,
+    "rmse": 0.0006966519285924733
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.0.conv2",
+    "maxAbs": 0.0034866929054260254,
+    "rmse": 0.0008036650833673775
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.0.conv_shortcut",
+    "maxAbs": 0.0006454347167164087,
+    "rmse": 0.00014461071987170726
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.1.conv1",
+    "maxAbs": 0.002918063197284937,
+    "rmse": 0.000634998781606555
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.1.conv2",
+    "maxAbs": 0.004481758922338486,
+    "rmse": 0.0008610397926531732
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.2.conv1",
+    "maxAbs": 0.00263517489656806,
+    "rmse": 0.0006728377193212509
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.resnets.2.conv2",
+    "maxAbs": 0.0023779571056365967,
+    "rmse": 0.0007865247898735106
+  },
+  {
+    "name": "vae.decoder.up_blocks.2.upsamplers.0.conv",
+    "maxAbs": 0.0010053962469100952,
+    "rmse": 0.0003630169958341867
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.0.conv1",
+    "maxAbs": 0.00249481201171875,
+    "rmse": 0.0006423863233067095
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.0.conv2",
+    "maxAbs": 0.004767946898937225,
+    "rmse": 0.0009787535527721047
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.0.conv_shortcut",
+    "maxAbs": 0.0006645387038588524,
+    "rmse": 0.00023344147484749556
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.1.conv1",
+    "maxAbs": 0.00350014865398407,
+    "rmse": 0.0006309563177637756
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.1.conv2",
+    "maxAbs": 0.005212016403675079,
+    "rmse": 0.001016730209812522
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.2.conv1",
+    "maxAbs": 0.00251157209277153,
+    "rmse": 0.0006597855244763196
+  },
+  {
+    "name": "vae.decoder.up_blocks.3.resnets.2.conv2",
+    "maxAbs": 0.0042265634983778,
+    "rmse": 0.0009553460404276848
+  },
+  {
+    "name": "vae.post_quant_conv",
+    "maxAbs": 0.0009669661521911621,
+    "rmse": 0.00043373386142775416
+  }
+]

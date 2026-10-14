@@ -1,0 +1,84 @@
+{
+  "hardware": "RTX 5080 / D3D11",
+  "unity": "2022.3.22f1",
+  "vrcSdk": "3.10.5",
+  "modelSource": {
+    "repo": "gsdf/Counterfeit-V3.0",
+    "revision": "d8ce63b3eb8e9102e54b3fcc07f9cb7a28ef30fc",
+    "checkpointSHA256": "a54c944e4c04e9d9ca43468ef5b90ea0408bb6264829a4980de79a768df7179f"
+  },
+  "runtime": "Actual Udon / VRCGraphics, no external inference server",
+  "precision": "W8A8 / INT32 Conv and Linear; mixed float nonlinear/norm/attention/sampling",
+  "playModeRuns": [
+    {
+      "seed": 1234,
+      "steps": 20,
+      "elapsed": 91.88063,
+      "width": 256,
+      "height": 256,
+      "finite": true,
+      "source": "Actual Udon, integer Conv/Linear, full VAE"
+    },
+    {
+      "seed": 2345,
+      "steps": 20,
+      "elapsed": 111.540016,
+      "width": 256,
+      "height": 256,
+      "finite": true,
+      "source": "Actual Udon, integer Conv/Linear, full VAE"
+    },
+    {
+      "seed": 3456,
+      "steps": 20,
+      "elapsed": 357.742859,
+      "width": 512,
+      "height": 512,
+      "finite": true,
+      "source": "Actual Udon, integer Conv/Linear, full VAE"
+    }
+  ],
+  "settings": {
+    "passesPerFrame": 32,
+    "cpuSubmissionBudgetMs": 8,
+    "defaultPassesPerFrame": 4,
+    "defaultCpuSubmissionBudgetMs": 2
+  },
+  "ui": {
+    "buttons": 20,
+    "languages": 3,
+    "verifiedRaycastAndActualUdonClick": true,
+    "planeGapMeters": 0.01,
+    "detailsCaptureAndHighlightVerified": true,
+    "previewToggleVerified": true,
+    "pauseResumeVerified": true,
+    "configurationResetVerified": true,
+    "ownerLocalOffPausesVerified": true
+  },
+  "nativeGraphWorkTextures": [
+    {
+      "size": 256,
+      "unetBytes": 29917200,
+      "vaeBytes": 224772624
+    },
+    {
+      "size": 384,
+      "unetBytes": 67371024,
+      "vaeBytes": 505692688
+    },
+    {
+      "size": 512,
+      "unetBytes": 119472144,
+      "vaeBytes": 898892304
+    }
+  ],
+  "limitations": [
+    "No benchmark against a floating point Shader backend; no confirmed DP4A/Tensor Core use.",
+    "Quantization alters image details; not lossless.",
+    "CPU floating point comparison uses F32 Conv accumulation and F16 writeback.",
+    "384 native graph available but not separately sampled in this run.",
+    "No actual multi-client network test, SD Android build, SDK BuildAndTest, or upload.",
+    "Four offline CLIP presets; no free-text runtime encoder.",
+    "Timing is wall clock under concurrent GPU usage and explicit test submission settings."
+  ]
+}

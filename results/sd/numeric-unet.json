@@ -1,0 +1,530 @@
+{
+  "status": "completed",
+  "nodes": 609,
+  "draws": 5858,
+  "seconds": 52.0515798,
+  "rows": [
+    {
+      "node": 0,
+      "name": "time_embedding.linear_1",
+      "maxAbs": 0.0078125,
+      "rmse": 0.0007851098718118601,
+      "referenceRMS": 0.9351480282589099,
+      "nonFinite": 0,
+      "count": 1280
+    },
+    {
+      "node": 1,
+      "name": "time_embedding.silu",
+      "maxAbs": 0.0078125,
+      "rmse": 0.0005997688392003046,
+      "referenceRMS": 0.4949991551326705,
+      "nonFinite": 0,
+      "count": 1280
+    },
+    {
+      "node": 2,
+      "name": "time_embedding.linear_2",
+      "maxAbs": 0.0078125,
+      "rmse": 0.000693192725373488,
+      "referenceRMS": 0.33673739547575415,
+      "nonFinite": 0,
+      "count": 1280
+    },
+    {
+      "node": 3,
+      "name": "time_embedding.resnet_silu",
+      "maxAbs": 0.01171875,
+      "rmse": 0.0005276718139064711,
+      "referenceRMS": 0.24562918057196356,
+      "nonFinite": 0,
+      "count": 1280
+    },
+    {
+      "node": 4,
+      "name": "conv_in",
+      "maxAbs": 0.001953125,
+      "rmse": 0.00020544240583528434,
+      "referenceRMS": 0.40550363320702754,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 5,
+      "name": "down_blocks.0.resnets.0.norm1",
+      "maxAbs": 0.00390625,
+      "rmse": 0.0002710582804790135,
+      "referenceRMS": 0.47857793347892835,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 6,
+      "name": "down_blocks.0.resnets.0.silu1",
+      "maxAbs": 0.005859375,
+      "rmse": 0.00021858823947876186,
+      "referenceRMS": 0.2286790970516631,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 7,
+      "name": "down_blocks.0.resnets.0.conv1",
+      "maxAbs": 0.02734375,
+      "rmse": 0.00425257663975878,
+      "referenceRMS": 1.0262905011417502,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 8,
+      "name": "down_blocks.0.resnets.0.time_emb_proj",
+      "maxAbs": 0.0078125,
+      "rmse": 0.0013162059904293446,
+      "referenceRMS": 2.2445333015142164,
+      "nonFinite": 0,
+      "count": 320
+    },
+    {
+      "node": 9,
+      "name": "down_blocks.0.resnets.0.time_add",
+      "maxAbs": 0.03125,
+      "rmse": 0.004568056592715978,
+      "referenceRMS": 2.6095014771308813,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 10,
+      "name": "down_blocks.0.resnets.0.norm2",
+      "maxAbs": 0.03564453,
+      "rmse": 0.0015874095617639757,
+      "referenceRMS": 0.5723306529502421,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 11,
+      "name": "down_blocks.0.resnets.0.silu2",
+      "maxAbs": 0.03125,
+      "rmse": 0.0006832779671991075,
+      "referenceRMS": 0.13220780450546604,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 12,
+      "name": "down_blocks.0.resnets.0.conv2",
+      "maxAbs": 0.025390625,
+      "rmse": 0.004965641291556572,
+      "referenceRMS": 0.634442948291331,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 13,
+      "name": "down_blocks.0.resnets.0.residual",
+      "maxAbs": 0.02734375,
+      "rmse": 0.005003715145499063,
+      "referenceRMS": 0.7120151030966542,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 14,
+      "name": "down_blocks.0.attentions.0.norm",
+      "maxAbs": 0.032409668,
+      "rmse": 0.004247169937107538,
+      "referenceRMS": 0.23996656683330334,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 15,
+      "name": "down_blocks.0.attentions.0.proj_in",
+      "maxAbs": 0.04345703,
+      "rmse": 0.005750135967885635,
+      "referenceRMS": 0.19152595629071928,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 16,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.norm1",
+      "maxAbs": 0.108642578,
+      "rmse": 0.018530529712457174,
+      "referenceRMS": 0.5377431650966156,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 17,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_q",
+      "maxAbs": 0.231445313,
+      "rmse": 0.037908469041206413,
+      "referenceRMS": 0.9673517370541966,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 18,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_k",
+      "maxAbs": 0.21484375,
+      "rmse": 0.03610735801948409,
+      "referenceRMS": 0.9625305109213005,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 19,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_v",
+      "maxAbs": 0.113525391,
+      "rmse": 0.021676737894910807,
+      "referenceRMS": 0.6857228584145475,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 20,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.online_softmax",
+      "maxAbs": 0.0383300781,
+      "rmse": 0.003998933499613923,
+      "referenceRMS": 0.1425460683811202,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 21,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.to_out.0",
+      "maxAbs": 0.02734375,
+      "rmse": 0.004295870967827089,
+      "referenceRMS": 0.14582356325307297,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 22,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn1.residual",
+      "maxAbs": 0.0380859375,
+      "rmse": 0.006741149314150736,
+      "referenceRMS": 0.23470916544141684,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 23,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.norm2",
+      "maxAbs": 0.060546875,
+      "rmse": 0.011402074697286296,
+      "referenceRMS": 0.3830085823813416,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 24,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_q",
+      "maxAbs": 0.115478516,
+      "rmse": 0.020438148511910417,
+      "referenceRMS": 0.5533367800657042,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 25,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_k",
+      "maxAbs": 0.09765625,
+      "rmse": 0.012968176537223134,
+      "referenceRMS": 2.1094668062854756,
+      "nonFinite": 0,
+      "count": 24640
+    },
+    {
+      "node": 26,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_v",
+      "maxAbs": 0.04296875,
+      "rmse": 0.00497707406849684,
+      "referenceRMS": 0.7959199391212484,
+      "nonFinite": 0,
+      "count": 24640
+    },
+    {
+      "node": 27,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.online_softmax",
+      "maxAbs": 0.275390625,
+      "rmse": 0.00937718708518214,
+      "referenceRMS": 0.164337250924765,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 28,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.to_out.0",
+      "maxAbs": 0.0562744141,
+      "rmse": 0.00407207666940408,
+      "referenceRMS": 0.0868803045064418,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 29,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.attn2.residual",
+      "maxAbs": 0.064453125,
+      "rmse": 0.007891064099625929,
+      "referenceRMS": 0.2690041454248114,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 30,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.norm3",
+      "maxAbs": 0.07470703,
+      "rmse": 0.013529148980438443,
+      "referenceRMS": 0.38841915234487534,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 31,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.ff.net.0.proj",
+      "maxAbs": 0.24609375,
+      "rmse": 0.017615269015688006,
+      "referenceRMS": 0.5449058150933547,
+      "nonFinite": 0,
+      "count": 2621440
+    },
+    {
+      "node": 32,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.ff.geglu",
+      "maxAbs": 0.174072266,
+      "rmse": 0.005292725594263643,
+      "referenceRMS": 0.1070755159515208,
+      "nonFinite": 0,
+      "count": 1310720
+    },
+    {
+      "node": 33,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.ff.net.2",
+      "maxAbs": 0.140625,
+      "rmse": 0.01984874815097512,
+      "referenceRMS": 0.2430298633458565,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 34,
+      "name": "down_blocks.0.attentions.0.transformer_blocks.0.ff.residual",
+      "maxAbs": 0.140136719,
+      "rmse": 0.021151551969321513,
+      "referenceRMS": 0.30574861491714395,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 35,
+      "name": "down_blocks.0.attentions.0.proj_out",
+      "maxAbs": 0.0961914063,
+      "rmse": 0.018459676631455074,
+      "referenceRMS": 0.24960554097150484,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 36,
+      "name": "down_blocks.0.attentions.0.residual",
+      "maxAbs": 0.10546875,
+      "rmse": 0.018608574510849744,
+      "referenceRMS": 0.6776089107865033,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 37,
+      "name": "down_blocks.0.resnets.1.norm1",
+      "maxAbs": 0.237915039,
+      "rmse": 0.019747660941008837,
+      "referenceRMS": 0.3503545678191532,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 38,
+      "name": "down_blocks.0.resnets.1.silu1",
+      "maxAbs": 0.10546875,
+      "rmse": 0.008854548822431373,
+      "referenceRMS": 0.13437172879954934,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 39,
+      "name": "down_blocks.0.resnets.1.conv1",
+      "maxAbs": 0.151428223,
+      "rmse": 0.027339826531920013,
+      "referenceRMS": 0.5423339602440816,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 40,
+      "name": "down_blocks.0.resnets.1.time_emb_proj",
+      "maxAbs": 0.00390625,
+      "rmse": 0.0009656235976236399,
+      "referenceRMS": 0.7100522098562803,
+      "nonFinite": 0,
+      "count": 320
+    },
+    {
+      "node": 41,
+      "name": "down_blocks.0.resnets.1.time_add",
+      "maxAbs": 0.151367188,
+      "rmse": 0.02735411965028912,
+      "referenceRMS": 0.9400097668723985,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 42,
+      "name": "down_blocks.0.resnets.1.norm2",
+      "maxAbs": 0.392578125,
+      "rmse": 0.02288228554412376,
+      "referenceRMS": 0.731514581288958,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 43,
+      "name": "down_blocks.0.resnets.1.silu2",
+      "maxAbs": 0.110717773,
+      "rmse": 0.008913067550030145,
+      "referenceRMS": 0.14688185773703052,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 44,
+      "name": "down_blocks.0.resnets.1.conv2",
+      "maxAbs": 0.10546875,
+      "rmse": 0.02118279886229622,
+      "referenceRMS": 0.3791187099724829,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 45,
+      "name": "down_blocks.0.resnets.1.residual",
+      "maxAbs": 0.12890625,
+      "rmse": 0.02625946160471523,
+      "referenceRMS": 0.7128576153732761,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 46,
+      "name": "down_blocks.0.attentions.1.norm",
+      "maxAbs": 0.116943359,
+      "rmse": 0.020809441747941727,
+      "referenceRMS": 0.352877801102126,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 47,
+      "name": "down_blocks.0.attentions.1.proj_in",
+      "maxAbs": 0.153320313,
+      "rmse": 0.021651686900210087,
+      "referenceRMS": 0.36540232972962783,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 48,
+      "name": "down_blocks.0.attentions.1.transformer_blocks.0.norm1",
+      "maxAbs": 0.242248535,
+      "rmse": 0.04322239578121469,
+      "referenceRMS": 0.5360074982345773,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 49,
+      "name": "down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_q",
+      "maxAbs": 0.451171875,
+      "rmse": 0.08063562916580795,
+      "referenceRMS": 1.083162200330268,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 50,
+      "name": "down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_k",
+      "maxAbs": 0.4885254,
+      "rmse": 0.08438821295613946,
+      "referenceRMS": 1.3170036003004897,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 51,
+      "name": "down_blocks.0.attentions.1.transformer_blocks.0.attn1.to_v",
+      "maxAbs": 0.2578125,
+      "rmse": 0.04961767893881495,
+      "referenceRMS": 0.6907161229530068,
+      "nonFinite": 0,
+      "count": 327680
+    },
+    {
+      "node": 100,
+      "name": "down_blocks.1.attentions.0.transformer_blocks.0.ff.residual",
+      "maxAbs": 0.625,
+      "rmse": 0.08468169555277655,
+      "referenceRMS": 0.4245501552603242,
+      "nonFinite": 0,
+      "count": 163840
+    },
+    {
+      "node": 200,
+      "name": "down_blocks.2.attentions.1.residual",
+      "maxAbs": 1.6484375,
+      "rmse": 0.2826499026160456,
+      "referenceRMS": 1.667128982121543,
+      "nonFinite": 0,
+      "count": 81920
+    },
+    {
+      "node": 300,
+      "name": "up_blocks.1.resnets.0.time_emb_proj",
+      "maxAbs": 0.00390625,
+      "rmse": 0.001029876058036522,
+      "referenceRMS": 0.8993928039780521,
+      "nonFinite": 0,
+      "count": 1280
+    },
+    {
+      "node": 400,
+      "name": "up_blocks.2.concat.0",
+      "maxAbs": 20.953125,
+      "rmse": 1.7569039602227527,
+      "referenceRMS": 6.582153757824746,
+      "nonFinite": 0,
+      "count": 491520
+    },
+    {
+      "node": 500,
+      "name": "up_blocks.2.attentions.2.proj_out",
+      "maxAbs": 2.49804688,
+      "rmse": 0.3282490899146889,
+      "referenceRMS": 1.175638469125711,
+      "nonFinite": 0,
+      "count": 163840
+    },
+    {
+      "node": 608,
+      "name": "conv_out",
+      "maxAbs": 0.0458984375,
+      "rmse": 0.00999618107634192,
+      "referenceRMS": 1.0360947419936994,
+      "nonFinite": 0,
+      "count": 4096
+    }
+  ]
+}

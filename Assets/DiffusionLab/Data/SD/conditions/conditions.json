@@ -1,0 +1,128 @@
+{
+  "source": {
+    "repoId": "gsdf/Counterfeit-V3.0",
+    "revision": "d8ce63b3eb8e9102e54b3fcc07f9cb7a28ef30fc",
+    "checkpoint": "Counterfeit-V3.0_fix_fp16.safetensors",
+    "checkpointSha256": "a54c944e4c04e9d9ca43468ef5b90ea0408bb6264829a4980de79a768df7179f",
+    "conversion": "diffusers 0.35.2 convert_ldm_unet_checkpoint / convert_ldm_vae_checkpoint; no EMA; exact key/shape comparison",
+    "configurationSourceRevision": "f79f307806896050ac376e46d8081d221b8aa93a",
+    "component": "text_encoder",
+    "weights": "text_encoder/model.fp16.safetensors",
+    "weightsSha256": "cbbd26d79b35eca10399d1d15d5d12c2a3bfcf6b6a7f86414400fbb71bc6b314"
+  },
+  "encoder": {
+    "class": "CLIPTextModel",
+    "output": "last_hidden_state",
+    "clipSkip": "not applied",
+    "sourceWeightDtype": "float16",
+    "inferenceDtype": "float32",
+    "device": "cpu",
+    "attentionMaskPassed": false
+  },
+  "tokenizer": {
+    "class": "CLIPTokenizer",
+    "addSpecialTokens": true,
+    "padding": "max_length",
+    "truncation": true,
+    "maxLength": 77
+  },
+  "embedding": {
+    "shape": [
+      77,
+      768
+    ],
+    "dtype": "float32",
+    "endianness": "little",
+    "layout": "row-major [token, hidden]",
+    "bytesPerEmbedding": 236544,
+    "rgbaTexelLanes": 4
+  },
+  "runtime": {
+    "device": "cpu",
+    "torchVersion": "2.14.1+cpu",
+    "torchCudaBuild": null,
+    "transformersVersion": "4.57.1",
+    "safetensorsVersion": "0.8.0",
+    "threads": 4,
+    "sourceWeightSha256": "cbbd26d79b35eca10399d1d15d5d12c2a3bfcf6b6a7f86414400fbb71bc6b314"
+  },
+  "sharedNegativeCondition": {
+    "index": 0,
+    "path": "embedding-0.bytes",
+    "label": "negative_common",
+    "sha256": "08689dae8bf023b3d8423a9790265a932617f4d0a9ff49e681ff6ebfe36e11b1",
+    "usedWith": [
+      "anime_portrait_adult",
+      "spring_coast",
+      "autumn_cafe",
+      "garden_cat"
+    ]
+  },
+  "conditions": [
+    {
+      "index": 0,
+      "label": "negative_common",
+      "prompt": "low quality, worst quality, low resolution, blurry, jpeg artifacts, bad anatomy, deformed anatomy, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, text, watermark, logo, nsfw, nude, nudity, explicit, pornographic, sexual content",
+      "sha256": "08689dae8bf023b3d8423a9790265a932617f4d0a9ff49e681ff6ebfe36e11b1",
+      "tokenCountBeforeTruncation": 62,
+      "tokenCountAfterTruncation": 62,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 61,
+      "path": "embedding-0.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 1,
+      "label": "anime_portrait_adult",
+      "prompt": "masterpiece, best quality, anime illustration, A calm portrait of an adult anime woman with short dark hair, wearing a blue cardigan, gentle expression, soft window light, simple background.",
+      "sha256": "b98f1ce2b9e8b4606e9ad206c5272ac192937a2dd662eda70970c7430362ca03",
+      "tokenCountBeforeTruncation": 38,
+      "tokenCountAfterTruncation": 38,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 37,
+      "path": "embedding-1.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 2,
+      "label": "spring_coast",
+      "prompt": "masterpiece, best quality, anime illustration, A peaceful coastal village at sunrise, pastel houses beside a quiet sea, distant mountains, soft clouds, detailed anime landscape.",
+      "sha256": "ce463463fd001c2ae7a94d102388a2c0305500bff1ce00eabde758dcc6b32012",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-2.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 3,
+      "label": "autumn_cafe",
+      "prompt": "masterpiece, best quality, anime illustration, A small street cafe in autumn, falling leaves, warm light in the windows, wet pavement, a cozy anime illustration.",
+      "sha256": "ed2b68f36d4d07246ec6d504370dae38d1e5c93cb85e80a1e22a2c42f9e0abf0",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-3.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 4,
+      "label": "garden_cat",
+      "prompt": "masterpiece, best quality, anime illustration, A white cat resting on a windowsill and looking into a green garden in spring, soft morning light, a peaceful illustrated scene.",
+      "sha256": "256c682e3abc229bd6094e606892a5dea8c14e7fb49165917a0621a00a0dd057",
+      "tokenCountBeforeTruncation": 37,
+      "tokenCountAfterTruncation": 37,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 36,
+      "path": "embedding-4.bytes",
+      "byteLength": 236544
+    }
+  ]
+}

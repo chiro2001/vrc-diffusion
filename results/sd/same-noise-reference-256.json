@@ -1,0 +1,10 @@
+{
+  "initialSource": "Actual Udon/VRCGraphics initial latent",
+  "seed": 2345,
+  "size": 256,
+  "steps": 20,
+  "latentRMSE": 0.39419445395469666,
+  "referenceRMS": 0.9970670342445374,
+  "latentMaxAbs": 2.2001953125,
+  "note": "Full trajectory can amplify per-forward arithmetic differences; image details differ."
+}

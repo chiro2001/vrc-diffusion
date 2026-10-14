@@ -393,5 +393,250 @@
     "step",
     "步",
     "ステップ"
+  ],
+  [
+    "SD1.x ANIME · COUNTERFEIT-V3.0",
+    "SD1.x 动漫 · COUNTERFEIT-V3.0",
+    "SD1.x アニメ · COUNTERFEIT-V3.0"
+  ],
+  [
+    "Counterfeit-V3.0 | W8A8 Conv/Linear",
+    "Counterfeit-V3.0 | W8A8 卷积/线性层",
+    "Counterfeit-V3.0 | W8A8 畳み込み/全結合"
+  ],
+  [
+    "PRESET: Anime portrait",
+    "预设：动漫肖像",
+    "プリセット：アニメのポートレート"
+  ],
+  [
+    "PRESET: ",
+    "预设：",
+    "プリセット："
+  ],
+  [
+    "Anime portrait",
+    "动漫肖像",
+    "アニメのポートレート"
+  ],
+  [
+    "Coastal village",
+    "海岸村庄",
+    "海辺の村"
+  ],
+  [
+    "Autumn cafe",
+    "秋日咖啡馆",
+    "秋のカフェ"
+  ],
+  [
+    "Garden cat",
+    "花园里的猫",
+    "庭の猫"
+  ],
+  [
+    "PORTRAIT",
+    "肖像",
+    "ポートレート"
+  ],
+  [
+    "COAST",
+    "海岸",
+    "海岸"
+  ],
+  [
+    "CAFE",
+    "咖啡馆",
+    "カフェ"
+  ],
+  [
+    "CAT",
+    "猫",
+    "猫"
+  ],
+  [
+    "REAL SHADER MEMORY · 16 CHANNELS",
+    "实时 Shader 内存 · 16 通道",
+    "リアルタイム Shader メモリ · 16 チャンネル"
+  ],
+  [
+    "NHWC4 tensor · live data",
+    "NHWC4 张量 · 实时数据",
+    "NHWC4 テンソル · ライブデータ"
+  ],
+  [
+    "NOISE → LINEAR LATENT PREVIEW → REAL VAE OUTPUT",
+    "噪声 → 线性潜变量预览 → VAE 实际输出",
+    "ノイズ → 線形潜在表現プレビュー → VAE 出力"
+  ],
+  [
+    "PAUSE / RUN",
+    "暂停 / 运行",
+    "一時停止 / 実行"
+  ],
+  [
+    "DETAILS ON / OFF",
+    "细节显示 开 / 关",
+    "詳細表示 オン / オフ"
+  ],
+  [
+    "NATIVE",
+    "原生",
+    "ネイティブ"
+  ],
+  [
+    "native",
+    "原生",
+    "ネイティブ"
+  ],
+  [
+    "LOCAL SPEED",
+    "本地处理速度",
+    "ローカル処理速度"
+  ],
+  [
+    "REAL COMPUTATION",
+    "真实计算",
+    "実際の計算"
+  ],
+  [
+    "Ready",
+    "就绪",
+    "準備完了"
+  ],
+  [
+    "U-Net: negative condition",
+    "U-Net：负向条件",
+    "U-Net：ネガティブ条件"
+  ],
+  [
+    "U-Net: prompt condition",
+    "U-Net：提示词条件",
+    "U-Net：プロンプト条件"
+  ],
+  [
+    "CFG: eps = eps_u + s (eps_c - eps_u)",
+    "CFG：eps = eps_u + s (eps_c - eps_u)",
+    "CFG：eps = eps_u + s (eps_c - eps_u)"
+  ],
+  [
+    "DDIM: x_t to x_prev",
+    "DDIM：x_t → x_prev",
+    "DDIM：x_t から x_prev"
+  ],
+  [
+    "VAE: latent / 0.18215 to RGB",
+    "VAE：潜变量 / 0.18215 → RGB",
+    "VAE：潜在表現 / 0.18215 → RGB"
+  ],
+  [
+    "VAE decoded image",
+    "VAE 解码图像",
+    "VAE デコード画像"
+  ],
+  [
+    "Orange = positive; blue = negative",
+    "橙色 = 正值；蓝色 = 负值",
+    "オレンジ = 正の値；青 = 負の値"
+  ],
+  [
+    "nodes",
+    "节点",
+    "ノード"
+  ],
+  [
+    "tile",
+    "分块",
+    "タイル"
+  ],
+  [
+    "attention key",
+    "注意力 Key",
+    "注意キー"
+  ],
+  [
+    "Intermediate images: linear latent preview. Final: real VAE decode.",
+    "中间图像：线性潜变量预览。最终图像：VAE 实际解码。",
+    "中間画像：線形潜在表現のプレビュー。最終画像：VAE デコード。"
+  ],
+  [
+    "You have control",
+    "你正在控制",
+    "あなたが操作中"
+  ],
+  [
+    "Shared configuration; request control between runs",
+    "设置共享；请在两次生成之间申请控制",
+    "設定は共有中です。生成の合間に操作権をリクエストしてください"
+  ],
+  [
+    "details ON",
+    "细节 开启",
+    "詳細 オン"
+  ],
+  [
+    "details OFF",
+    "细节 关闭",
+    "詳細 オフ"
+  ],
+  [
+    "seed",
+    "种子",
+    "シード"
+  ],
+  [
+    "Noise and image share one latent space.\nU-Net predicts noise conditioned on CLIP.\nCFG combines prompt and negative predictions.\nDDIM removes noise step by step.\nVAE maps 4 latent channels into RGB.\nINT8 bytes + INT32 MAC; norms and softmax use float.",
+    "噪声与图像共享同一潜空间。\nU-Net 根据 CLIP 条件预测噪声。\nCFG 组合正向与负向条件的预测。\nDDIM 逐步消除噪声。\nVAE 将 4 个潜通道解码为 RGB。\nINT8 数据、INT32 累加；归一化与 softmax 使用浮点。",
+    "ノイズと画像は同じ潜在空間を共有します。\nU-Net は CLIP 条件でノイズを予測します。\nCFG は正・負条件の予測を組み合わせます。\nDDIM はノイズを段階的に取り除きます。\nVAE は 4 潜在チャンネルを RGB に変換します。\nINT8 データと INT32 積和、正規化と softmax は浮動小数点です。"
+  ],
+  [
+    "LOCAL INFERENCE ON / OFF",
+    "本地推理：开启 / 关闭",
+    "ローカル推論：オン / オフ"
+  ],
+  [
+    "LOCAL INFERENCE OFF",
+    "本地推理已关闭",
+    "ローカル推論オフ"
+  ],
+  [
+    "LOCAL SPEED 2",
+    "本地速度 2",
+    "ローカル速度 2"
+  ],
+  [
+    "LOCAL SPEED 32",
+    "本地速度 32",
+    "ローカル速度 32"
+  ],
+  [
+    "FP16 OUTPUT",
+    "FP16 输出",
+    "FP16 出力"
+  ],
+  [
+    "ACTUAL INT8 INPUT",
+    "实际 INT8 输入",
+    "実際の INT8 入力"
+  ],
+  [
+    "Awaiting computed tensor",
+    "等待实际计算的张量",
+    "計算されたテンソルを待機中"
+  ],
+  [
+    "Intermediate images: real VAE previews. Final: real VAE decode.",
+    "中间图像：真实 VAE 预览。最终图像：真实 VAE 解码。",
+    "中間画像：実際の VAE プレビュー。最終画像：実際の VAE デコード。"
+  ],
+  [
+    "NOISE → REAL VAE PREVIEWS → FINAL IMAGE",
+    "噪声 → 真实 VAE 预览 → 最终图像",
+    "ノイズ → 実際の VAE プレビュー → 最終画像"
+  ],
+  [
+    "VAE PREVIEWS ON / OFF",
+    "VAE 预览 开 / 关",
+    "VAE プレビュー ON / OFF"
   ]
 ]

@@ -1,6 +1,9 @@
 """Configuration checks for the vrc-diffusion Unity helper tools."""
 
 from pathlib import Path
+import hashlib
+import subprocess
+import tempfile
 import unittest
 from unittest import mock
 
@@ -75,6 +78,33 @@ class PreserveDirtyManifestTests(unittest.TestCase):
                 sync_windows_git.verify_preserved_paths_unchanged(
                     "a" * 40, "b" * 40, ["Assets/Scene.unity"]
                 )
+
+
+class SnapshotPreservationTests(unittest.TestCase):
+    def test_audit_rejects_changes_to_either_copy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "local"
+            stage = Path(directory) / "editor"
+            relative = "ProjectSettings/example.txt"
+            (root / relative).parent.mkdir(parents=True)
+            (stage / relative).parent.mkdir(parents=True)
+            (root / relative).write_bytes(b"committed")
+            (stage / relative).write_bytes(b"user edit")
+            for args in (["init", "-q"], ["add", "."],
+                         ["-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit", "-qm", "fixture"]):
+                subprocess.run(["git", *args], cwd=root, check=True)
+            head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+            files = {relative: hashlib.sha256(b"user edit").hexdigest()}
+            snapshot_unity_project.validate_preserved_snapshot(root, stage, head, files)
+            (stage / relative).write_bytes(b"later user edit")
+            with self.assertRaisesRegex(RuntimeError, "changed after audit"):
+                snapshot_unity_project.validate_preserved_snapshot(root, stage, head, files)
+            (stage / relative).write_bytes(b"user edit")
+            (root / relative).write_bytes(b"local change")
+            with self.assertRaisesRegex(RuntimeError, "Local preserved path has edits"):
+                snapshot_unity_project.validate_preserved_snapshot(root, stage, head, files)
+            with self.assertRaisesRegex(RuntimeError, "current local HEAD"):
+                snapshot_unity_project.validate_preserved_snapshot(root, stage, "a" * 40, files)
 
 
 if __name__ == "__main__":
