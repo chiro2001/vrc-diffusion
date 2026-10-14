@@ -7,10 +7,22 @@ using VRC.Udon.Common;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class DiffusionController : UdonSharpBehaviour {
+    public DiffusionTeaching teaching;
+    public RenderTexture displayedState,stepInput;
+    public int lastAlgorithmStage;
+    public int lastComputedLayer=-1;
+    public bool lastUnconditional;
+    public int sampledT;
+    public float sampledAlpha,sampledNextAlpha;
+    public DiffusionModel[] models;
+    public RenderTexture[] outputMemory;
+    private int boundModel=-1;
+    public int nativeSize=32,timestepMin=0,timestepMax=255;
+    public bool leadingSpacing=true;
     public Material[] layers;
     public RenderTexture[] layerMemory;
     public int[] layerChannels;
-    public RenderTexture stateA,stateB,cleanPrediction,conditionalNoise,guidedNoise;
+    public RenderTexture stateA,stateB,cleanPrediction,conditionalNoise,unconditionalNoise,guidedNoise;
     public bool classifierFreeGuidance;
     public float guidanceScale=3f;
     public Material sampler,mainDisplay,cleanDisplay,noiseDisplay,memoryDisplay;
@@ -33,7 +45,9 @@ public class DiffusionController : UdonSharpBehaviour {
     private float[] validationReadback;
     private float runStartedAt;
     private int validationReadEpoch=-1;
-    [UdonSynced] public int schemaVersion=1;
+    [UdonSynced] public int schemaVersion=2;
+    [UdonSynced] public int modelIndex;
+    [UdonSynced] public int outputIndex;
     [UdonSynced] public int networkModelVersion=1;
     [UdonSynced] public int epoch;
     [UdonSynced] public int revision;
@@ -49,6 +63,7 @@ public class DiffusionController : UdonSharpBehaviour {
     public int localStep;
     public int localLayer;
     public int localEpoch=-1;
+    private int displayedSeed=1234;
     private int selectedMemory;
     private int pendingPasses;
     private int stepTarget;
@@ -62,12 +77,15 @@ public class DiffusionController : UdonSharpBehaviour {
     private int appliedRevision=-1;
     private int savedSchema,savedModel,savedEpoch,savedAuthority,savedDigit,savedSeed,savedSteps,savedCompleted,savedPhase,savedGrant;
     private bool savedFixture;
+    private int savedModelIndex,savedOutputIndex;
     private void CacheSnapshot() {
+        savedModelIndex=modelIndex;savedOutputIndex=outputIndex;
         appliedRevision=revision;savedSchema=schemaVersion;savedModel=networkModelVersion;savedEpoch=epoch;
         savedAuthority=authorityId;savedDigit=digit;savedSeed=seed;savedSteps=totalSteps;
         savedCompleted=completedSteps;savedPhase=phase;savedGrant=grantedId;savedFixture=fixtureRun;
     }
     private void RestoreSnapshot() {
+        modelIndex=savedModelIndex;outputIndex=savedOutputIndex;
         revision=appliedRevision;schemaVersion=savedSchema;networkModelVersion=savedModel;epoch=savedEpoch;
         authorityId=savedAuthority;digit=savedDigit;seed=savedSeed;totalSteps=savedSteps;
         completedSteps=savedCompleted;phase=savedPhase;grantedId=savedGrant;fixtureRun=savedFixture;
@@ -88,12 +106,16 @@ public class DiffusionController : UdonSharpBehaviour {
         if(validationRunOnStart) SendCustomEventDelayedSeconds(nameof(BeginValidationRun),2f);
     }
     public void ApplyState() {
-        if(networkModelVersion!=modelVersion||schemaVersion!=1) {
+        if(networkModelVersion!=modelVersion||schemaVersion!=2) {
             notice="Incompatible model/protocol version";return;
+        }
+        if(models!=null&&models.Length>0) {
+            if(modelIndex<0||modelIndex>=models.Length||outputIndex<0||outputIndex>3) {notice="Incompatible model/protocol version";return;}
+            if(boundModel!=modelIndex) BindModel();
         }
         if(localEpoch!=epoch) {
             localEpoch=epoch;localStep=0;localLayer=0;pendingPasses=0;stepTarget=0;
-            validationPassed=false;validationMaxError=0;validationReadEpoch=-1;runStartedAt=Time.realtimeSinceStartup;
+            validationPassed=false;validationMaxError=0;validationReadEpoch=-1;lastComputedLayer=-1;lastAlgorithmStage=0;runStartedAt=Time.realtimeSinceStartup;
             current=stateA;next=stateB;
             sampler.SetTexture("_State",null);sampler.SetTexture("_Noise",null);sampler.SetTexture("_UnconditionedNoise",null);
             sampler.SetInt("_SeedLo",seed&65535);sampler.SetInt("_SeedHi",(seed>>16)&65535);
@@ -101,7 +123,7 @@ public class DiffusionController : UdonSharpBehaviour {
             VRCGraphics.Blit(null,current,sampler);
             sampler.SetInt("_Mode",3);VRCGraphics.Blit(null,next,sampler);
             VRCGraphics.Blit(null,cleanPrediction,sampler);
-            VRCGraphics.Blit(null,conditionalNoise,sampler);VRCGraphics.Blit(null,guidedNoise,sampler);
+            VRCGraphics.Blit(null,conditionalNoise,sampler);if(unconditionalNoise!=null)VRCGraphics.Blit(null,unconditionalNoise,sampler);VRCGraphics.Blit(null,guidedNoise,sampler);
             for(int i=0;i<layerMemory.Length;i++) VRCGraphics.Blit(null,layerMemory[i],sampler);
             for(int i=0;i<historyMemory.Length;i++) {
                 VRCGraphics.Blit(null,historyMemory[i],sampler);
@@ -110,13 +132,34 @@ public class DiffusionController : UdonSharpBehaviour {
             BindDisplays();
             if(phase!=0) {
                 if(fixtureRun&&validationInput!=null) VRCGraphics.Blit(validationInput,current);
-                VRCGraphics.Blit(current,historyMemory[0]);
+                VRCGraphics.Blit(current,historyMemory[0]);UpdateOutput();
             }
         }
-        UpdateLabels();
+        UpdateOutput();UpdateLabels();
+    }
+    private void BindModel() {
+        DiffusionModel m=models[modelIndex];boundModel=modelIndex;
+        layers=m.layers;layerMemory=m.memory;layerChannels=m.channels;
+        stateA=m.stateA;stateB=m.stateB;cleanPrediction=m.clean;conditionalNoise=m.conditional;unconditionalNoise=m.unconditional;guidedNoise=m.guided;
+        historyMemory=m.history;outputMemory=m.outputs;alphaCumprod=m.alpha;
+        nativeSize=m.nativeSize;timestepMin=m.timestepMin;timestepMax=m.timestepMax;leadingSpacing=m.leadingSpacing;
+        classifierFreeGuidance=m.classifierFreeGuidance;guidanceScale=m.guidanceScale;
+        validationInput=m.validationInput;validationExpected=m.validationExpected;
+        selectedMemory=0;lastComputedLayer=-1;localEpoch=-1;
+        sampler.SetFloat("_ClipPrediction",m.clipPrediction?1:0);
+        sampler.SetFloat("_ValueMin",m.valueMin);sampler.SetFloat("_ValueMax",m.valueMax);
+        mainDisplay.SetFloat("_ValueMin",m.valueMin);mainDisplay.SetFloat("_ValueMax",m.valueMax);
+        cleanDisplay.SetFloat("_ValueMin",m.valueMin);cleanDisplay.SetFloat("_ValueMax",m.valueMax);
+        for(int i=0;i<historyDisplays.Length;i++){historyDisplays[i].SetFloat("_ValueMin",m.valueMin);historyDisplays[i].SetFloat("_ValueMax",m.valueMax);}
+    }
+    private void UpdateOutput() {
+        if(outputMemory==null||outputMemory.Length==0) {mainDisplay.SetTexture("_MainTex",current);return;}
+        sampler.SetTexture("_State",current);sampler.SetInt("_InputSize",nativeSize);
+        sampler.SetInt("_OutputSize",outputMemory[outputIndex].width);sampler.SetInt("_Mode",6);
+        VRCGraphics.Blit(null,outputMemory[outputIndex],sampler);mainDisplay.SetTexture("_MainTex",outputMemory[outputIndex]);displayedState=current;
     }
     private void BindDisplays() {
-        mainDisplay.SetTexture("_MainTex",current);
+        UpdateOutput();
         cleanDisplay.SetTexture("_MainTex",cleanPrediction);
         noiseDisplay.SetTexture("_MainTex",guidedNoise);
         memoryDisplay.SetTexture("_MainTex",layerMemory[selectedMemory]);
@@ -124,12 +167,12 @@ public class DiffusionController : UdonSharpBehaviour {
         for(int i=0;i<historyDisplays.Length;i++) historyDisplays[i].SetTexture("_MainTex",historyMemory[i]);
     }
     private int TimeAt(int step) {
-        if(totalSteps<=1) return 0;
-        if(classifierFreeGuidance) return (totalSteps-1-step)*(alphaCumprod.Length/totalSteps);
-        return Mathf.RoundToInt((alphaCumprod.Length-1)*(1f-step/(float)(totalSteps-1)));
+        if(totalSteps<=1) return timestepMin;
+        if(leadingSpacing) return (totalSteps-1-step)*(alphaCumprod.Length/totalSteps);
+        return timestepMin+Mathf.RoundToInt((timestepMax-timestepMin)*(1f-step/(float)(totalSteps-1)));
     }
     private void Update() {
-        if(networkModelVersion!=modelVersion||schemaVersion!=1) return;
+        if(networkModelVersion!=modelVersion||schemaVersion!=2) return;
         if(phase!=0&&localStep<totalSteps&&!handoffWaiting) {
             bool owner=IsController();
             bool advance=owner?(phase==1||localStep<completedSteps||localStep<stepTarget||pendingPasses>0):localStep<completedSteps;
@@ -156,22 +199,30 @@ public class DiffusionController : UdonSharpBehaviour {
             if(index==0) mat.SetTexture("_Input",current);
             mat.SetInt("_Class",localLayer<layers.Length?digit:10);mat.SetInt("_Timestep",t);
             VRCGraphics.Blit(null,layerMemory[index],mat);
+            lastComputedLayer=index;lastUnconditional=localLayer>=layers.Length;lastAlgorithmStage=lastUnconditional?2:1;
             localLayer++;
             if(classifierFreeGuidance&&localLayer==layers.Length) VRCGraphics.Blit(layerMemory[index],conditionalNoise);
+            if(classifierFreeGuidance&&localLayer==layers.Length*2&&unconditionalNoise!=null)VRCGraphics.Blit(layerMemory[index],unconditionalNoise);
             return;
         }
+        stepInput=current;sampledT=t;sampledAlpha=alphaCumprod[t];sampledNextAlpha=localStep+1>=totalSteps?1f:alphaCumprod[TimeAt(localStep+1)];
         sampler.SetTexture("_State",current);
         sampler.SetTexture("_Noise",classifierFreeGuidance?conditionalNoise:layerMemory[layerMemory.Length-1]);
         sampler.SetTexture("_UnconditionedNoise",layerMemory[layerMemory.Length-1]);
         sampler.SetFloat("_Guidance",classifierFreeGuidance?guidanceScale:1f);
         sampler.SetFloat("_Alpha",alphaCumprod[t]);
         sampler.SetFloat("_NextAlpha",localStep+1>=totalSteps?1f:alphaCumprod[TimeAt(localStep+1)]);
-        sampler.SetInt("_Mode",5);VRCGraphics.Blit(null,guidedNoise,sampler);
-        sampler.SetInt("_Mode",2);VRCGraphics.Blit(null,cleanPrediction,sampler);
-        sampler.SetInt("_Mode",1);VRCGraphics.Blit(null,next,sampler);
+        if(localLayer==layers.Length*evaluations) {
+            sampler.SetInt("_Mode",5);VRCGraphics.Blit(null,guidedNoise,sampler);localLayer++;lastAlgorithmStage=3;return;
+        }
+        if(localLayer==layers.Length*evaluations+1) {
+            sampler.SetInt("_Mode",2);VRCGraphics.Blit(null,cleanPrediction,sampler);localLayer++;lastAlgorithmStage=4;return;
+        }
+        sampler.SetInt("_Mode",1);VRCGraphics.Blit(null,next,sampler);lastAlgorithmStage=5;
         RenderTexture swap=current;current=next;next=swap;
         localStep++;localLayer=0;
-        mainDisplay.SetTexture("_MainTex",current);
+        if(teaching!=null)teaching.SendCustomEvent("CaptureStep");
+        UpdateOutput();
         int previousBucket=(localStep-1)*(historyMemory.Length-1)/totalSteps;
         int bucket=localStep*(historyMemory.Length-1)/totalSteps;
         if(bucket>previousBucket) {
@@ -180,8 +231,8 @@ public class DiffusionController : UdonSharpBehaviour {
         }
         if(localStep>=totalSteps) {
             Debug.Log("DIFFUSION_COMPLETE role="+(IsController()?"controller":"follower")+" class="+digit+" seed="+seed+" steps="+localStep+" shared="+completedSteps+" seconds="+(Time.realtimeSinceStartup-runStartedAt));
-            if(fixtureRun&&validationExpected!=null&&validationExpected.Length==1024) {
-                validationReadback=new float[1024];validationReadEpoch=epoch;
+            if(fixtureRun&&validationExpected!=null&&validationExpected.Length==nativeSize*nativeSize) {
+                validationReadback=new float[nativeSize*nativeSize];validationReadEpoch=epoch;
                 VRCAsyncGPUReadback.Request(current,0,this);
             }
         }
@@ -207,7 +258,7 @@ public class DiffusionController : UdonSharpBehaviour {
             validationRunOnStart=false;Debug.Log("DIFFUSION_VALIDATION_FOLLOW owner="+authorityId);return;
         }
         RequestControl();
-        digit=3;totalSteps=32;
+        digit=3;totalSteps=models!=null&&models.Length>0?models[modelIndex].defaultSteps:32;
         Generate();validationRunOnStart=false;
         Debug.Log("DIFFUSION_VALIDATION_START model="+modelVersion+" class="+digit+" steps="+totalSteps);
     }
@@ -252,8 +303,13 @@ public class DiffusionController : UdonSharpBehaviour {
         notice="";fixtureRun=false;epoch++;phase=0;completedSteps=0;ApplyState();Publish();
     }
     public void SelectDigit() {if(!CanEdit())return;digit=Mathf.Clamp(commandValue,0,9);ConfigChanged();}
-    public void SelectSteps() {if(!CanEdit())return;totalSteps=Mathf.Clamp(commandValue,4,128);ConfigChanged();}
-    public void RandomSeed() {if(!CanEdit())return;seed=Random.Range(1,1000000000);ConfigChanged();}
+    public void SelectSteps() {if(!CanEdit())return;totalSteps=Mathf.Clamp(commandValue,4,timestepMax);ConfigChanged();}
+    public void SelectModel() {
+        if(!CanEdit()||models==null||commandValue<0||commandValue>=models.Length) return;
+        modelIndex=commandValue;totalSteps=models[modelIndex].defaultSteps;ConfigChanged();
+    }
+    public void SelectOutput() {if(!CanEdit())return;outputIndex=Mathf.Clamp(commandValue,0,3);UpdateOutput();Publish();}
+    public void RandomSeed() {if(!CanEdit())return;seed=Random.Range(1,1000000000);if(seedInput!=null)seedInput.text=seed.ToString();ConfigChanged();}
     public void ApplySeed() {
         if(!CanEdit()||seedInput==null) return;
         // Udon-compatible bounded decimal input; reject rather than silently wrap.
@@ -264,7 +320,7 @@ public class DiffusionController : UdonSharpBehaviour {
             if(c<0||c>9) {notice="Seed accepts digits only";UpdateLabels();return;}
             n=n*10+c;
         }
-        seed=(int)n;ConfigChanged();
+        seed=(int)n;seedInput.text=seed.ToString();ConfigChanged();
     }
     public void NextMemory() {selectedMemory=(selectedMemory+1)%layerMemory.Length;BindDisplays();UpdateLabels();}
     public void PreviousMemory() {selectedMemory=(selectedMemory+layerMemory.Length-1)%layerMemory.Length;BindDisplays();UpdateLabels();}
@@ -336,10 +392,17 @@ public class DiffusionController : UdonSharpBehaviour {
     public override void OnPlayerJoined(VRCPlayerApi player) {if(Networking.IsOwner(gameObject)) RequestSerialization();}
     public override void OnDeserialization() {ApplyReceivedState();}
     public void ApplyReceivedState() {
+        if(models!=null&&models.Length>0&&(modelIndex<0||modelIndex>=models.Length||outputIndex<0||outputIndex>3)) {
+            RestoreSnapshot();notice="Incompatible model/protocol version";UpdateLabels();return;
+        }
+        if(totalSteps<1||completedSteps<0||completedSteps>totalSteps||digit<0||digit>9||phase<0||phase>3) {
+            RestoreSnapshot();notice="Incompatible model/protocol version";UpdateLabels();return;
+        }
         if(revision<appliedRevision) {RestoreSnapshot();UpdateLabels();return;}
         CacheSnapshot();ApplyState();
     }
     public void UpdateLabels() {
+        if(seed!=displayedSeed){if(seedInput!=null&&seedInput.text==displayedSeed.ToString())seedInput.text=seed.ToString();displayedSeed=seed;}
         string owner="available";
         if(authorityId>=0) {VRCPlayerApi p=VRCPlayerApi.GetPlayerById(authorityId);if(p!=null)owner=p.displayName;}
         if(Networking.LocalPlayer==null) owner="Editor local";
@@ -350,8 +413,8 @@ public class DiffusionController : UdonSharpBehaviour {
         }
         string phaseName=phase==0?"IDLE":phase==1?"RUNNING":phase==2?"PAUSED":"COMPLETE";
         if(statusText!=null) statusText.text=phaseName+"  · shared "+completedSteps+"/"+totalSteps+"  · local "+localStep+"/"+totalSteps+"\n"+
-            "t="+(localStep<totalSteps?TimeAt(localStep):0)+"  · operator "+localLayer+"/"+(layers.Length*(classifierFreeGuidance?2:1)+1)+"  · CONTROL "+owner+"\n"+notice;
-        if(configText!=null) configText.text="CLASS "+digit+"   SEED "+seed+"   DDIM "+totalSteps+" steps   · "+passesPerFrame+" passes/frame";
+            "t="+(localStep<totalSteps?TimeAt(localStep):0)+"  · operator "+localLayer+"/"+(layers.Length*(classifierFreeGuidance?2:1)+3)+"  · CONTROL "+owner+"\n"+notice;
+        if(configText!=null) configText.text="CLASS "+digit+"   SEED "+seed+"   DDIM "+totalSteps+" steps   · "+passesPerFrame+" passes/frame"+"\nMODEL "+(models!=null&&models.Length>0?models[modelIndex].displayName:"MNIST")+" · native inference "+nativeSize+"×"+nativeSize+" · OUTPUT "+(outputMemory!=null&&outputMemory.Length>0?outputMemory[outputIndex].width:nativeSize)+(outputIndex==0?"":" upscale");
         if(controlText!=null) controlText.text="REQUESTS "+waiting+" · Shared settings / local GPU inference · floating-point results may differ";
         if(memoryText!=null) memoryText.text="LIVE GPU MEMORY · layer "+selectedMemory+" · "+layerChannels[selectedMemory]+" channels\n"+
             layerMemory[selectedMemory].width+" × "+layerMemory[selectedMemory].height+" RFloat · signed color range ±3";

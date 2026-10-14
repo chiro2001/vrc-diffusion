@@ -24,13 +24,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: a059d84ea090ea34e9d878916e92456e, type: 2}
+        m_Texture: {fileID: 8400000, guid: 0c3f5a4cf1dd38e4a8ce267fa0230f95, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Channels: 16
+    - _Channels: 128
     - _Range: 3
     - _Signed: 1
+    - _ValueMax: 1
+    - _ValueMin: -1
     m_Colors: []
   m_BuildTextureStacks: []

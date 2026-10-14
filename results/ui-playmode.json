@@ -1,0 +1,310 @@
+{
+  "passed": true,
+  "buttonsRaycast": 43,
+  "canvases": [
+    {
+      "canvas": "DiffusionLabWorld/Interface",
+      "buttonCount": 36,
+      "cameraPosition": [
+        0.0,
+        2.7,
+        -8.86
+      ],
+      "fieldOfView": 40.0
+    },
+    {
+      "canvas": "DiffusionLabWorld/TeachingBoard/TeachingInterface",
+      "buttonCount": 7,
+      "cameraPosition": [
+        7.0,
+        2.8,
+        -8.86
+      ],
+      "fieldOfView": 40.0
+    }
+  ],
+  "localPlayerId": 1,
+  "authorityIdAfterRequest": 1,
+  "classAfterClick": 7,
+  "seedAfterClick": 987654321,
+  "languages": [
+    {
+      "value": 1,
+      "activeTmp": 154
+    },
+    {
+      "value": 2,
+      "activeTmp": 154
+    },
+    {
+      "value": 0,
+      "activeTmp": 154
+    }
+  ],
+  "screenshots": [
+    "Reports/DiffusionLab\\ui-main-front.png",
+    "Reports/DiffusionLab\\ui-main-oblique.png",
+    "Reports/DiffusionLab\\ui-teaching-front.png"
+  ],
+  "sceneSaved": false,
+  "raycasts": [
+    {
+      "name": "SetLanguage_-1",
+      "screenX": 886,
+      "screenY": 596,
+      "firstHit": "DiffusionLabWorld/Interface/SetLanguage_-1"
+    },
+    {
+      "name": "SetLanguage_0",
+      "screenX": 940,
+      "screenY": 596,
+      "firstHit": "DiffusionLabWorld/Interface/SetLanguage_0"
+    },
+    {
+      "name": "SetLanguage_1",
+      "screenX": 995,
+      "screenY": 596,
+      "firstHit": "DiffusionLabWorld/Interface/SetLanguage_1"
+    },
+    {
+      "name": "SetLanguage_2",
+      "screenX": 1049,
+      "screenY": 596,
+      "firstHit": "DiffusionLabWorld/Interface/SetLanguage_2"
+    },
+    {
+      "name": "SelectDigit_0",
+      "screenX": 374,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_0"
+    },
+    {
+      "name": "SelectDigit_1",
+      "screenX": 421,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_1"
+    },
+    {
+      "name": "SelectDigit_2",
+      "screenX": 468,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_2"
+    },
+    {
+      "name": "SelectDigit_3",
+      "screenX": 515,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_3"
+    },
+    {
+      "name": "SelectDigit_4",
+      "screenX": 562,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_4"
+    },
+    {
+      "name": "SelectDigit_5",
+      "screenX": 609,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_5"
+    },
+    {
+      "name": "SelectDigit_6",
+      "screenX": 656,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_6"
+    },
+    {
+      "name": "SelectDigit_7",
+      "screenX": 703,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_7"
+    },
+    {
+      "name": "SelectDigit_8",
+      "screenX": 750,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_8"
+    },
+    {
+      "name": "SelectDigit_9",
+      "screenX": 797,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/SelectDigit_9"
+    },
+    {
+      "name": "Generate_0",
+      "screenX": 910,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/Generate_0"
+    },
+    {
+      "name": "ResetRun_0",
+      "screenX": 1031,
+      "screenY": 268,
+      "firstHit": "DiffusionLabWorld/Interface/ResetRun_0"
+    },
+    {
+      "name": "PauseResume_0",
+      "screenX": 423,
+      "screenY": 218,
+      "firstHit": "DiffusionLabWorld/Interface/PauseResume_0"
+    },
+    {
+      "name": "StepDenoise_0",
+      "screenX": 571,
+      "screenY": 218,
+      "firstHit": "DiffusionLabWorld/Interface/StepDenoise_0"
+    },
+    {
+      "name": "StepOperator_0",
+      "screenX": 722,
+      "screenY": 218,
+      "firstHit": "DiffusionLabWorld/Interface/StepOperator_0"
+    },
+    {
+      "name": "RequestControl_0",
+      "screenX": 873,
+      "screenY": 218,
+      "firstHit": "DiffusionLabWorld/Interface/RequestControl_0"
+    },
+    {
+      "name": "GrantControl_0",
+      "screenX": 1023,
+      "screenY": 218,
+      "firstHit": "DiffusionLabWorld/Interface/GrantControl_0"
+    },
+    {
+      "name": "PreviousMemory_0",
+      "screenX": 1031,
+      "screenY": 527,
+      "firstHit": "DiffusionLabWorld/Interface/PreviousMemory_0"
+    },
+    {
+      "name": "NextMemory_0",
+      "screenX": 1031,
+      "screenY": 498,
+      "firstHit": "DiffusionLabWorld/Interface/NextMemory_0"
+    },
+    {
+      "name": "Slower_0",
+      "screenX": 1031,
+      "screenY": 466,
+      "firstHit": "DiffusionLabWorld/Interface/Slower_0"
+    },
+    {
+      "name": "Faster_0",
+      "screenX": 1031,
+      "screenY": 437,
+      "firstHit": "DiffusionLabWorld/Interface/Faster_0"
+    },
+    {
+      "name": "SelectSteps_16",
+      "screenX": 389,
+      "screenY": 243,
+      "firstHit": "DiffusionLabWorld/Interface/SelectSteps_16"
+    },
+    {
+      "name": "SelectSteps_32",
+      "screenX": 472,
+      "screenY": 243,
+      "firstHit": "DiffusionLabWorld/Interface/SelectSteps_32"
+    },
+    {
+      "name": "SelectSteps_64",
+      "screenX": 555,
+      "screenY": 243,
+      "firstHit": "DiffusionLabWorld/Interface/SelectSteps_64"
+    },
+    {
+      "name": "ApplySeed_0",
+      "screenX": 859,
+      "screenY": 243,
+      "firstHit": "DiffusionLabWorld/Interface/ApplySeed_0"
+    },
+    {
+      "name": "RandomSeed_0",
+      "screenX": 1009,
+      "screenY": 243,
+      "firstHit": "DiffusionLabWorld/Interface/RandomSeed_0"
+    },
+    {
+      "name": "SelectModel_0",
+      "screenX": 432,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectModel_0"
+    },
+    {
+      "name": "SelectModel_1",
+      "screenX": 600,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectModel_1"
+    },
+    {
+      "name": "SelectOutput_0",
+      "screenX": 770,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectOutput_0"
+    },
+    {
+      "name": "SelectOutput_1",
+      "screenX": 888,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectOutput_1"
+    },
+    {
+      "name": "SelectOutput_2",
+      "screenX": 976,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectOutput_2"
+    },
+    {
+      "name": "SelectOutput_3",
+      "screenX": 1065,
+      "screenY": 194,
+      "firstHit": "DiffusionLabWorld/Interface/SelectOutput_3"
+    },
+    {
+      "name": "PreviousPage",
+      "screenX": 499,
+      "screenY": 598,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/PreviousPage"
+    },
+    {
+      "name": "NextPage",
+      "screenX": 926,
+      "screenY": 598,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/NextPage"
+    },
+    {
+      "name": "ProbeLeft",
+      "screenX": 532,
+      "screenY": 176,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/ProbeLeft"
+    },
+    {
+      "name": "ProbeRight",
+      "screenX": 622,
+      "screenY": 176,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/ProbeRight"
+    },
+    {
+      "name": "ProbeDown",
+      "screenX": 711,
+      "screenY": 176,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/ProbeDown"
+    },
+    {
+      "name": "ProbeUp",
+      "screenX": 801,
+      "screenY": 176,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/ProbeUp"
+    },
+    {
+      "name": "ProbeChannel",
+      "screenX": 893,
+      "screenY": 176,
+      "firstHit": "DiffusionLabWorld/TeachingBoard/TeachingInterface/ProbeChannel"
+    }
+  ]
+}

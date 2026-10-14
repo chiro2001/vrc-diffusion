@@ -1,0 +1,177 @@
+[
+  {
+    "id": "diffusion-cycle",
+    "title": [
+      "Forward noise, reverse generation",
+      "正向加噪，反向生成",
+      "順方向のノイズ付加と逆方向の生成"
+    ],
+    "body": [
+      "The forward process defines a noisy state: x_t = √ᾱ_t x_0 + √(1−ᾱ_t)ε, with ε sampled from a standard normal distribution. During training, the model sees x_t, time t, and a digit label, then learns to predict ε. Generation starts from Gaussian noise instead of a known image and repeatedly uses the predicted noise to estimate a clean image and the next state. The changing pictures and values come from this model's live GPU textures.",
+      "正向过程把图像逐步变成带噪状态：x_t = √ᾱ_t x_0 + √(1−ᾱ_t)ε，ε 取自标准高斯分布。训练时，模型读取 x_t、时间 t 和数字类别，学习预测 ε。生成时没有已知原图，而是从高斯噪声开始，反复用预测噪声估计干净图 x_0 和下一状态。页面中的图像与数值来自模型此刻在本机 GPU 纹理中的真实计算。",
+      "順方向の過程では、画像を段階的にノイズのある状態へ変換します。式は x_t = √ᾱ_t x_0 + √(1−ᾱ_t)ε で、ε は標準正規分布から取ります。学習では x_t、時刻 t、数字ラベルを入力し、ε の予測を学びます。生成では既知の画像ではなくガウスノイズから始め、予測ノイズから元画像 x_0 と次の状態を繰り返し推定します。表示する画像と値は GPU 上の実計算です。"
+    ],
+    "phrases": {
+      "timestep": [
+        "TIME STEP",
+        "时间步 t",
+        "時刻 t"
+      ],
+      "alpha": [
+        "CURRENT ᾱ_t",
+        "当前 ᾱ_t",
+        "現在の ᾱ_t"
+      ],
+      "next-alpha": [
+        "NEXT ᾱ",
+        "下一步 ᾱ",
+        "次の ᾱ"
+      ],
+      "noisy-state": [
+        "NOISY STATE x_t",
+        "带噪状态 x_t",
+        "ノイズ状態 x_t"
+      ],
+      "clean-estimate": [
+        "CLEAN ESTIMATE x_0",
+        "干净估计 x_0",
+        "元画像の推定 x_0"
+      ],
+      "next-state": [
+        "NEXT STATE x_next",
+        "下一状态 x_next",
+        "次の状態 x_next"
+      ],
+      "predicted-noise": [
+        "PREDICTED ε",
+        "预测噪声 ε",
+        "予測ノイズ ε"
+      ]
+    }
+  },
+  {
+    "id": "unet-operators",
+    "title": [
+      "A U-Net you can inspect",
+      "可观察的 U-Net 内部",
+      "内部を観察できる U-Net"
+    ],
+    "body": [
+      "Tea's U-Net processes feature maps at 28×28, 14×14, and 7×7, compresses them to a 1×1 summary, then upsamples toward 28×28. At 14×14 and 28×28, the decoder concatenates matching encoder features through skip connections, preserving spatial cues. Each operator writes its actual result into single-precision RFloat textures; channels are laid out side by side. Highlight the running operator, its skip edge, and one activation channel to follow the computation.",
+      "Tea 的 U-Net 依次处理 28×28、14×14、7×7 特征图，再汇聚为 1×1 表示，随后逐级放大回 28×28。在 14×14 和 28×28 处，解码器通过 skip 连接拼接编码器的同尺度特征，保留空间线索。每个算子都把实际结果写入单精度 RFloat 纹理，各通道并排存放。高亮当前算子、skip 连线和激活通道，可追踪真实计算过程。",
+      "Tea の U-Net は 28×28、14×14、7×7 の特徴マップを処理し、1×1 に集約した後、28×28 へ段階的に拡大します。14×14 と 28×28 では、skip 接続で同じ解像度のエンコーダ特徴を連結し、位置情報を補います。各演算の実出力は単精度 RFloat テクスチャに書き込まれ、チャンネルごとに並べて表示されます。実行中の演算、skip 接続、活性値チャンネルを強調すると計算を追えます。"
+    ],
+    "phrases": {
+      "operator": [
+        "CURRENT OPERATOR",
+        "当前算子",
+        "現在の演算"
+      ],
+      "down": [
+        "DOWNSAMPLE",
+        "下采样",
+        "ダウンサンプリング"
+      ],
+      "skip": [
+        "SKIP CONNECTION",
+        "Skip 连接",
+        "skip 接続"
+      ],
+      "up": [
+        "UPSAMPLE",
+        "上采样",
+        "アップサンプリング"
+      ],
+      "activation": [
+        "ACTIVATION CHANNELS",
+        "激活通道",
+        "活性値チャンネル"
+      ],
+      "feature-map": [
+        "FEATURE MAP",
+        "特征图",
+        "特徴マップ"
+      ]
+    }
+  },
+  {
+    "id": "guidance-ddim",
+    "title": [
+      "Guidance and one DDIM step",
+      "引导与一次 DDIM 更新",
+      "ガイダンスと DDIM の 1 ステップ"
+    ],
+    "body": [
+      "The conditional branch predicts ε_c for the chosen digit; the null branch predicts ε_null with the class masked. This build combines them as ε_guided = ε_null + 3(ε_c − ε_null), equivalent to the paper's (1+w)ε_c − wε_null with w=2. Then x_0 = (x_t − √(1−ᾱ_t)ε_guided)/√ᾱ_t, and η=0 gives x_next = √ᾱ_next x_0 + √(1−ᾱ_next)ε_guided, without fresh noise. Tea uses 64 evenly spaced steps from t=400 to 1; the last update returns x_0.",
+      "条件分支针对所选数字预测 ε_c；空条件分支屏蔽类别后预测 ε_null。本项目组合为 ε_guided = ε_null + 3(ε_c − ε_null)，等价于论文写法 (1+w)ε_c − wε_null 中的 w=2。随后计算 x_0 = (x_t − √(1−ᾱ_t)ε_guided)/√ᾱ_t；η=0 时，x_next = √ᾱ_next x_0 + √(1−ᾱ_next)ε_guided，不再抽取新噪声。Tea 使用 t=400 到 1 的 64 个均匀时间点，最后一步直接得到 x_0。",
+      "条件付き分岐は選択した数字の ε_c を予測し、空条件分岐はクラスをマスクして ε_null を予測します。本実装は ε_guided = ε_null + 3(ε_c − ε_null) と合成します。これは論文表記 (1+w)ε_c − wε_null の w=2 に相当します。次に x_0 = (x_t − √(1−ᾱ_t)ε_guided)/√ᾱ_t を求め、η=0 では新しいノイズを加えず x_next = √ᾱ_next x_0 + √(1−ᾱ_next)ε_guided と更新します。Tea は t=400 から 1 まで等間隔の 64 ステップを使い、最後は x_0 を出力します。"
+    ],
+    "phrases": {
+      "conditional-noise": [
+        "CONDITIONAL ε_c",
+        "条件噪声 ε_c",
+        "条件付き ε_c"
+      ],
+      "null-noise": [
+        "NULL ε_null",
+        "空条件噪声 ε_null",
+        "空条件 ε_null"
+      ],
+      "guided-noise": [
+        "GUIDED ε",
+        "引导噪声 ε",
+        "ガイド後の ε"
+      ],
+      "guidance": [
+        "GUIDANCE SCALE",
+        "引导强度",
+        "ガイダンス強度"
+      ],
+      "ddim": [
+        "DDIM · η = 0",
+        "DDIM · η = 0",
+        "DDIM · η = 0"
+      ]
+    }
+  },
+  {
+    "id": "models-and-sharing",
+    "title": [
+      "Native pixels and shared state",
+      "原生像素与多人共享",
+      "ネイティブ解像度と共有状態"
+    ],
+    "body": [
+      "The models use different image domains. Tea operates natively at 28×28 with training pixels in 0..1. Legacy maps MNIST to −1..1 and pads it to 32×32 with −1. A 32, 64, or 128 pixel display only enlarges the native output; it cannot add model detail. Players share the model version, digit, seed, step count, and progress, while each GPU recomputes its own image and activation textures. Floating-point differences can cause small pixel variations. Legacy clips x_0 to −1..1 and recomputes epsilon before updating; Tea does not clip.",
+      "两个模型使用不同图像范围。Tea 在原生 28×28 网格上推理，训练像素范围为 0..1。Legacy 把 MNIST 映射到 −1..1，并以 −1 补边到 32×32。显示为 32、64 或 128 像素只是放大原生输出，不能增加模型细节。玩家共享模型版本、类别、seed、步数和进度；图像及激活纹理由各自 GPU 重算。浮点运算差异会造成少量像素偏差。 Legacy 将 x_0 裁剪到 −1..1，并重算更新用的噪声；Tea 不裁剪。",
+      "2 つのモデルでは画像の値域が異なります。Tea はネイティブの 28×28 で推論し、学習画像の画素値は 0..1 です。Legacy は MNIST を −1..1 に変換し、−1 で補って 32×32 にします。32、64、128 ピクセルの表示は出力を拡大するだけで、モデルの細部は増えません。プレイヤー間ではモデル版、数字、seed、ステップ数、進捗を共有し、画像と活性テクスチャは各 GPU が再計算します。浮動小数点演算の差で画素に小さな違いが出ることがあります。 Legacy は x_0 を −1..1 に制限して更新用のノイズを再計算します。Tea は制限しません。"
+    ],
+    "phrases": {
+      "native-resolution": [
+        "NATIVE RESOLUTION",
+        "原生分辨率",
+        "ネイティブ解像度"
+      ],
+      "output-resolution": [
+        "DISPLAY SIZE",
+        "显示尺寸",
+        "表示サイズ"
+      ],
+      "shared-settings": [
+        "SHARED SETTINGS",
+        "共享设置",
+        "共有設定"
+      ],
+      "local-inference": [
+        "LOCAL GPU INFERENCE",
+        "本地 GPU 推理",
+        "ローカル GPU 推論"
+      ],
+      "floating-point": [
+        "FLOATING-POINT VARIATION",
+        "浮点差异",
+        "浮動小数点の差"
+      ]
+    }
+  }
+]

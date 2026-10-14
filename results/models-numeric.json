@@ -1,0 +1,289 @@
+{
+  "passed": true,
+  "device": "NVIDIA GeForce RTX 5080",
+  "api": "Direct3D11",
+  "models": [
+    {
+      "model": "Legacy MNIST 32",
+      "version": 1021740377,
+      "size": 32,
+      "steps": 32,
+      "seconds": 0.8807944,
+      "comparisons": [
+        {
+          "name": "model 0 node 0",
+          "maxAbs": 1.430511474609375E-06,
+          "rmse": 2.49354613725831E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 1",
+          "maxAbs": 3.0994415283203125E-06,
+          "rmse": 3.1568884894347061E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 2",
+          "maxAbs": 3.9339065551757813E-06,
+          "rmse": 4.0743152038751757E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 3",
+          "maxAbs": 3.5762786865234375E-06,
+          "rmse": 4.6094675637323744E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 4",
+          "maxAbs": 3.2186508178710938E-06,
+          "rmse": 4.1189881898185219E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 5",
+          "maxAbs": 3.1590461730957031E-06,
+          "rmse": 3.807481949591146E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 6",
+          "maxAbs": 4.0531158447265625E-06,
+          "rmse": 3.7851257073752733E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 7",
+          "maxAbs": 5.6028366088867188E-06,
+          "rmse": 3.7344291351473569E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 8",
+          "maxAbs": 2.8014183044433594E-06,
+          "rmse": 2.7492499166063655E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 9",
+          "maxAbs": 4.76837158203125E-06,
+          "rmse": 6.2093460701088154E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 node 10",
+          "maxAbs": 2.6226043701171875E-06,
+          "rmse": 6.475592926303241E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 DDIM 1",
+          "maxAbs": 5.0663948059082031E-06,
+          "rmse": 7.255498922538073E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 DDIM 16",
+          "maxAbs": 7.8082084655761719E-06,
+          "rmse": 9.19898903561836E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 0 DDIM 32",
+          "maxAbs": 4.45246696472168E-05,
+          "rmse": 1.8128050264153596E-06,
+          "nonfinite": 0
+        }
+      ]
+    },
+    {
+      "model": "TeaPearce MNIST 28",
+      "version": 692248240,
+      "size": 28,
+      "steps": 64,
+      "seconds": 3.6439033,
+      "comparisons": [
+        {
+          "name": "model 1 node 0",
+          "maxAbs": 1.1920928955078125E-06,
+          "rmse": 1.1010924955339278E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 1",
+          "maxAbs": 6.198883056640625E-06,
+          "rmse": 5.7396279530462329E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 2",
+          "maxAbs": 4.5299530029296875E-06,
+          "rmse": 4.1627090170544646E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 3",
+          "maxAbs": 7.8678131103515625E-06,
+          "rmse": 6.7714048441952626E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 4",
+          "maxAbs": 6.9737434387207031E-06,
+          "rmse": 6.9822851489410313E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 5",
+          "maxAbs": 6.9737434387207031E-06,
+          "rmse": 1.0153445640099358E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 6",
+          "maxAbs": 8.106231689453125E-06,
+          "rmse": 8.9655307052955953E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 7",
+          "maxAbs": 7.3909759521484375E-06,
+          "rmse": 8.8444123690654075E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 8",
+          "maxAbs": 7.152557373046875E-06,
+          "rmse": 1.1308600733538228E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 9",
+          "maxAbs": 7.152557373046875E-07,
+          "rmse": 2.0587108315270677E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 10",
+          "maxAbs": 4.76837158203125E-07,
+          "rmse": 4.8027795992596124E-08,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 11",
+          "maxAbs": 8.1956386566162109E-08,
+          "rmse": 4.5748703520056368E-08,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 12",
+          "maxAbs": 8.58306884765625E-06,
+          "rmse": 4.7998282753532866E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 13",
+          "maxAbs": 2.384185791015625E-06,
+          "rmse": 4.9007402222920232E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 14",
+          "maxAbs": 9.5367431640625E-06,
+          "rmse": 1.1628905712467539E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 15",
+          "maxAbs": 1.2874603271484375E-05,
+          "rmse": 1.4733812857011285E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 16",
+          "maxAbs": 1.52587890625E-05,
+          "rmse": 1.78429609776065E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 17",
+          "maxAbs": 2.47955322265625E-05,
+          "rmse": 2.361750447280818E-06,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 18",
+          "maxAbs": 1.7881393432617188E-06,
+          "rmse": 3.6678995238895033E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 19",
+          "maxAbs": 8.3446502685546875E-06,
+          "rmse": 6.8307660310183232E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 20",
+          "maxAbs": 1.0371208190917969E-05,
+          "rmse": 6.8733167815485816E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 21",
+          "maxAbs": 8.4638595581054688E-06,
+          "rmse": 6.5070447563298571E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 22",
+          "maxAbs": 5.245208740234375E-06,
+          "rmse": 3.1211395541610664E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 23",
+          "maxAbs": 6.198883056640625E-06,
+          "rmse": 5.2750429244458391E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 24",
+          "maxAbs": 2.7418136596679688E-06,
+          "rmse": 9.3975581911809579E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 25",
+          "maxAbs": 1.4781951904296875E-05,
+          "rmse": 7.8014886872555082E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 node 26",
+          "maxAbs": 4.76837158203125E-06,
+          "rmse": 8.276015204690711E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 DDIM 1",
+          "maxAbs": 7.152557373046875E-07,
+          "rmse": 1.4446633719703182E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 DDIM 32",
+          "maxAbs": 4.76837158203125E-06,
+          "rmse": 8.6796626483265362E-07,
+          "nonfinite": 0
+        },
+        {
+          "name": "model 1 DDIM 64",
+          "maxAbs": 4.2021274566650391E-06,
+          "rmse": 3.9949126449830177E-07,
+          "nonfinite": 0
+        }
+      ]
+    }
+  ]
+}

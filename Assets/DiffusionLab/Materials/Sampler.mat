@@ -24,25 +24,30 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Noise:
-        m_Texture: {fileID: 8400000, guid: 9f194dab0243057498d780328b9987bb, type: 2}
+        m_Texture: {fileID: 8400000, guid: 320f395b6af636b40bb5c5ce43999bbd, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _State:
-        m_Texture: {fileID: 8400000, guid: d4575c0277c7adf43b96090e15155777, type: 2}
+        m_Texture: {fileID: 8400000, guid: 2ee5b20869260c740b50779a3f70e1e1, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UnconditionedNoise:
-        m_Texture: {fileID: 8400000, guid: c75bb8da3ba707244a779895c79b43ad, type: 2}
+        m_Texture: {fileID: 8400000, guid: 15440594a9a250543b56726b0604ed2f, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.9998112
+    - _Alpha: 0.99975026
+    - _ClipPrediction: 0
     - _Guidance: 3
-    - _Mode: 1
+    - _InputSize: 28
+    - _Mode: 6
     - _NextAlpha: 1
+    - _OutputSize: 28
     - _Seed: 1234
-    - _SeedHi: 15070
-    - _SeedLo: 26801
+    - _SeedHi: 0
+    - _SeedLo: 1234
+    - _ValueMax: 1
+    - _ValueMin: 0
     m_Colors: []
   m_BuildTextureStacks: []

@@ -1,0 +1,56 @@
+{
+  "steps": 64,
+  "modelIndex": 1,
+  "samples": [
+    {
+      "digit": 0,
+      "seed": 1,
+      "file": "reference-00.bytes"
+    },
+    {
+      "digit": 1,
+      "seed": 42,
+      "file": "reference-01.bytes"
+    },
+    {
+      "digit": 2,
+      "seed": 1234,
+      "file": "reference-02.bytes"
+    },
+    {
+      "digit": 3,
+      "seed": 31415,
+      "file": "reference-03.bytes"
+    },
+    {
+      "digit": 4,
+      "seed": 271828,
+      "file": "reference-04.bytes"
+    },
+    {
+      "digit": 5,
+      "seed": 20261014,
+      "file": "reference-05.bytes"
+    },
+    {
+      "digit": 6,
+      "seed": 987654320,
+      "file": "reference-06.bytes"
+    },
+    {
+      "digit": 7,
+      "seed": 987654321,
+      "file": "reference-07.bytes"
+    },
+    {
+      "digit": 8,
+      "seed": 999999999,
+      "file": "reference-08.bytes"
+    },
+    {
+      "digit": 9,
+      "seed": 8675309,
+      "file": "reference-09.bytes"
+    }
+  ]
+}

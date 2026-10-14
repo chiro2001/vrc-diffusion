@@ -17,7 +17,7 @@ from unity_remote import DEFAULT_HOST, DEFAULT_PROJECT, pwsh_literal
 ROOT = Path(__file__).resolve().parents[1]
 TASK_TMP = Path.home() / "tmp/vrc-diffusion"
 DATA_ROOT = Path("Assets/DiffusionLab/Data")
-ALLOWED_EXTENSIONS = {".md", ".cs", ".shader", ".json", ".bytes", ".py"}
+ALLOWED_EXTENSIONS = {".md", ".cs", ".shader", ".json", ".bytes", ".py", ".ttf", ".txt"}
 DATA_EXTENSIONS = {".json", ".bytes"}
 ALLOWED_FILENAMES = {".gitignore"}
 FORBIDDEN_EXTENSIONS = {
@@ -44,6 +44,10 @@ def collect_sources(include_data: bool):
     patterns = [
         "Assets/DiffusionLab/Scripts/*.cs",
         "Assets/DiffusionLab/Shaders/*.shader",
+        "Assets/DiffusionLab/Localization/catalog.json",
+        "Assets/DiffusionLab/Localization/teaching.json",
+        "Assets/DiffusionLab/Localization/FontSources/*.ttf",
+        "Assets/DiffusionLab/Localization/FontSources/*-OFL.txt",
         "AgentScripts/*.cs",
         "ml/*.py",
         "docs/*.md",
@@ -65,6 +69,8 @@ def collect_sources(include_data: bool):
                 if not path.is_file():
                     continue
                 suffix = path.suffix.lower()
+                if suffix == ".meta":
+                    continue  # Unity-generated GUIDs stay in place; only native model sources are uploaded.
                 if suffix in FORBIDDEN_EXTENSIONS:
                     raise ValueError(f"Refusing serialized or metadata file: {path.relative_to(ROOT)}")
                 if suffix not in DATA_EXTENSIONS:
@@ -85,6 +91,8 @@ def collect_sources(include_data: bool):
         if not all(NAME_PART.fullmatch(part) for part in path.parts):
             raise ValueError(f"Source path contains unsupported characters: {relative}")
         suffix = Path(relative).suffix.lower()
+        if suffix in {".ttf", ".txt"} and not relative.startswith("Assets/DiffusionLab/Localization/FontSources/"):
+            raise ValueError(f"Font sources must be under Localization/FontSources: {relative}")
         if suffix in FORBIDDEN_EXTENSIONS:
             raise ValueError(f"Refusing serialized or metadata file: {relative}")
         if suffix not in ALLOWED_EXTENSIONS and relative not in ALLOWED_FILENAMES:
@@ -148,7 +156,7 @@ if ($Verify) {{
 foreach ($relative in $files) {{
     $extension = [IO.Path]::GetExtension($relative).ToLowerInvariant()
     if ($extension -in @('.meta', '.asset', '.mat', '.unity', '.prefab', '.controller', '.anim', '.overridecontroller', '.mask', '.playable', '.terrainlayer', '.physicmaterial', '.rendertexture', '.lighting', '.guiskin', '.flare', '.cubemap', '.fontsettings', '.giparams', '.brush', '.mixer')) {{ throw "Refusing metadata or serialized asset: $relative" }}
-    if ($extension -notin @('.md', '.cs', '.shader', '.json', '.bytes', '.py') -and [IO.Path]::GetFileName($relative) -ne '.gitignore') {{ throw "Refusing unsupported source type: $relative" }}
+    if ($extension -notin @('.md', '.cs', '.shader', '.json', '.bytes', '.py', '.ttf', '.txt') -and [IO.Path]::GetFileName($relative) -ne '.gitignore') {{ throw "Refusing unsupported source type: $relative" }}
     $target = Get-ProjectPath $relative
     if (Test-Path -LiteralPath $target -PathType Container) {{ throw "Destination is a directory: $relative" }}
     if (Test-Path -LiteralPath $target) {{

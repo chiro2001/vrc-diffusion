@@ -1,0 +1,109 @@
+{
+  "status": "completed",
+  "passed": true,
+  "samples": 10,
+  "steps": 64,
+  "source": "actual Shader hash noise + Direct3D11 fragment graph",
+  "results": [
+    {
+      "digit": 0,
+      "seed": 1,
+      "comparison": {
+        "name": "digit 0 seed 1",
+        "maxAbs": 3.9339065551757813E-06,
+        "rmse": 4.8498498181801842E-07,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 1,
+      "seed": 42,
+      "comparison": {
+        "name": "digit 1 seed 42",
+        "maxAbs": 1.9669532775878906E-06,
+        "rmse": 3.1886994714637186E-07,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 2,
+      "seed": 1234,
+      "comparison": {
+        "name": "digit 2 seed 1234",
+        "maxAbs": 1.3023614883422852E-05,
+        "rmse": 1.5830797494051946E-06,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 3,
+      "seed": 31415,
+      "comparison": {
+        "name": "digit 3 seed 31415",
+        "maxAbs": 2.3066997528076172E-05,
+        "rmse": 2.2334175084300421E-06,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 4,
+      "seed": 271828,
+      "comparison": {
+        "name": "digit 4 seed 271828",
+        "maxAbs": 1.1026859283447266E-06,
+        "rmse": 2.0719995190148204E-07,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 5,
+      "seed": 20261014,
+      "comparison": {
+        "name": "digit 5 seed 20261014",
+        "maxAbs": 3.6358833312988281E-06,
+        "rmse": 3.7835406864358128E-07,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 6,
+      "seed": 987654320,
+      "comparison": {
+        "name": "digit 6 seed 987654320",
+        "maxAbs": 2.6822090148925781E-06,
+        "rmse": 3.6084261742098375E-07,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 7,
+      "seed": 987654321,
+      "comparison": {
+        "name": "digit 7 seed 987654321",
+        "maxAbs": 9.5665454864501953E-06,
+        "rmse": 1.022295254428693E-06,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 8,
+      "seed": 999999999,
+      "comparison": {
+        "name": "digit 8 seed 999999999",
+        "maxAbs": 2.2828578948974609E-05,
+        "rmse": 1.5099049418217754E-06,
+        "nonfinite": 0
+      }
+    },
+    {
+      "digit": 9,
+      "seed": 8675309,
+      "comparison": {
+        "name": "digit 9 seed 8675309",
+        "maxAbs": 6.0498714447021484E-06,
+        "rmse": 6.3420880806611376E-07,
+        "nonfinite": 0
+      }
+    }
+  ]
+}

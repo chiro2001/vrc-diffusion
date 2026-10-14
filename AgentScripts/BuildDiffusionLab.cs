@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using UdonSharp;
 using UdonSharpEditor;
 using UnityEditor;
+using UnityEditor.Events;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,8 @@ public static class BuildDiffusionLab {
     const string ScenePath=Root+"/Scenes/DiffusionLab.unity";
     static Font font;
     static Transform world,canvas;
-    static Material buttonMat;
+    const int InteractionLayer=17;
+    static DiffusionLocalization localization;
     static DiffusionController controller;
     static void Folder(string p) {if(AssetDatabase.IsValidFolder(p))return;int i=p.LastIndexOf('/');if(i<0)return;Folder(p.Substring(0,i));AssetDatabase.CreateFolder(p.Substring(0,i),p.Substring(i+1));}
     static T Asset<T>(string p,Func<T> create) where T:Object {
@@ -39,10 +41,11 @@ public static class BuildDiffusionLab {
     }
     public static object Compile() {
         Folder(Root+"/Programs");
-        foreach(string n in new[]{"DiffusionController","DiffusionButton","DiffusionControlRequest"}) {
+        foreach(string n in new[]{"DiffusionController","DiffusionButton","DiffusionControlRequest","DiffusionLocalization","DiffusionModel","DiffusionTeaching"}) {
+            var source=AssetDatabase.LoadAssetAtPath<MonoScript>(Root+"/Scripts/"+n+".cs");
+            if(source==null)throw new Exception("Import source scripts before compile: "+n);
             var p=Asset(Root+"/Programs/"+n+".asset",()=>ScriptableObject.CreateInstance<UdonSharpProgramAsset>());
-            p.sourceCsScript=AssetDatabase.LoadAssetAtPath<MonoScript>(Root+"/Scripts/"+n+".cs");
-            if(p.sourceCsScript==null)throw new Exception("Missing script "+n);
+            p.sourceCsScript=source;
             EditorUtility.SetDirty(p);
         }
         AssetDatabase.SaveAssets();UdonSharpProgramAsset.CompileAllCsPrograms(true,true);
@@ -98,9 +101,9 @@ public static class BuildDiffusionLab {
         world=new GameObject("DiffusionLabWorld").transform;
         var dark=Mat("Panel","Unlit/Color");dark.color=new Color(.018f,.026f,.045f);
         var floor=Mat("Floor","Unlit/Color");floor.color=new Color(.05f,.065f,.09f);
-        buttonMat=Mat("Buttons","Unlit/Color");buttonMat.color=new Color(.06f,.19f,.25f);
+
         Primitive("Floor",PrimitiveType.Cube,new Vector3(0,-.1f,0),new Vector3(18,.2f,18),floor,true);
-        Primitive("Backboard",PrimitiveType.Quad,new Vector3(0,2.7f,3.15f),new Vector3(8.6f,5.1f,1),dark,false);
+        Primitive("Backboard",PrimitiveType.Quad,new Vector3(0,2.7f,3.15f),new Vector3(8.6f,5.3f,1),dark,false);
         var desc=new GameObject("VRCWorld");desc.transform.SetParent(world);var d=desc.AddComponent<VRCSceneDescriptor>();desc.AddComponent<VRC.Core.PipelineManager>();
         var spawn=new GameObject("Spawn");spawn.transform.SetParent(world);spawn.transform.position=new Vector3(0,.05f,-3.5f);d.spawns=new[]{spawn.transform};
         var cgo=new GameObject("InferenceController");cgo.transform.SetParent(world);controller=cgo.AddUdonSharpComponent<DiffusionController>();
@@ -118,52 +121,68 @@ public static class BuildDiffusionLab {
         controller.historyMemory=history;controller.historyDisplays=hd;controller.alphaCumprod=spec["alphaCumprod"].ToObject<float[]>();
         controller.requests=new DiffusionControlRequest[16];
         for(int i=0;i<controller.requests.Length;i++) {var g=new GameObject("ControlRequest"+i);g.transform.SetParent(world);var r=g.AddUdonSharpComponent<DiffusionControlRequest>();r.controller=controller;controller.requests[i]=r;SaveProxy(r);}
-        Primitive("Current x_t",PrimitiveType.Quad,new Vector3(-2.15f,3.5f,3),new Vector3(1.95f,1.95f,1),main,false);
-        Primitive("Predicted x0",PrimitiveType.Quad,new Vector3(-.25f,4.02f,3),new Vector3(.95f,.95f,1),pred,false);
-        Primitive("Predicted epsilon",PrimitiveType.Quad,new Vector3(-.25f,2.8f,3),new Vector3(.95f,.95f,1),noise,false);
-        Primitive("Live memory",PrimitiveType.Quad,new Vector3(2.15f,3.5f,3),new Vector3(2.25f,2.25f,1),mem,false);
-        var cg=new GameObject("Interface",typeof(RectTransform),typeof(Canvas),typeof(GraphicRaycaster),typeof(VRCUiShape),typeof(BoxCollider));cg.transform.SetParent(world);
-        cg.layer=5;
+        var cg=new GameObject("Interface",typeof(RectTransform),typeof(Canvas),typeof(GraphicRaycaster),typeof(VRCUiShape),typeof(BoxCollider));cg.transform.SetParent(world,false);
+        cg.layer=InteractionLayer;
         var cvs=cg.GetComponent<Canvas>();cvs.renderMode=RenderMode.WorldSpace;canvas=cg.transform;
-        cg.transform.position=new Vector3(0,2.7f,2.70f);cg.transform.localScale=Vector3.one*.004f;
+        // Every UI control shares this plane, 1 cm in front of the backing surface.
+        cg.transform.localPosition=new Vector3(0,2.7f,3.14f);cg.transform.localScale=Vector3.one*.004f;
         cg.GetComponent<RectTransform>().sizeDelta=new Vector2(2150,1300);
-        var box=cg.GetComponent<BoxCollider>();box.size=new Vector3(370,65,1);box.center=new Vector3(0,-375,0);box.isTrigger=false;
-        font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        Label("Title","DIFFUSION LAB / MNIST",0,550,1900,65,40);
-        Label("Subtitle","CLASS-CONDITIONAL U-NET · DDIM · FRAGMENT SHADER INFERENCE",0,492,1900,40,23);
-        Label("CurrentLabel","CURRENT IMAGE  x_t",-537,470,510,35,24);
-        Label("CleanLabel","PREDICTED x_0",-62,458,340,32,18);
-        Label("NoiseLabel","PREDICTED NOISE",-62,170,340,32,18);
-        controller.memoryText=Label("MemoryLabel","LIVE GPU MEMORY",537,470,660,65,19);
-        controller.statusText=Label("Status","IDLE",-380,-100,1080,95,22);
-        controller.controlText=Label("Control","CONTROL",0,-625,1950,30,16);
-        controller.configText=Label("Config","CLASS / SEED / STEPS",537,-110,720,32,18);
+        var box=cg.GetComponent<BoxCollider>();box.size=new Vector3(2150,1300,1);box.isTrigger=false;
+        font=AssetDatabase.LoadAssetAtPath<Font>(Root+"/Localization/FontSources/IBMPlexMono-Regular.ttf");
+        if(font==null)throw new Exception("Import font sources before building");
+        localization=world.gameObject.AddUdonSharpComponent<DiffusionLocalization>();
+        localization.languageOverride=1;localization.languageIndex=1;
+        Label("Title","DIFFUSION LAB / MNIST",-330,555,1300,65,40);
+        Label("Subtitle","CLASS-CONDITIONAL U-NET · DDIM · FRAGMENT SHADER INFERENCE",0,510,1950,40,21);
+        localization.languageButtons=new Image[4];
+        string[] langs={"AUTO","English","简体中文","日本語"};
+        for(int i=0;i<4;i++) localization.languageButtons[i]=Button(langs[i],"SetLanguage",i-1,480+i*150,555,140,46,true);
+        Picture("Current x_t",main,-615,205,480,480);
+        Picture("Predicted x0",pred,-260,330,215,215);
+        Picture("Predicted epsilon",noise,-260,65,215,215);
+        Picture("Live memory",mem,365,195,480,480);
+        Label("CurrentLabel","CURRENT IMAGE  x_t",-615,465,540,36,24);
+        Label("CleanLabel","PREDICTED x_0",-260,455,290,30,18);
+        Label("NoiseLabel","PREDICTED NOISE",-260,190,290,30,18);
+        controller.memoryText=Label("MemoryLabel","LIVE GPU MEMORY",365,465,670,62,19);
+        controller.statusText=Label("Status","IDLE",-445,-80,1100,70,20);
+        controller.configText=Label("Config","CLASS / SEED / STEPS",450,-80,1050,70,18);
+        controller.controlText=Label("Control","CONTROL",0,-627,2020,46,16);
         controller.historyLabels=new Text[8];
         for(int i=0;i<8;i++) {
-            float x=-3.5f+i;
-            Primitive("History "+i,PrimitiveType.Quad,new Vector3(x,1.68f,3),new Vector3(.68f,.68f,1),hd[i],false);
-            Primitive("History header "+i,PrimitiveType.Quad,new Vector3(x,2.06f,2.98f),new Vector3(.68f,.10f,1),dark,false);
-            controller.historyLabels[i]=Label("HistoryLabel"+i,i==0?"NOISE":i==7?"FINAL":"—",x/.004f,-160,170,24,16);
+            float x=-875+i*250;
+            Picture("History "+i,hd[i],x,-207,165,165);
+            controller.historyLabels[i]=Label("HistoryLabel"+i,i==0?"NOISE":i==7?"FINAL":"—",x,-307,190,26,17);
         }
-        for(int i=0;i<10;i++)Button("CLASS "+i,"SelectDigit",i,-3.2f+i*.48f,.92f,.43f);
-        Button("GENERATE","Generate",0,2.25f,.92f,1.5f);
-        Button("RESET","ResetRun",0,3.55f,.92f,.85f);
-        Button("INIT / PAUSE / RUN","PauseResume",0,-2.95f,.49f,1.5f);
-        Button("STEP DENOISE","StepDenoise",0,-1.28f,.49f,1.55f);
-        Button("STEP OPERATOR","StepOperator",0,.4f,.49f,1.55f);
-        Button("REQUEST CONTROL","RequestControl",0,2.1f,.49f,1.55f);
-        Button("GRANT","GrantControl",0,3.55f,.49f,.85f);
-        Button("MEM <","PreviousMemory",0,3.8f,4.1f,.75f);
-        Button("MEM >","NextMemory",0,3.8f,3.66f,.75f);
-        Button("SLOWER","Slower",0,3.8f,3.22f,.75f);
-        Button("FASTER","Faster",0,3.8f,2.78f,.75f);
-        Button("16 STEPS","SelectSteps",16,-3.5f,1.20f,.7f);
-        Button("32 STEPS","SelectSteps",32,-2.7f,1.20f,.7f);
-        Button("64 STEPS","SelectSteps",64,-1.9f,1.20f,.7f);
-        // Seed field uses the VRC world-space UI raycaster; explicit APPLY commits it.
-        controller.seedInput=Input("SeedInput",new Vector2(0,-375),new Vector2(370,65));
-        Button("APPLY SEED","ApplySeed",0,1.35f,1.20f,1.05f);
-        Button("RANDOM SEED","RandomSeed",0,2.85f,1.20f,1.5f);
+        for(int i=0;i<10;i++)Button("CLASS "+i,"SelectDigit",i,-937+i*130,-350,120,50);
+        Button("GENERATE","Generate",0,545,-350,280,50);
+        Button("RESET","ResetRun",0,880,-350,240,50);
+        Button("INIT / PAUSE / RUN","PauseResume",0,-800,-490,380,58);
+        Button("STEP DENOISE","StepDenoise",0,-390,-490,390,58);
+        Button("STEP OPERATOR","StepOperator",0,25,-490,390,58);
+        Button("REQUEST CONTROL","RequestControl",0,445,-490,390,58);
+        Button("GRANT","GrantControl",0,860,-490,340,58);
+        Button("MEM <","PreviousMemory",0,880,365,210,60);
+        Button("MEM >","NextMemory",0,880,285,210,60);
+        Button("SLOWER","Slower",0,880,195,210,60);
+        Button("FASTER","Faster",0,880,115,210,60);
+        Button("16 STEPS","SelectSteps",16,-895,-420,210,55);
+        Button("32 STEPS","SelectSteps",32,-665,-420,210,55);
+        Button("64 STEPS","SelectSteps",64,-435,-420,210,55);
+        Label("SeedLabel","SEED",-210,-420,150,55,20);
+        controller.seedInput=Input("SeedInput",new Vector2(60,-420),new Vector2(360,55));
+        Button("APPLY SEED","ApplySeed",0,405,-420,280,55);
+        Button("RANDOM SEED","RandomSeed",0,820,-420,360,55);
+        Button("MODEL Legacy compare","SelectModel",0,-775,-557,430,48);
+        Button("MODEL TeaPearce 28","SelectModel",1,-310,-557,450,48);
+        Button("OUTPUT native","SelectOutput",0,160,-557,340,48);
+        Button("32","SelectOutput",1,485,-557,220,48);
+        Button("64","SelectOutput",2,730,-557,220,48);
+        Button("128","SelectOutput",3,975,-557,220,48);
+        SaveProxy(localization);
+        controller.validationRunOnStart=false;controller.fixtureRun=false;
+        controller.phase=0;controller.epoch=0;controller.revision=0;controller.authorityId=-1;controller.grantedId=-1;
+        controller.localEpoch=-1;controller.localStep=0;controller.localLayer=0;
         var cameraGO=new GameObject("PreviewCamera");cameraGO.transform.SetParent(world);cameraGO.transform.position=new Vector3(0,2.65f,-7.8f);cameraGO.transform.LookAt(new Vector3(0,2.65f,3));
         var cam=cameraGO.AddComponent<Camera>();cam.enabled=false;cam.fieldOfView=34;cam.backgroundColor=new Color(.025f,.03f,.045f);cam.clearFlags=CameraClearFlags.SolidColor;
         RenderSettings.ambientLight=Color.white;
@@ -179,18 +198,33 @@ public static class BuildDiffusionLab {
     static Text Label(string name,string text,float x,float y,float w,float h,int size) {
         var g=new GameObject(name,typeof(RectTransform),typeof(CanvasRenderer),typeof(Text));g.transform.SetParent(canvas,false);
         var r=g.GetComponent<RectTransform>();r.anchoredPosition=new Vector2(x,y);r.sizeDelta=new Vector2(w,h);
-        g.layer=5;var t=g.GetComponent<Text>();t.font=font;t.text=text;t.fontSize=size;t.color=new Color(.85f,.93f,1);t.alignment=TextAnchor.MiddleCenter;t.raycastTarget=false;return t;
+        g.layer=InteractionLayer;var t=g.GetComponent<Text>();t.font=font;t.text=text;t.fontSize=size;t.color=new Color(.85f,.93f,1);t.alignment=TextAnchor.MiddleCenter;t.raycastTarget=false;return t;
     }
-    static void Button(string label,string command,int value,float x,float y,float w) {
-        var g=Primitive(label,PrimitiveType.Cube,new Vector3(x,y,2.83f),new Vector3(w,.26f,.16f),buttonMat,true);
-        var b=g.AddUdonSharpComponent<DiffusionButton>();b.controller=controller;b.command=command;b.value=value;SaveProxy(b);
-        var backing=UdonSharpEditorUtility.GetBackingUdonBehaviour(b);backing.interactText=label;backing.proximity=3;EditorUtility.SetDirty(backing);
-        Label("Label "+label,label,x/.004f,(y-2.7f)/.004f,w/.004f-10,55,18);
+    static Image Button(string label,string command,int value,float x,float y,float w,float h,bool language=false) {
+        var g=new GameObject(command+"_"+value,typeof(RectTransform),typeof(CanvasRenderer),typeof(Image),typeof(UnityEngine.UI.Button));
+        g.transform.SetParent(canvas,false);g.layer=InteractionLayer;
+        var r=g.GetComponent<RectTransform>();r.anchoredPosition=new Vector2(x,y);r.sizeDelta=new Vector2(w,h);
+        var image=g.GetComponent<Image>();image.color=new Color(.07f,.19f,.26f);image.raycastTarget=true;
+        var ui=g.GetComponent<UnityEngine.UI.Button>();ui.targetGraphic=image;ui.navigation=new Navigation{mode=Navigation.Mode.None};
+        var b=g.AddUdonSharpComponent<DiffusionButton>();b.controller=controller;b.command=command;b.value=value;
+        if(language)b.localization=localization;
+        SaveProxy(b);
+        UnityEventTools.AddStringPersistentListener(ui.onClick,UdonSharpEditorUtility.GetBackingUdonBehaviour(b).SendCustomEvent,"Press");
+        Text t=Label("Label",label,0,0,w-16,h-8,21);t.transform.SetParent(g.transform,false);
+        t.resizeTextForBestFit=true;t.resizeTextMinSize=16;t.resizeTextMaxSize=21;
+        return image;
+    }
+    static void Picture(string name,Material material,float x,float y,float w,float h) {
+        // A mesh on the same backing plane keeps GPU textures independent of UI raycasts.
+        var g=GameObject.CreatePrimitive(PrimitiveType.Quad);g.name=name;g.transform.SetParent(canvas,false);
+        g.transform.localPosition=new Vector3(x,y,1.25f);g.transform.localScale=new Vector3(w,h,1);
+        g.GetComponent<Renderer>().sharedMaterial=material;Object.DestroyImmediate(g.GetComponent<Collider>());
     }
     static InputField Input(string name,Vector2 pos,Vector2 size) {
         var g=new GameObject(name,typeof(RectTransform),typeof(CanvasRenderer),typeof(Image),typeof(InputField));g.transform.SetParent(canvas,false);
-        g.layer=5;var rt=g.GetComponent<RectTransform>();rt.anchoredPosition=pos;rt.sizeDelta=size;g.GetComponent<Image>().color=new Color(.07f,.12f,.18f);
-        Text txt=Label(name+"Text","1234",0,0,size.x-20,size.y-10,24);txt.transform.SetParent(g.transform,false);
+        g.layer=InteractionLayer;var rt=g.GetComponent<RectTransform>();rt.anchoredPosition=pos;rt.sizeDelta=size;g.GetComponent<Image>().color=new Color(.07f,.12f,.18f);
+        Text txt=Label(name+"Text","1234",0,0,size.x-24,size.y-10,26);txt.transform.SetParent(g.transform,false);
+        txt.alignment=TextAnchor.MiddleLeft;
         var f=g.GetComponent<InputField>();f.textComponent=txt;f.targetGraphic=g.GetComponent<Image>();f.contentType=InputField.ContentType.IntegerNumber;f.characterLimit=9;f.text="1234";f.navigation=new Navigation{mode=Navigation.Mode.None};return f;
     }
 }

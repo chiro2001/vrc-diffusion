@@ -1,0 +1,397 @@
+[
+  [
+    "LIVE OPERATOR GRAPH · cyan: active · gold: skip · signed range ±3",
+    "实时算子图 · 青色：当前 · 金色：Skip · 正负范围 ±3",
+    "演算グラフ · 青：実行中 · 金：skip · 色範囲 ±3"
+  ],
+  [
+    "CLASS-CONDITIONAL U-NET · DDIM · FRAGMENT SHADER INFERENCE",
+    "类别条件 U-Net · DDIM · 片元 Shader 推理",
+    "クラス条件 U-Net · DDIM · フラグメントシェーダー推論"
+  ],
+  [
+    "PIXEL PROBE · completes with a denoise step",
+    "像素探针 · 单步去噪完成后更新",
+    "画素プローブ · 除去ステップ後に更新"
+  ],
+  [
+    "Catching up to shared state; please wait",
+    "正在追赶共享进度，请稍等",
+    "共有状態に追いついています"
+  ],
+  [
+    "Shared settings / local GPU inference",
+    "共享设置 / 本地 GPU 推理",
+    "設定を共有 / ローカル GPU 推論"
+  ],
+  [
+    "Control requested; waiting for grant",
+    "已申请控制，等待移交",
+    "操作をリクエストしました"
+  ],
+  [
+    "Incompatible model/protocol version",
+    "模型或协议版本不一致",
+    "モデルまたはプロトコルが不一致"
+  ],
+  [
+    "floating-point results may differ",
+    "浮点结果可能有差异",
+    "浮動小数点の結果に差が出る場合があります"
+  ],
+  [
+    "Seed: enter 1-9 decimal digits",
+    "种子请输入 1–9 位十进制数字",
+    "シードは 1–9 桁の数字"
+  ],
+  [
+    "Request queue full; try later",
+    "申请队列已满，请稍后重试",
+    "リクエストが一杯です"
+  ],
+  [
+    "Please REQUEST CONTROL first",
+    "请先申请控制",
+    "先に操作をリクエストしてください"
+  ],
+  [
+    "INSIDE DIFFUSION · LIVE DATA",
+    "扩散模型内部 · 实时数据",
+    "拡散モデル内部 · 実データ"
+  ],
+  [
+    "Seed accepts digits only",
+    "种子只接受数字",
+    "シードは数字のみ"
+  ],
+  [
+    "Control request pending",
+    "控制申请处理中",
+    "操作リクエスト処理中"
+  ],
+  [
+    "signed color range ±3",
+    "正负值颜色范围 ±3",
+    "符号付き色範囲 ±3"
+  ],
+  [
+    "GPU texture readback",
+    "GPU 纹理读回",
+    "GPU テクスチャの読み出し"
+  ],
+  [
+    "MODEL Legacy compare",
+    "旧模型对照",
+    "旧モデル比較"
+  ],
+  [
+    "No pending requests",
+    "没有待处理申请",
+    "リクエストはありません"
+  ],
+  [
+    "INIT / PAUSE / RUN",
+    "初始化 / 暂停 / 继续",
+    "初期化 / 一時停止 / 再開"
+  ],
+  [
+    "native inference",
+    "原生推理",
+    "推論解像度"
+  ],
+  [
+    "PREDICTED NOISE",
+    "预测噪声",
+    "予測ノイズ"
+  ],
+  [
+    "LIVE GPU MEMORY",
+    "实时 GPU 内存",
+    "GPU メモリ"
+  ],
+  [
+    "REQUEST CONTROL",
+    "申请控制",
+    "操作をリクエスト"
+  ],
+  [
+    "ACTIVE OPERATOR",
+    "当前算子",
+    "実行中の演算"
+  ],
+  [
+    "MODEL TeaPearce",
+    "模型 TeaPearce",
+    "モデル TeaPearce"
+  ],
+  [
+    "OPERATOR INPUT",
+    "算子输入",
+    "演算の入力"
+  ],
+  [
+    "MEMORY channel",
+    "内存通道",
+    "メモリチャンネル"
+  ],
+  [
+    "DIFFUSION LAB",
+    "扩散模型实验室",
+    "拡散モデル実験室"
+  ],
+  [
+    "CURRENT IMAGE",
+    "当前图像",
+    "現在の画像"
+  ],
+  [
+    "PREDICTED x_0",
+    "预测原图 x_0",
+    "予測原画像 x_0"
+  ],
+  [
+    "STEP OPERATOR",
+    "单步算子",
+    "1 演算"
+  ],
+  [
+    "OUTPUT native",
+    "输出原生尺寸",
+    "ネイティブ出力"
+  ],
+  [
+    "STEP DENOISE",
+    "单步去噪",
+    "1 ステップ除去"
+  ],
+  [
+    "passes/frame",
+    "算子/帧",
+    "演算/フレーム"
+  ],
+  [
+    "Editor local",
+    "编辑器本地",
+    "エディター"
+  ],
+  [
+    "CLASS BRANCH",
+    "条件分支",
+    "条件付き分岐"
+  ],
+  [
+    "MODEL Legacy",
+    "模型 Legacy",
+    "モデル Legacy"
+  ],
+  [
+    "RANDOM SEED",
+    "随机种子",
+    "ランダムシード"
+  ],
+  [
+    "NULL BRANCH",
+    "空条件分支",
+    "空条件分岐"
+  ],
+  [
+    "PIXEL PROBE",
+    "像素探针",
+    "画素プローブ"
+  ],
+  [
+    "LAST UPDATE",
+    "上一次更新",
+    "前回の更新"
+  ],
+  [
+    "NEXT UPDATE",
+    "下一次更新",
+    "次の更新"
+  ],
+  [
+    "APPLY SEED",
+    "应用种子",
+    "シードを適用"
+  ],
+  [
+    "comparison",
+    "质量对照",
+    "品質比較"
+  ],
+  [
+    "available",
+    "空闲",
+    "空き"
+  ],
+  [
+    "CHANNEL +",
+    "通道 +",
+    "チャンネル +"
+  ],
+  [
+    "GENERATE",
+    "生成",
+    "生成"
+  ],
+  [
+    "channels",
+    "通道",
+    "チャンネル"
+  ],
+  [
+    "operator",
+    "算子",
+    "演算"
+  ],
+  [
+    "REQUESTS",
+    "申请数",
+    "リクエスト数"
+  ],
+  [
+    "COMPLETE",
+    "完成",
+    "完了"
+  ],
+  [
+    "CONTROL",
+    "控制者",
+    "操作者"
+  ],
+  [
+    "RUNNING",
+    "运行中",
+    "実行中"
+  ],
+  [
+    "upscale",
+    "放大",
+    "拡大"
+  ],
+  [
+    "PROBE X",
+    "探针 X",
+    "プローブ X"
+  ],
+  [
+    "PROBE Y",
+    "探针 Y",
+    "プローブ Y"
+  ],
+  [
+    "SLOWER",
+    "减速",
+    "低速"
+  ],
+  [
+    "FASTER",
+    "加速",
+    "高速"
+  ],
+  [
+    "shared",
+    "共享",
+    "共有"
+  ],
+  [
+    "PAUSED",
+    "已暂停",
+    "一時停止"
+  ],
+  [
+    "OUTPUT",
+    "输出",
+    "出力"
+  ],
+  [
+    "RESET",
+    "重置",
+    "リセット"
+  ],
+  [
+    "GRANT",
+    "移交",
+    "操作を渡す"
+  ],
+  [
+    "MEM <",
+    "内存 <",
+    "メモリ <"
+  ],
+  [
+    "MEM >",
+    "内存 >",
+    "メモリ >"
+  ],
+  [
+    "STEPS",
+    "步",
+    "ステップ"
+  ],
+  [
+    "local",
+    "本地",
+    "ローカル"
+  ],
+  [
+    "layer",
+    "层",
+    "層"
+  ],
+  [
+    "steps",
+    "步",
+    "ステップ"
+  ],
+  [
+    "CLASS",
+    "类别",
+    "クラス"
+  ],
+  [
+    "NOISE",
+    "噪声",
+    "ノイズ"
+  ],
+  [
+    "FINAL",
+    "结果",
+    "結果"
+  ],
+  [
+    "MODEL",
+    "模型",
+    "モデル"
+  ],
+  [
+    "SEED",
+    "种子",
+    "シード"
+  ],
+  [
+    "IDLE",
+    "待机",
+    "待機"
+  ],
+  [
+    "STEP",
+    "第",
+    "ステップ"
+  ],
+  [
+    "crop",
+    "裁剪",
+    "切り抜き"
+  ],
+  [
+    "AUTO",
+    "自动",
+    "自動"
+  ],
+  [
+    "step",
+    "步",
+    "ステップ"
+  ]
+]

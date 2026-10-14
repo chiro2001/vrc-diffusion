@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "buttons": 43,
+  "canvases": 2,
+  "legacyText": 155,
+  "tmpText": 462,
+  "inputFields": 1,
+  "maxTextPlaneDistanceMeters": 0.00999999,
+  "backboardPlaneDistanceLimitMeters": 0.02,
+  "interactionLayer": 17
+}

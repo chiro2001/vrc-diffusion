@@ -83,6 +83,8 @@ Set-Location -LiteralPath {pwsh_literal(options.project_path)}
 $stage = {pwsh_literal(remote_stage)}
 $projectRoot = [IO.Path]::GetFullPath({pwsh_literal(options.project_path)}).TrimEnd('\\')
 $expected = Get-Content -Raw (Join-Path $stage 'files.json') | ConvertFrom-Json -AsHashtable
+$expectedPaths = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+foreach ($expectedPath in $expected.Keys) {{ [void]$expectedPaths.Add($expectedPath) }}
 $unityPaths = Get-Content -Raw (Join-Path $stage 'unity-paths.json') | ConvertFrom-Json
 $bundle = Join-Path $stage 'project.bundle'
 if (!(Test-Path -LiteralPath '.git')) {{ throw 'Windows project has no Git repository; initialize it separately before syncing.' }}
@@ -102,7 +104,9 @@ foreach ($path in $dirty) {{
 }}
 $untracked = @(& git ls-files --others --exclude-standard)
 if ($LASTEXITCODE -ne 0) {{ throw 'Cannot inspect untracked Windows files.' }}
-if ($untracked.Count -gt 0) {{ throw "Untracked Windows files need review before syncing: $($untracked -join ', ')" }}
+foreach ($path in $untracked) {{
+    if (!$expectedPaths.Contains($path) -or !(Test-Path -LiteralPath $path -PathType Leaf) -or (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected[$path]) {{ throw "Uncaptured Windows file: $path" }}
+}}
 
 & git fetch $bundle {pwsh_literal(branch)} 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {{ throw 'Git bundle fetch failed.' }}

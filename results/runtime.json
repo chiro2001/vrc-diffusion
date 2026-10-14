@@ -1,18 +1,26 @@
 {
   "passed": true,
-  "numericMaxAbs": 4.452467E-05,
+  "numericMaxAbs": [
+    4.452467E-05,
+    4.20212746E-06
+  ],
   "highSeedNoiseDifference": 5.696431,
+  "teachingFormulaMaxAbs": 2.98023224E-08,
   "controls": [
-    "class",
+    "model 32/28",
     "seed",
-    "paused noise initialization",
+    "paused noise",
+    "class",
     "generate",
     "pause",
-    "operator step",
-    "denoise step",
+    "operator",
+    "denoise",
     "resume",
-    "reset",
-    "stale snapshot rejection"
-  ],
-  "status": "COMPLETE  · shared 32/32  · local 32/32\nt=0  · operator 0/23  · CONTROL [1] Local Player\n"
+    "output 28/32/64/128",
+    "same-epoch output",
+    "stale snapshot",
+    "invalid model snapshot",
+    "teaching page",
+    "GPU pixel probe"
+  ]
 }

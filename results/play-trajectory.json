@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "model": 1,
+  "digit": 3,
+  "seed": 1234,
+  "steps": 64,
+  "source": "PlayMode Udon/VRCGraphics actual map hash noise",
+  "frames": 65
+}
