@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "source": "real UdonSharp backing behaviour + VRCGraphics.Blit + VRCAsyncGPUReadback byte[]",
+  "runs": 1,
+  "firstInt32Exact": true,
+  "requantBytesExact": true,
+  "secondInt32Exact": true,
+  "floatMaxAbs": 0.0
+}

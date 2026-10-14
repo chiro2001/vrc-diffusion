@@ -59,3 +59,5 @@ UI 构建与 PlayMode 射线结果见[EditMode 报告](results/ui-editmode.json)
 Legacy 保留作对比，不建议作为默认模型；旧版本样本曾有大量无效或难辨认输出，不能把少量变形的旧结论沿用到当前模型。PlayMode 已覆盖本地状态重放、陈旧快照和运行控制；真实多客户端的请求、所有权移交、晚加入和掉线恢复尚未实测。本轮没有进行 NPU 训练。
 
 更多资料：[多人控制与追赶](docs/multiplayer-design.md)、[教学板设计](docs/teaching-design.md)、[射线 UI 参考](docs/ui-reference.md)、[预训练模型调研](docs/pretrained-research.md)。
+
+W8A8 算子原型与复现步骤见 [低精度计算验证](docs/w8a8.md)。独立验证场景已在 PlayMode 通过真实 Udon/VRCGraphics 的卷积、重量化、线性层和精确整数读回；它使用 SM5 的 INT32 乘加，尚未接入 SD 模型或证明统一提速。

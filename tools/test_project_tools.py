@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import unittest
+from unittest import mock
 
 import snapshot_unity_project
 import sync_windows_git
@@ -30,6 +31,50 @@ class ProjectToolConfigTests(unittest.TestCase):
         source = Path(sync_windows_git.__file__).read_text(encoding="utf-8")
         for forbidden in ("git init", "git commit", "git push", "remote get-url", "ls-remote"):
             self.assertNotIn(forbidden, source)
+
+
+class PreserveDirtyManifestTests(unittest.TestCase):
+    def test_reads_preserved_path_tree_entry(self):
+        mode, blob = sync_windows_git.git_tree_entry("HEAD", "tools/sync_windows_git.py")
+
+        self.assertEqual(mode, "100644")
+        self.assertRegex(blob, r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
+
+    def test_parses_valid_manifest_and_normalizes_hashes(self):
+        baseline = "a" * 40
+        digest = "B" * 64
+        parsed_baseline, files = sync_windows_git.parse_preserve_manifest(
+            {"baselineHead": baseline, "files": {"Assets/Scene.unity": digest}}
+        )
+
+        self.assertEqual(parsed_baseline, baseline)
+        self.assertEqual(files, {"Assets/Scene.unity": digest.lower()})
+
+    def test_rejects_unsafe_or_unhashed_manifest_paths(self):
+        baseline = "a" * 40
+        with self.assertRaises(ValueError):
+            sync_windows_git.parse_preserve_manifest(
+                {"baselineHead": baseline, "files": {"../outside.asset": "b" * 64}}
+            )
+        with self.assertRaises(ValueError):
+            sync_windows_git.parse_preserve_manifest(
+                {"baselineHead": baseline, "files": {".": "b" * 64}}
+            )
+        with self.assertRaises(ValueError):
+            sync_windows_git.parse_preserve_manifest(
+                {"baselineHead": baseline, "files": {"Assets/Scene.unity": "not-a-hash"}}
+            )
+
+    def test_rejects_local_commit_that_changes_a_preserved_tree_entry(self):
+        with mock.patch.object(
+            sync_windows_git,
+            "git_tree_entry",
+            side_effect=[("100644", "1" * 40), ("100644", "2" * 40)],
+        ):
+            with self.assertRaisesRegex(RuntimeError, "changed preserved path"):
+                sync_windows_git.verify_preserved_paths_unchanged(
+                    "a" * 40, "b" * 40, ["Assets/Scene.unity"]
+                )
 
 
 if __name__ == "__main__":

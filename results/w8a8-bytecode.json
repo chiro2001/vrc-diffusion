@@ -1,0 +1,9 @@
+{
+  "profile": "ps_5_0",
+  "bytecodeSize": 5528,
+  "imul": 5,
+  "imad": 20,
+  "iadd": 19,
+  "floatDot": 0,
+  "nativeInt8Dot": 0
+}
