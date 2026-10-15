@@ -3,6 +3,9 @@ Shader "DiffusionLab/SDTensor" {
   _A("Float input A",2D)="black"{} _B("Float input B",2D)="black"{} _C("Float input C",2D)="black"{}
   _Packed("Quantized activation q+128",2D)="gray"{} _Weights("Quantized weights q+128",2D)="gray"{}
   _Params("Scale and bias / gamma and beta",2D)="white"{}
+  _TokenEmbedding("CLIP token embedding FP16",2D)="black"{} _PositionEmbedding("CLIP position embedding FP16",2D)="black"{}
+  _Causal("Causal attention mask",Int)=0
+  _FloatActivation("W8A16 instead of W8A8",Int)=0
   _Partial("Partial reduction",2D)="black"{} _Stats("Reduction result",2D)="black"{}
   _Tile("Convolution output tile",2D)="black"{} _Previous("Previous output",2D)="black"{}
   _Scores("Attention tile scores",2D)="black"{} _OldStats("Online softmax previous stats",2D)="black"{}
@@ -27,6 +30,8 @@ Shader "DiffusionLab/SDTensor" {
   CGINCLUDE
   #include "UnityCG.cginc"
   Texture2D<float4> _A,_B,_C,_Packed,_Weights,_Params,_Partial,_Stats,_Tile,_Previous,_Scores,_OldStats;
+  Texture2D<float4> _TokenEmbedding,_PositionEmbedding;
+  int _Causal,_FloatActivation;
   int _WeightHeight,_WeightLayout;
   int _AShift,_BShift,_CShift,_PackedShift,_WeightShift,_ParamShift,_OutputShift,_PartialShift,_StatsShift;
   int _TileShift,_PreviousShift,_ScoreShift,_OldStatsShift;
@@ -50,7 +55,7 @@ Shader "DiffusionLab/SDTensor" {
    float er=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-z*z);
    return .5*x*(1+sign(x)*er);
   }
-  float activate(float x){return _Activation==1?x/(1+exp(-x)):gelu(x);}
+  float activate(float x){return _Activation==1?x/(1+exp(-x)):_Activation==3?x/(1+exp(-1.702*x)):gelu(x);}
   float4 maxPartial(v2f_img i):SV_Target {
    uint part=pixel(i);float m=0;
    [loop]for(uint j=0;j<256;j++){uint at=part*256+j;if(at<(uint)_Count){float4 a=abs(_A.Load(addr(at,_AShift)));m=max(m,max(max(a.x,a.y),max(a.z,a.w)));}}
@@ -74,17 +79,24 @@ Shader "DiffusionLab/SDTensor" {
   float4 convolution(v2f_img i):SV_Target {
    uint local=pixel(i),at=local+_Offset;if(local>=(uint)_TileCount||at>=(uint)_OutCount)return 0;
    int og=groups(_OutC),group=at%og,row=at/og,oc=group*4;
-   int2 p=int2(row%_OutW,row/_OutW);int4 sum=0;
+   int2 p=int2(row%_OutW,row/_OutW);int4 sum=0;float4 fsum=0;
    [loop]for(int ky=0;ky<_Kernel;ky++)[loop]for(int kx=0;kx<_Kernel;kx++){
     int2 q=p*_Stride+int2(kx,ky)-_Padding;
     if(q.x<0||q.y<0||q.x>=_InW||q.y>=_InH)continue;
     [loop]for(int g=0;g<groups(_InC);g++){
-     int4 a=loadActivation(q.y*_InW+q.x,g);int ch=g*4;
+     int ch=g*4;
+     if(_FloatActivation!=0){
+      float4 a=_A.Load(addr((q.y*_InW+q.x)*groups(_InC)+g,_AShift));a=mask(a,ch,_InC);
+      fsum.x+=dot(a,(float4)loadWeight(oc,ky,kx,g));fsum.y+=dot(a,(float4)loadWeight(oc+1,ky,kx,g));
+      fsum.z+=dot(a,(float4)loadWeight(oc+2,ky,kx,g));fsum.w+=dot(a,(float4)loadWeight(oc+3,ky,kx,g));continue;
+     }
+     int4 a=loadActivation(q.y*_InW+q.x,g);
      if(ch+3>=_InC){a.x=ch<_InC?a.x:0;a.y=ch+1<_InC?a.y:0;a.z=ch+2<_InC?a.z:0;a.w=ch+3<_InC?a.w:0;}
      sum.x+=idot(a,loadWeight(oc,ky,kx,g));sum.y+=idot(a,loadWeight(oc+1,ky,kx,g));
      sum.z+=idot(a,loadWeight(oc+2,ky,kx,g));sum.w+=idot(a,loadWeight(oc+3,ky,kx,g));
     }
    }
+   if(_FloatActivation!=0){float4 r=0;[unroll]for(int lane=0;lane<4;lane++){if(oc+lane<_OutC){float4 par=_Params.Load(addr(oc+lane,_ParamShift));r[lane]=fsum[lane]*par.x+par.y;}}return roundHalf(r);}
    float s=_Stats.Load(int3(0,0,0)).x;
    return roundHalf(float4(finish(sum.x,oc,s),finish(sum.y,oc+1,s),finish(sum.z,oc+2,s),finish(sum.w,oc+3,s)));
   }
@@ -123,6 +135,7 @@ Shader "DiffusionLab/SDTensor" {
   float4 elementwiseRaw(v2f_img i) {
    uint at=pixel(i);if(at>=(uint)_OutCount)return 0;
    int row=at/groups(_OutC),ch=(at%groups(_OutC))*4;float4 a=_A.Load(addr(row*groups(_InC)+(ch>>2),_AShift));
+   if(_Op==9){int token=(int)_A.Load(addr(row,_AShift)).x;return _TokenEmbedding.Load(addr(token*192+(ch>>2),11))+_PositionEmbedding.Load(addr(row*192+(ch>>2),10));}
    if(_Op==2)return mask(float4(activate(a.x),activate(a.y),activate(a.z),activate(a.w)),ch,_OutC);
    if(_Op==3){int br=_BH*_BW==1?0:row;return mask(a+_B.Load(addr(br*groups(_BC)+(ch>>2),_BShift)),ch,_OutC);}
    if(_Op==4){
@@ -134,7 +147,7 @@ Shader "DiffusionLab/SDTensor" {
   }
   float4 elementwise(v2f_img i):SV_Target {return roundHalf(elementwiseRaw(i));}
   float score(int query,int head,int key){
-   if(key>=_KeyRows)return -1e30;
+   if(key>=_KeyRows||(_Causal!=0&&key>query))return -1e30;
    int d=_InC/_Heads;float s=0;
    [loop]for(int c=0;c<d;c+=4){int group=(head*d+c)>>2;float4 q=_A.Load(addr(query*groups(_InC)+group,_AShift));float4 k=_B.Load(addr(key*groups(_BC)+group,_BShift));s+=dot(q,k);}
    return s*rsqrt((float)d);

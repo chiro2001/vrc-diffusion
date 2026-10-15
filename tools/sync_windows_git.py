@@ -100,6 +100,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host", default=DEFAULT_HOST)
     parser.add_argument("--project-path", default=DEFAULT_PROJECT)
+    parser.add_argument("--remote-temp-root", help="Windows staging directory; use a data drive when C: is low on space.")
     parser.add_argument(
         "--preserve-dirty-manifest",
         type=Path,
@@ -140,8 +141,10 @@ def main():
 
     TASK_TMP.mkdir(parents=True, exist_ok=True)
     name = "git-sync-" + uuid.uuid4().hex
+    temp_root = (f"$taskRoot = {pwsh_literal(options.remote_temp_root)}; " if options.remote_temp_root
+                 else "$taskRoot = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'tmp\\vrc-diffusion'; ")
     remote_stage = checked_pwsh(
-        "$taskRoot = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'tmp\\vrc-diffusion'; "
+        temp_root +
         "New-Item -ItemType Directory -Path $taskRoot -Force | Out-Null; "
         f"$stage = Join-Path $taskRoot {pwsh_literal(name)}; "
         "New-Item -ItemType Directory -Path $stage -Force | Out-Null; Write-Output $stage",

@@ -7,7 +7,7 @@ public class SDGraphExecutor : UdonSharpBehaviour {
     public SDGraphData graph;
     public Texture latent,condition,timeEmbedding;
     public bool finished=true;
-    public int node,substage,tileOffset,keyOffset,blitCount;
+    public int node,substage,tileOffset,keyOffset,blitCount,totalBlits;
     public int lastCompletedNode=-1;
     public RenderTexture lastMemory;
     private Material material;
@@ -18,7 +18,7 @@ public class SDGraphExecutor : UdonSharpBehaviour {
         if(id<0)return null;return graph.memory[graph.memoryIndex[id]];
     }
     private int Shift(int id) {
-        if(id==-1)return 6; // Latent external textures are padded to 64 texels wide.
+        if(id==-1)return graph.externalShift;
         if(id==-2)return 10;
         if(id==-3)return 7;
         if(id<0)return 0;return graph.shifts[id];
@@ -26,6 +26,7 @@ public class SDGraphExecutor : UdonSharpBehaviour {
     public void Begin() {node=0;substage=0;tileOffset=0;keyOffset=0;finished=false;lastCompletedNode=-1;blitCount=0;}
     private void BindNode() {
         material=graph.operators[node];
+        material.SetInt("_FloatActivation",graph.floatActivation?1:0);
         if(graph.op[node]==0){material.SetInt("_WeightHeight",material.GetTexture("_Weights").height);material.SetInt("_WeightLayout",graph.weightLayout);}
         material.SetTexture("_A",Resolve(graph.inputA[node]));material.SetInt("_AShift",Shift(graph.inputA[node]));
         material.SetTexture("_B",Resolve(graph.inputB[node]));material.SetInt("_BShift",Shift(graph.inputB[node]));
@@ -34,7 +35,7 @@ public class SDGraphExecutor : UdonSharpBehaviour {
         material.SetInt("_OutCount",graph.counts[node]);
     }
     private void Draw(RenderTexture target,int pass,int shift) {
-        material.SetInt("_OutputShift",shift);VRCGraphics.Blit(null,target,material,pass);blitCount++;
+        material.SetInt("_OutputShift",shift);VRCGraphics.Blit(null,target,material,pass);blitCount++;totalBlits++;
     }
     private void Done() {
         lastCompletedNode=node;lastMemory=graph.memory[graph.memoryIndex[node]];node++;substage=0;tileOffset=0;keyOffset=0;
@@ -44,6 +45,7 @@ public class SDGraphExecutor : UdonSharpBehaviour {
         if(finished||graph==null)return;
         if(substage==0&&tileOffset==0&&keyOffset==0)BindNode();int op=graph.op[node];RenderTexture output=graph.memory[graph.memoryIndex[node]];
         if(op==0){
+            if(graph.floatActivation&&substage==0){substage=3;convolutionPrevious=output;}
             if(substage==0){
                 int count=graph.inH[node]*graph.inW[node]*((graph.inChannels[node]+3)/4);
                 currentChunks=(count+255)/256;material.SetInt("_Count",count);material.SetInt("_Chunks",currentChunks);

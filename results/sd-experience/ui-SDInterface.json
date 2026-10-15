@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "buttons": 20,
+  "tmpLabels": 129,
+  "maxPlaneDistanceMeters": 0.00999999,
+  "rayHits": [
+    "SetPreset0",
+    "SetPreset1",
+    "SetPreset2",
+    "SetPreset3",
+    "StartGeneration0",
+    "PauseResume0",
+    "ToggleDetails0",
+    "RequestControl0",
+    "SetResolution0",
+    "SetResolution1",
+    "SetResolution2",
+    "SetSteps10",
+    "SetSteps20",
+    "SetSteps30",
+    "SetSeed0",
+    "NextSeed0",
+    "VAEPreviews",
+    "LocalInference",
+    "LocalSlow",
+    "LocalFast"
+  ],
+  "actualClick": false
+}

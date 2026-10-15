@@ -20,7 +20,7 @@ public static class ValidateSDPlay {
     static void Png(string file,RenderTexture rt){
         float[] data=Read(rt);if(data.Any(x=>float.IsNaN(x)||float.IsInfinity(x)))throw new Exception("Non-finite image: "+file);
         var tex=new Texture2D(rt.width,rt.height,TextureFormat.RGBA32,false,true);var colors=new Color[rt.width*rt.height];
-        for(int i=0;i<colors.Length;i++)colors[i]=new Color(data[i*4],data[i*4+1],data[i*4+2],1);tex.SetPixels(colors);tex.Apply();
+        for(int i=0;i<colors.Length;i++){var color=new Color(data[i*4],data[i*4+1],data[i*4+2],1);colors[i]=QualitySettings.activeColorSpace==ColorSpace.Linear?color.gamma:color;}tex.SetPixels(colors);tex.Apply();
         Directory.CreateDirectory(Root);File.WriteAllBytes(Path.Combine(Root,file),tex.EncodeToPNG());Object.DestroyImmediate(tex);
     }
     public static object Prepare(){
@@ -70,7 +70,7 @@ public static class ValidateSDPlay {
     public static object Capture(){
         var c=Controller();if(Int(c,"algorithmStage")!=6)throw new Exception("Wait for actual VAE completion");int seed=Int(c,"seed");var rt=(RenderTexture)c.GetProgramVariable("displayedImage");
         float[] data=Read(rt);if(data.Any(x=>float.IsNaN(x)||float.IsInfinity(x)))throw new Exception("Non-finite RGB output");
-        var tex=new Texture2D(rt.width,rt.height,TextureFormat.RGBA32,false,true);var colors=new Color[rt.width*rt.height];for(int i=0;i<colors.Length;i++)colors[i]=new Color(data[i*4],data[i*4+1],data[i*4+2],1);tex.SetPixels(colors);tex.Apply();
+        var tex=new Texture2D(rt.width,rt.height,TextureFormat.RGBA32,false,true);var colors=new Color[rt.width*rt.height];for(int i=0;i<colors.Length;i++){var color=new Color(data[i*4],data[i*4+1],data[i*4+2],1);colors[i]=QualitySettings.activeColorSpace==ColorSpace.Linear?color.gamma:color;}tex.SetPixels(colors);tex.Apply();
         Directory.CreateDirectory(Root);File.WriteAllBytes(Path.Combine(Root,"final-"+seed+".png"),tex.EncodeToPNG());Object.DestroyImmediate(tex);Raw("latent-final-"+seed+".bytes",(RenderTexture)c.GetProgramVariable("currentLatent"));
         Report("completed-"+seed+".json",new{seed,steps=Int(c,"localStep"),elapsed=(float)c.GetProgramVariable("elapsed"),width=rt.width,height=rt.height,finite=true,source="Actual Udon, integer Conv/Linear, full VAE"});return Status();
     }

@@ -16,13 +16,15 @@ Unity 工程位于 Windows 主机 `192.168.101.5` 的 `D:\Projects\VRChatProject
 
 主面板可用 **AUTO / English / 简体中文 / 日本語** 切换语言。AUTO 读取本机 VRChat 语言；手动语言覆盖只作用于本机。
 
+MNIST 与 SD 分别使用独立控制锁，初始 owner 自动取得控制。共享操作在无权限时变灰并禁用，本地预览、性能和语言开关仍可使用。场景保留用户放大的 100×100 floor；本地玩家初始化和重生时设置跳跃冲量 3.5。
+
 ## 模型概览
 
 | 模型 | 原生尺寸 | 参数量 | shader 图 | 默认设置 |
 | --- | ---: | ---: | ---: | --- |
 | Legacy MNIST 32 | 32×32 | 146,177 | 11 个卷积层 | 32 步、[-1, 1]、预测裁剪 |
 | TeaPearce MNIST 28 | 28×28 | 6,585,601 | 27 个算子 | 64 步、CFG=3、[0, 1]、不裁剪预测 |
-| Counterfeit-V3.0（独立 SD 面板） | 256 / 384 / 512 原生 | 908,529,552 推理权重 | U-Net 609 / VAE 119 节点 | 20 步、CFG=7.5、DDIM、W8A8 Conv/Linear |
+| Counterfeit-V3.0（独立 SD 面板） | 256 / 384 / 512 原生 | 主干 908,529,552，另含 VAE encoder / CLIP | U-Net 609 / VAE decoder 119 / encoder 87 / CLIP 146 节点 | 20 步、CFG=7.5、DDIM；主干 W8A8，CLIP W8A16 |
 
 Tea 权重来自 [TeaPearce/Conditional_Diffusion_MNIST](https://github.com/TeaPearce/Conditional_Diffusion_MNIST)，许可为 MIT；checkpoint commit、SHA-256 和导出图版本见[模型设计](docs/model-design.md)与[预训练调研](docs/pretrained-research.md)。本项目没有在这轮工作中重新训练该模型。
 
@@ -63,6 +65,12 @@ Legacy 保留作对比，不建议作为默认模型；旧版本样本曾有大�
 
 W8A8 算子原型与复现步骤见 [低精度计算验证](docs/w8a8.md)。独立验证场景已在 PlayMode 通过真实 Udon/VRCGraphics 的卷积、重量化、线性层和精确整数读回。SD 演示站现已接入 Counterfeit-V3.0：全部 U-Net / VAE 卷积和线性层走 W8A8 / INT32，其他算子混合浮点。256×256、20 步真实 Udon 生成约 92–112 秒，后者包含中间 VAE 解码与内部纹理展示；尚未证明相对浮点 Shader 的统一提速。
 
-SD 面板位于原面板左侧：先申请控制权，选择肖像 / 海岸 / 咖啡馆 / 猫、原生 256 / 384 / 512、步数和 seed，再生成。共享配置和暂停状态，各访客按“本地推理”主动启用自己 GPU 的计算。细节开关控制真实 INT8 / FP16 内存和模块高亮；VAE 预览开关控制额外的中间 RGB 解码。两者为本地选择，不改动共享生成配置。文本条件来自完整提示词预设，当前未实现自由文本 CLIP。模型许可为 CreativeML Open RAIL-M，详见[模型来源](docs/sd-model-source.md)、[后端说明](docs/sd-shader-backend.md)。
+SD 面板位于原面板左侧，旁边有性能与输入板。可选择 24 组预设，或输入普通英文正、负提示词后按“应用自定义提示词”，由本机 CLIP 编码；最多 75 个内容 token，不支持 A1111 权重和调度语法。配置原生 256 / 384 / 512、步数和 seed 后生成。共享配置和暂停状态，各访客按“本地推理”主动启用自己 GPU 的计算。
+
+台座上是从用户指定原包导入的 Polaroid 相机。取得 SD 控制后拍照，照片会替换中心正方形输入；开启“照片初始化”并选择 0.35 / 0.60 / 0.85 重绘强度，再生成。输入板左侧的青色框是保存区域：把 VRChat 原生拍照相机移入后，生成结果会填入相机画面，玩家按原生快门保存。宽高比不同时保留黑边，普通玩家视角和区域外相机不显示该覆盖层。原生客户端保存和真正多人同步仍待实测，见[相机说明](docs/camera-integration.md)。
+
+性能板显示真实执行阶段、进度条、有效步数、运行秒数、平均 steps/s 和 Blit 提交次数。细节开关控制真实 INT8 / FP16 内存与网络高亮；VAE 预览开关控制额外的中间 RGB 解码，默认均关闭并标明性能成本。CLIP 的激活保留 A16 以降低量化误差，U-Net 与 VAE 的 Conv/Linear 保持 W8A8。模型许可为 CreativeML Open RAIL-M，详见[模型来源](docs/sd-model-source.md)、[后端说明](docs/sd-shader-backend.md)。
+
+本轮已通过实际 Udon 的相机图生图：256×256，20 步日程中执行 17 步、重绘强度 0.85、自定义提示词，约 75 秒（每帧最多 32 次提交、8ms CPU 预算）。见[新功能验证](results/sd-experience/validation.json)、[结果](results/sd-experience/img2img-final.png)、[相机保存画面](results/sd-experience/camera-export-square.png)与[场景截图](results/sd-experience/experience-world.png)。C 盘临时文件检查见[空间审计](docs/storage-audit.md)。
 
 SD 实测与图像：[256 去噪序列](results/sd/trajectory-256.png)、[512 最终图](results/sd/playmode-512.png)、[512 去噪序列](results/sd/trajectory-512.png)、[地图截图](results/sd/world-512.png)、[八组质量样本](results/sd/quality-w8a8-512.png)、[浮点/W8A8 对照](results/sd/quality-float-vs-w8a8-512.png)。原生 512×512 / 20 步实测 357.74 秒，包含中间 VAE 预览与部分细节展示；测试使用每帧至多 32 次提交和 8 ms CPU 提交预算，默认设置更保守。真实多客户端网络、SD Android 版与 SDK 构建/上传尚未验证。

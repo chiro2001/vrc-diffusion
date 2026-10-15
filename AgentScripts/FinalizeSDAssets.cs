@@ -25,10 +25,13 @@ public static class FinalizeSDAssets {
         }
         c.executor.graph=null;c.executor.latent=null;c.executor.condition=null;c.executor.timeEmbedding=null;c.executor.finished=true;c.executor.lastCompletedNode=-1;Save(c.executor);
         c.phase=0;c.localEpoch=-1;c.algorithmStage=0;c.localInference=false;c.autoStartForValidation=false;c.passesPerFrame=4;c.frameBudgetMs=2;
-        foreach(var g in c.unetGraphs.Concat(c.vaeGraphs)){
+        var graphs=c.unetGraphs.Concat(c.vaeGraphs);if(c.inputs!=null)graphs=graphs.Concat(c.inputs.encoderGraphs).Concat(new[]{c.inputs.textGraph});
+        foreach(var g in graphs){
             foreach(var m in g.operators){foreach(string key in new[]{"_A","_B","_C","_Packed","_Partial","_Stats","_Tile","_Previous","_Scores","_OldStats"})m.SetTexture(key,null);EditorUtility.SetDirty(m);}g.ReleaseMemory();
         }
-        foreach(string key in new[]{"_State","_Conditional","_Unconditional","_RGB"})c.sampler.SetTexture(key,null);EditorUtility.SetDirty(c.sampler);
+        foreach(string key in new[]{"_State","_Conditional","_Unconditional","_RGB","_SourceImage","_SourceLatent"})c.sampler.SetTexture(key,null);EditorUtility.SetDirty(c.sampler);
+        if(c.inputs!=null){c.usePhoto=false;c.customPrompt=false;c.photoBytes=new byte[0];c.photoSize=0;c.inputs.hasPhoto=false;c.details=false;c.vaePreviews=false;
+            c.inputs.LoadPresetText();Save(c.inputs);if(c.performance!=null){c.performance.progress=0;Save(c.performance);}}
         c.finalView.texture=c.images[c.resolution];Save(c);
         var canvas=GameObject.Find("SDInterface").transform;var cr=canvas.GetComponent<RectTransform>();cr.sizeDelta=new Vector2(1600,1740);canvas.GetComponent<BoxCollider>().size=new Vector3(1600,1740,1);
         var back=GameObject.Find("SDBackboard");back.transform.localScale=new Vector3(5.5f,5.8f,1);

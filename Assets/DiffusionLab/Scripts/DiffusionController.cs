@@ -7,6 +7,8 @@ using VRC.Udon.Common;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class DiffusionController : UdonSharpBehaviour {
+    public DiffusionButton[] buttons;
+    private bool buttonStateReady,lastButtonOwner,lastButtonHandoff;
     public DiffusionTeaching teaching;
     public RenderTexture displayedState,stepInput;
     public int lastAlgorithmStage;
@@ -95,6 +97,14 @@ public class DiffusionController : UdonSharpBehaviour {
         return Networking.LocalPlayer==null ||
           (Networking.IsOwner(gameObject)&&authorityId==Networking.LocalPlayer.playerId);
     }
+    public bool HasControl(){return IsController();}
+    public bool CanUseCommand(string command){if(command=="Faster"||command=="Slower"||command=="NextMemory"||command=="PreviousMemory")return true;return command=="RequestControl"?!IsController():IsController()&&!handoffWaiting;}
+    public void InitializeAuthority(){
+        if(Networking.LocalPlayer==null){SendCustomEventDelayedSeconds(nameof(InitializeAuthority),1f);return;}
+        if(Networking.IsOwner(gameObject)&&(authorityId<0||VRCPlayerApi.GetPlayerById(authorityId)==null)){
+            authorityId=Networking.LocalPlayer.playerId;grantedId=-1;Publish();
+        }
+    }
     private bool CanEdit() {
         if(IsController()&&!handoffWaiting) return true;
         notice="Please REQUEST CONTROL first";
@@ -102,7 +112,7 @@ public class DiffusionController : UdonSharpBehaviour {
     }
     private void Start() {
         current=stateA;next=stateB;
-        CacheSnapshot();ApplyState();UpdateLabels();
+        InitializeAuthority();CacheSnapshot();ApplyState();UpdateLabels();
         if(validationRunOnStart) SendCustomEventDelayedSeconds(nameof(BeginValidationRun),2f);
     }
     public void ApplyState() {
@@ -380,16 +390,16 @@ public class DiffusionController : UdonSharpBehaviour {
         handoffWaiting=false;
         if(player==null||!player.isLocal) return;
         if(grantedId==player.playerId) {notice="";authorityId=player.playerId;grantedId=-1;ClearOwnRequests();Publish();}
-        else if(authorityId>=0&&VRCPlayerApi.GetPlayerById(authorityId)==null) {
-            authorityId=-1;phase=phase==1?2:phase;grantedId=-1;Publish();
+        else if(authorityId<0||VRCPlayerApi.GetPlayerById(authorityId)==null) {
+            authorityId=player.playerId;phase=phase==1?2:phase;grantedId=-1;Publish();
         }
     }
     public override void OnPlayerLeft(VRCPlayerApi player) {
         if(Networking.IsOwner(gameObject)&&player.playerId==authorityId) {
-            authorityId=-1;phase=phase==1?2:phase;grantedId=-1;Publish();
+            authorityId=Networking.LocalPlayer==null?-1:Networking.LocalPlayer.playerId;phase=phase==1?2:phase;grantedId=-1;Publish();
         }
     }
-    public override void OnPlayerJoined(VRCPlayerApi player) {if(Networking.IsOwner(gameObject)) RequestSerialization();}
+    public override void OnPlayerJoined(VRCPlayerApi player) {if(Networking.IsOwner(gameObject)){InitializeAuthority();RequestSerialization();}}
     public override void OnDeserialization() {ApplyReceivedState();}
     public void ApplyReceivedState() {
         if(models!=null&&models.Length>0&&(modelIndex<0||modelIndex>=models.Length||outputIndex<0||outputIndex>3)) {
@@ -402,6 +412,8 @@ public class DiffusionController : UdonSharpBehaviour {
         CacheSnapshot();ApplyState();
     }
     public void UpdateLabels() {
+        bool ownerState=IsController();if(!buttonStateReady||ownerState!=lastButtonOwner||handoffWaiting!=lastButtonHandoff){buttonStateReady=true;lastButtonOwner=ownerState;lastButtonHandoff=handoffWaiting;if(buttons!=null)for(int i=0;i<buttons.Length;i++)buttons[i].Refresh();}
+        if(seedInput!=null)seedInput.interactable=IsController()&&!handoffWaiting;
         if(seed!=displayedSeed){if(seedInput!=null&&seedInput.text==displayedSeed.ToString())seedInput.text=seed.ToString();displayedSeed=seed;}
         string owner="available";
         if(authorityId>=0) {VRCPlayerApi p=VRCPlayerApi.GetPlayerById(authorityId);if(p!=null)owner=p.displayName;}

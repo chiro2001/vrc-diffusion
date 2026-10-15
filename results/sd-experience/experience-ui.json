@@ -1,0 +1,8 @@
+{
+  "buttons": 32,
+  "toggles": true,
+  "speedButtons": true,
+  "threeLanguages": true,
+  "busyControlsGray": true,
+  "settings": "LOCAL PERFORMANCE / PREVIEWS\nTensor memory + network highlight: OFF | Intermediate VAE previews: OFF\nLocal inference: ON | Camera export: ON\nSubmission: up to 32 passes/frame | 8.0 ms CPU/frame\nPREVIEWS COST PERFORMANCE. Memory capture adds GPU passes; each VAE preview runs a full decoder.\nFor fastest generation turn BOTH previews OFF. Final VAE decoding is always required.\nPHOTO INIT: ON | Denoise strength 0.85 | CUSTOM TEXT\nPhoto latent ready; shared as 16-bit values."
+}

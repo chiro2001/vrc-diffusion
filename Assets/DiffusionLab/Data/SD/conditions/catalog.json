@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "counterfeit-anime-prompts",
+  "catalogVersion": 1,
+  "format": {
+    "promptLanguage": "en",
+    "promptStyle": "Plain English SD 1.x prompt, written as comma-separated descriptive phrases.",
+    "syntax": "Plain text only. A1111 weighting, emphasis, and scheduling syntax is unsupported.",
+    "contentTokenLimit": "Maximum 75 content tokens. The 77 CLIP positions include BOS and EOS; longer prompts are truncated.",
+    "localizedNames": {
+      "en": "English display name",
+      "zh": "简体中文显示名称",
+      "ja": "日本語の表示名"
+    },
+    "indexing": "Index 0 is the shared negative prompt; positive presets begin at index 1.",
+    "embeddingFiles": "embedding-{index}.bytes, one file per catalog entry."
+  },
+  "source": {
+    "repoId": "gsdf/Counterfeit-V3.0",
+    "revision": "d8ce63b3eb8e9102e54b3fcc07f9cb7a28ef30fc",
+    "checkpoint": "Counterfeit-V3.0_fix_fp16.safetensors",
+    "checkpointSha256": "a54c944e4c04e9d9ca43468ef5b90ea0408bb6264829a4980de79a768df7179f",
+    "conversion": "diffusers 0.35.2 convert_ldm_unet_checkpoint / convert_ldm_vae_checkpoint; no EMA; exact key/shape comparison",
+    "configurationSourceRevision": "f79f307806896050ac376e46d8081d221b8aa93a",
+    "component": "text_encoder",
+    "weights": "text_encoder/model.fp16.safetensors",
+    "weightsSha256": "cbbd26d79b35eca10399d1d15d5d12c2a3bfcf6b6a7f86414400fbb71bc6b314"
+  },
+  "encoder": {
+    "class": "CLIPTextModel",
+    "output": "last_hidden_state",
+    "clipSkip": "not applied",
+    "sourceWeightDtype": "float16",
+    "inferenceDtype": "float32",
+    "device": "cpu",
+    "attentionMaskPassed": false
+  },
+  "tokenizer": {
+    "class": "CLIPTokenizer",
+    "addSpecialTokens": true,
+    "padding": "max_length",
+    "truncation": true,
+    "maxLength": 77
+  },
+  "embedding": {
+    "shape": [
+      77,
+      768
+    ],
+    "dtype": "float32",
+    "endianness": "little",
+    "layout": "row-major [token, hidden]",
+    "bytesPerEmbedding": 236544,
+    "rgbaTexelLanes": 4
+  },
+  "runtime": {
+    "device": "cpu",
+    "torchVersion": "2.14.1+cpu",
+    "torchCudaBuild": null,
+    "transformersVersion": "4.57.1",
+    "safetensorsVersion": "0.8.0",
+    "threads": 4,
+    "sourceWeightSha256": "cbbd26d79b35eca10399d1d15d5d12c2a3bfcf6b6a7f86414400fbb71bc6b314"
+  },
+  "sharedNegativeCondition": {
+    "index": 0,
+    "path": "embedding-0.bytes",
+    "label": "negative_common",
+    "sha256": "08689dae8bf023b3d8423a9790265a932617f4d0a9ff49e681ff6ebfe36e11b1",
+    "usedWith": [
+      "anime_portrait_adult",
+      "spring_coast",
+      "autumn_cafe",
+      "garden_cat",
+      "rainy_city_walk",
+      "two_friends_seaside",
+      "travellers_train_station",
+      "mountain_lake",
+      "old_city_canal",
+      "corgi_park",
+      "bookstore_tabby",
+      "cranes_in_wetlands",
+      "forest_mage",
+      "bamboo_forest_path",
+      "night_city_crossing",
+      "mecha_hangar",
+      "robot_city_guardian",
+      "spaceship_pilot",
+      "airship_above_clouds",
+      "flower_meadow",
+      "snow_fox",
+      "shrine_lantern_festival",
+      "coastal_lighthouse",
+      "snowy_railway_village"
+    ]
+  },
+  "conditions": [
+    {
+      "index": 0,
+      "label": "negative_common",
+      "category": "negative",
+      "name": {
+        "en": "Common negative prompt",
+        "zh": "通用负向提示词",
+        "ja": "共通ネガティブプロンプト"
+      },
+      "prompt": "low quality, worst quality, low resolution, blurry, jpeg artifacts, bad anatomy, deformed anatomy, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, text, watermark, logo, nsfw, nude, nudity, explicit, pornographic, sexual content",
+      "sha256": "08689dae8bf023b3d8423a9790265a932617f4d0a9ff49e681ff6ebfe36e11b1",
+      "tokenCountBeforeTruncation": 62,
+      "tokenCountAfterTruncation": 62,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 61,
+      "path": "embedding-0.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 1,
+      "label": "anime_portrait_adult",
+      "category": "character",
+      "name": {
+        "en": "Quiet portrait",
+        "zh": "窗边静谧肖像",
+        "ja": "窓辺の静かな肖像"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A calm portrait of an adult anime woman with short dark hair, wearing a blue cardigan, gentle expression, soft window light, simple background.",
+      "sha256": "b98f1ce2b9e8b4606e9ad206c5272ac192937a2dd662eda70970c7430362ca03",
+      "tokenCountBeforeTruncation": 38,
+      "tokenCountAfterTruncation": 38,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 37,
+      "path": "embedding-1.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 2,
+      "label": "spring_coast",
+      "category": "landscape",
+      "name": {
+        "en": "Spring coast",
+        "zh": "春日海岸",
+        "ja": "春の海岸"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A peaceful coastal village at sunrise, pastel houses beside a quiet sea, distant mountains, soft clouds, detailed anime landscape.",
+      "sha256": "ce463463fd001c2ae7a94d102388a2c0305500bff1ce00eabde758dcc6b32012",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-2.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 3,
+      "label": "autumn_cafe",
+      "category": "city",
+      "name": {
+        "en": "Autumn street cafe",
+        "zh": "秋日街角咖啡馆",
+        "ja": "秋の街角カフェ"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A small street cafe in autumn, falling leaves, warm light in the windows, wet pavement, a cozy anime illustration.",
+      "sha256": "ed2b68f36d4d07246ec6d504370dae38d1e5c93cb85e80a1e22a2c42f9e0abf0",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-3.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 4,
+      "label": "garden_cat",
+      "category": "animal",
+      "name": {
+        "en": "Cat by the garden window",
+        "zh": "花园窗边的猫",
+        "ja": "庭を眺める窓辺の猫"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A white cat resting on a windowsill and looking into a green garden in spring, soft morning light, a peaceful illustrated scene.",
+      "sha256": "256c682e3abc229bd6094e606892a5dea8c14e7fb49165917a0621a00a0dd057",
+      "tokenCountBeforeTruncation": 37,
+      "tokenCountAfterTruncation": 37,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 36,
+      "path": "embedding-4.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 5,
+      "label": "rainy_city_walk",
+      "category": "character",
+      "name": {
+        "en": "Rainy city walk",
+        "zh": "雨中漫步",
+        "ja": "雨の街を歩く人"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, An adult woman under a clear umbrella on a rainy city street, reflective pavement, glowing shop windows, evening light",
+      "sha256": "9b29424686189f538aef5d45e509b621da6ff1d7bd3ebee8a802ff3bdc280e48",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-5.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 6,
+      "label": "two_friends_seaside",
+      "category": "duo",
+      "name": {
+        "en": "Friends at the seaside",
+        "zh": "海边的朋友",
+        "ja": "海辺の友人たち"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, Two adult friends watching the sunset from a seaside promenade, wind moving their coats, calm waves, warm orange sky",
+      "sha256": "b9355a27171e860fdb3ab95d60f3116d4b64f950c7f6da0b0fda18e897e44590",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-6.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 7,
+      "label": "travellers_train_station",
+      "category": "duo",
+      "name": {
+        "en": "Travellers at the station",
+        "zh": "车站里的旅伴",
+        "ja": "駅にいる旅人たち"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, Two travellers waiting beside a rural train platform, luggage at their feet, a local train arriving, green hills in the distance",
+      "sha256": "8e40672d29389f9e9125217173a40f581bc4625cb7ccc551aa7e6f3f2f404746",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-7.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 8,
+      "label": "mountain_lake",
+      "category": "landscape",
+      "name": {
+        "en": "Mountain lake morning",
+        "zh": "清晨山间湖泊",
+        "ja": "山の湖の朝"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A clear mountain lake at dawn, pine trees reflected in still water, mist between the peaks, pale blue sky",
+      "sha256": "1c80d551e1c90668ba58bfb36103f056a8fec8916565d505bb5bcc4fe61a0c8e",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-8.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 9,
+      "label": "old_city_canal",
+      "category": "city",
+      "name": {
+        "en": "Old town canal",
+        "zh": "古镇运河",
+        "ja": "古い町の運河"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A quiet old town canal lined with narrow houses, stone bridge, small boats, flower boxes, soft afternoon sunlight",
+      "sha256": "f2c2b4bceb6c4380ac1737cd869d1ca8918e413a2e4e4764023063b2163d9886",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-9.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 10,
+      "label": "corgi_park",
+      "category": "animal",
+      "name": {
+        "en": "Corgi in the park",
+        "zh": "公园里的柯基",
+        "ja": "公園のコーギー"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A cheerful corgi running through a green park, daisies in the grass, leaves drifting in a light breeze, sunny afternoon",
+      "sha256": "fdcac9b5044372495511e74cc4b0ce819e57370e3cce39d37ff23ca4e12b36df",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-10.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 11,
+      "label": "bookstore_tabby",
+      "category": "animal",
+      "name": {
+        "en": "Tabby in a bookshop",
+        "zh": "书店里的虎斑猫",
+        "ja": "本屋のキジトラ猫"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, An orange tabby cat curled on a wooden counter in a small bookshop, tall shelves, a sunbeam across the floor",
+      "sha256": "9b29508b043aa96804cda7f21eeef7d9f428553552848f00c2fe8b75b825380e",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-11.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 12,
+      "label": "cranes_in_wetlands",
+      "category": "animal",
+      "name": {
+        "en": "Cranes in the wetlands",
+        "zh": "湿地上的丹顶鹤",
+        "ja": "湿地のタンチョウ"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, Two red-crowned cranes standing in a quiet marsh, reeds and shallow water, distant mountains, clear winter morning",
+      "sha256": "ed3e3faa17faa390378e4596c99fd5f6c7285bc32d1bf07652ed135c46bce0e4",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-12.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 13,
+      "label": "forest_mage",
+      "category": "fantasy",
+      "name": {
+        "en": "Mage in the forest",
+        "zh": "森林中的魔法师",
+        "ja": "森の魔法使い"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, An adult mage carrying a lantern through an ancient forest, long cloak, tiny lights among the trees, blue twilight",
+      "sha256": "458ce6b9d4763d0ad40177db3ce1f837cfedba7aa3d419f6045b5eea5e86321f",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-13.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 14,
+      "label": "bamboo_forest_path",
+      "category": "landscape",
+      "name": {
+        "en": "Path through bamboo",
+        "zh": "竹林小径",
+        "ja": "竹林の小道"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A narrow stone path through a tall bamboo forest, sunbeams through green leaves, small mossy steps, peaceful atmosphere",
+      "sha256": "84c1e70586c337491a819d8f56c327251f17d276cc6c50706ea6180cb68fc5fa",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-14.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 15,
+      "label": "night_city_crossing",
+      "category": "city",
+      "name": {
+        "en": "Night city crossing",
+        "zh": "夜色中的城市路口",
+        "ja": "夜の街の交差点"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A lively city crossing at night, colorful signs reflected on wet streets, pedestrians beneath umbrellas, tall buildings fading into the sky",
+      "sha256": "a4a596ed2deada16afcaf4eabcc4ceca4562fd247e70e8a04252dfded0b75273",
+      "tokenCountBeforeTruncation": 34,
+      "tokenCountAfterTruncation": 34,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 33,
+      "path": "embedding-15.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 16,
+      "label": "mecha_hangar",
+      "category": "mecha",
+      "name": {
+        "en": "Mecha in the hangar",
+        "zh": "机库中的机甲",
+        "ja": "格納庫のメカ"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A blue and white giant robot standing inside a maintenance hangar, overhead work lights, technicians on platforms, detailed mechanical parts",
+      "sha256": "0582ec9a635657402a952d8c0af7a23319d37ebb7cbc7cbc7de173eddfbd541a",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-16.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 17,
+      "label": "robot_city_guardian",
+      "category": "science_fiction",
+      "name": {
+        "en": "Guardian robot in the city",
+        "zh": "城市守护机器人",
+        "ja": "街を守るロボット"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A small friendly service robot guiding people through a futuristic city plaza, glass towers, green rooftop gardens, bright morning",
+      "sha256": "5e65dd627b7da4818d1e57716255177a6de9350b84d98a047c83e9c71dd678a8",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-17.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 18,
+      "label": "spaceship_pilot",
+      "category": "science_fiction",
+      "name": {
+        "en": "Pilot above the planet",
+        "zh": "行星上空的飞行员",
+        "ja": "惑星上空のパイロット"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, An adult spaceship pilot looking through a cockpit window, distant blue planet, stars across deep space, instrument lights",
+      "sha256": "410517725aaf0a9c677d6690e195df6750b2f08d8af73f0a9f2ee55d5f9727b0",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-18.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 19,
+      "label": "airship_above_clouds",
+      "category": "fantasy",
+      "name": {
+        "en": "Airship above the clouds",
+        "zh": "云海之上的飞艇",
+        "ja": "雲海の上の飛行船"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A brass airship sailing above a sea of clouds, distant floating islands, golden sunrise, tiny birds in the sky",
+      "sha256": "340b90636070f6420e7d7e4813062bc7b345cf559f2601389777358443e49a48",
+      "tokenCountBeforeTruncation": 33,
+      "tokenCountAfterTruncation": 33,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 32,
+      "path": "embedding-19.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 20,
+      "label": "flower_meadow",
+      "category": "landscape",
+      "name": {
+        "en": "Wildflower meadow",
+        "zh": "野花草甸",
+        "ja": "野花の草原"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A wide meadow filled with blue and yellow wildflowers, distant farmhouse, rolling hills, bright clouds on a summer day",
+      "sha256": "c9f5c645dbec4fd8ef3a6625ff9bd3bc67a7f8eaf0e720fabbda4f82142efdbc",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-20.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 21,
+      "label": "snow_fox",
+      "category": "animal",
+      "name": {
+        "en": "Fox in fresh snow",
+        "zh": "雪地里的狐狸",
+        "ja": "新雪の中のキツネ"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A red fox walking through fresh snow in a quiet forest, delicate footprints, frosted branches, pale winter sunlight",
+      "sha256": "b69606dd5a6b9780dd5b37090a054af62ba09dcf92c93ab33d63d25a24e13d6e",
+      "tokenCountBeforeTruncation": 31,
+      "tokenCountAfterTruncation": 31,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 30,
+      "path": "embedding-21.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 22,
+      "label": "shrine_lantern_festival",
+      "category": "festival",
+      "name": {
+        "en": "Lantern festival at the shrine",
+        "zh": "神社灯笼祭典",
+        "ja": "神社の灯籠祭り"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A traditional shrine path decorated with paper lanterns during a summer festival, families strolling, evening stalls, warm light",
+      "sha256": "783e9442ebfbdc6df9049c78baf9b9ae20fa832f3ecfb599fba014bc5b99cf20",
+      "tokenCountBeforeTruncation": 31,
+      "tokenCountAfterTruncation": 31,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 30,
+      "path": "embedding-22.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 23,
+      "label": "coastal_lighthouse",
+      "category": "landscape",
+      "name": {
+        "en": "Lighthouse on the cliffs",
+        "zh": "海崖灯塔",
+        "ja": "海崖の灯台"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A white lighthouse on green coastal cliffs, seabirds circling above the waves, distant fishing boats, clear spring sky",
+      "sha256": "5e5411760855dd1bfe92ef49501ac65f3b7897befa71e4f6279199c0563b64c9",
+      "tokenCountBeforeTruncation": 32,
+      "tokenCountAfterTruncation": 32,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 31,
+      "path": "embedding-23.bytes",
+      "byteLength": 236544
+    },
+    {
+      "index": 24,
+      "label": "snowy_railway_village",
+      "category": "city",
+      "name": {
+        "en": "Snowy railway village",
+        "zh": "雪中的铁路小镇",
+        "ja": "雪の鉄道の町"
+      },
+      "prompt": "masterpiece, best quality, anime illustration, A small railway station in a snowy village, warm light from the waiting room, pine trees, a red train in the distance",
+      "sha256": "cbe5d652c199caabb23b1278934e06934399a130042bf5d63e479578915caeb3",
+      "tokenCountBeforeTruncation": 35,
+      "tokenCountAfterTruncation": 35,
+      "truncated": false,
+      "truncatedTokenCount": 0,
+      "nonPaddingTokenCount": 34,
+      "path": "embedding-24.bytes",
+      "byteLength": 236544
+    }
+  ]
+}

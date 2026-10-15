@@ -1,0 +1,13 @@
+{
+  "phase": 3,
+  "stage": 6,
+  "step": 20,
+  "firstStep": 3,
+  "node": 119,
+  "progress": 1.0,
+  "activeSeconds": 75.01137,
+  "elapsed": 74.9496155,
+  "photoSize": 256,
+  "photoBytes": 8192,
+  "notice": "Photo latent ready; shared as 16-bit values."
+}

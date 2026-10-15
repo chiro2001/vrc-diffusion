@@ -1,5 +1,460 @@
 [
   [
+    "VAE PREVIEWS OFF: LINEAR LATENT. ON: REAL RGB. FINAL: FULL VAE DECODE.",
+    "VAE 预览关：线性潜变量；开：真实 RGB；最终图像始终完整 VAE 解码。",
+    "VAE プレビュー OFF：線形潜在表示。ON：実 RGB。最終画像は完全な VAE 復号。"
+  ],
+  [
+    "CLIP: causal text Transformer",
+    "CLIP：因果文本 Transformer",
+    "CLIP：因果テキスト Transformer"
+  ],
+  [
+    "VAE encoder: RGB to latent moments",
+    "VAE 编码器：RGB 转潜变量分布参数",
+    "VAE エンコーダー：RGB から潜在分布パラメータへ"
+  ],
+  [
+    "Photo latent readback / synchronization",
+    "照片潜变量读回 / 同步",
+    "写真の潜在変数の読み戻し / 同期"
+  ],
+  [
+    "Blits submitted/s",
+    "Blit 提交次数/秒",
+    "Blit 送信回数/秒"
+  ],
+  [
+    "Plain English, comma-separated descriptions. Positive: subject, appearance, scene, lighting, style. Negative: unwanted content. 75 content tokens maximum; longer text is truncated. A1111 weights and schedules are unsupported.",
+    "用英文按逗号分隔描述。正向提示：主体、外观、场景、光线和风格；负向提示：不需要的内容。最多 75 个内容 token，超出部分会截断。不支持 A1111 的权重和调度语法。",
+    "英語で説明を入力し、カンマで区切ります。正のプロンプト：主題、外見、場面、照明、スタイル。負のプロンプト：不要な内容。内容は最大 75 トークンで、超過分は切り詰めます。A1111 の重み付けとスケジュール記法には対応していません。"
+  ],
+  [
+    "Take the Polaroid camera. Request SD control before shooting. A photograph replaces the input with a center square crop. Enable PHOTO INIT and Generate. Higher strength changes more.",
+    "拿起宝丽来相机。拍摄前先申请 SD 控制。照片会居中裁剪为正方形并替换输入。开启 PHOTO INIT 后按“生成”。强度越高，图像变化越大。",
+    "ポラロイドカメラを持ち上げます。撮影前に SD の操作権をリクエストしてください。写真は中央を正方形に切り抜いて入力画像にします。PHOTO INIT をオンにして生成します。強度が高いほど変化が大きくなります。"
+  ],
+  [
+    "Move your VRChat photo camera into the marked zone. The output fills its view. Press the native shutter to save to your photo folder.",
+    "将 VRChat 拍照相机移入标记区域。生成结果会填满相机视野。按原生快门即可保存到照片文件夹。",
+    "VRChat のフォトカメラをマークされた範囲に入れてください。生成画像がカメラの視野を埋めます。標準のシャッターを押すと写真フォルダーに保存されます。"
+  ],
+  [
+    "Two independent locks: MNIST and SD. Shared generation controls are locked; local preview and performance switches remain available.",
+    "MNIST 和 SD 分别独立锁定；生成控制已锁定，但本地预览和性能开关仍可使用。",
+    "MNIST と SD は別々にロックされます。生成設定はロックされますが、ローカルのプレビューとパフォーマンス切替は引き続き使用できます。"
+  ],
+  [
+    "PREVIEWS COST PERFORMANCE. Memory capture adds GPU passes; each VAE preview runs a full decoder.",
+    "预览会影响性能。内存捕获会增加 GPU Pass；每次 VAE 预览都会完整运行解码器。",
+    "プレビューは生成速度に影響します。メモリ取得では GPU パスが増え、VAE プレビューごとにデコーダー全体を実行します。"
+  ],
+  [
+    "For fastest generation turn BOTH previews OFF. Final VAE decoding is always required.",
+    "要尽快生成，请关闭两种预览。最终 VAE 解码始终需要执行。",
+    "生成を速くするには、両方のプレビューをオフにしてください。最後の VAE デコードは常に必要です。"
+  ],
+  [
+    "Photo captured: center square crop. Generate to encode.",
+    "已拍照：已居中裁剪为正方形。按“生成”进行编码。",
+    "写真を取り込みました。中央を正方形に切り抜きました。生成するとエンコードします。"
+  ],
+  [
+    "Custom prompt: local W8A16 CLIP encoding on Generate.",
+    "自定义提示词：按“生成”后会在本地使用 W8A16 编码 CLIP。",
+    "カスタムプロンプト：生成時にローカルで W8A16 CLIP エンコードを行います。"
+  ],
+  [
+    "Photo latent GPU readback failed; retake photo.",
+    "照片潜变量 GPU 读回失败，请重新拍摄。",
+    "写真の潜在表現を GPU から読み出せませんでした。撮り直してください。"
+  ],
+  [
+    "Photo latent ready; shared as 16-bit values.",
+    "照片潜变量已就绪，并以 16 位数值共享。",
+    "写真の潜在表現を準備し、16 ビット値として共有しました。"
+  ],
+  [
+    "Take a photo first (or disable PHOTO INIT).",
+    "请先拍照（或关闭 PHOTO INIT）。",
+    "先に撮影してください（または PHOTO INIT をオフにしてください）。"
+  ],
+  [
+    "Waiting for the controller's encoded photo.",
+    "正在等待控制者编码照片。",
+    "コントローラーによる写真のエンコードを待っています。"
+  ],
+  [
+    "Prompt truncated to 75 content tokens.",
+    "提示词已截断为最多 75 个内容 token。",
+    "プロンプトを内容 75 トークンに切り詰めました。"
+  ],
+  [
+    "Tensor memory + network highlight: OFF",
+    "张量内存 + 网络高亮：关闭",
+    "テンソルメモリ + ネットワーク強調表示：オフ"
+  ],
+  [
+    "Tensor memory + network highlight: ON",
+    "张量内存 + 网络高亮：开启",
+    "テンソルメモリ + ネットワーク強調表示：オン"
+  ],
+  [
+    "CLIP tokenizer could not initialize.",
+    "CLIP 分词器无法初始化。",
+    "CLIP トークナイザーを初期化できませんでした。"
+  ],
+  [
+    "Intermediate VAE previews: OFF",
+    "中间 VAE 预览：关闭",
+    "中間 VAE プレビュー：オフ"
+  ],
+  [
+    "Lantern festival at the shrine",
+    "神社灯笼祭典",
+    "神社の灯籠祭り"
+  ],
+  [
+    " | estimate by completed work",
+    " | 根据已完成的工作估算",
+    " | 完了した処理量から推定"
+  ],
+  [
+    "Intermediate VAE previews: ON",
+    "中间 VAE 预览：开启",
+    "中間 VAE プレビュー：オン"
+  ],
+  [
+    "LOCAL PERFORMANCE / PREVIEWS",
+    "本地性能 / 预览",
+    "ローカル性能 / プレビュー"
+  ],
+  [
+    "CUSTOM PROMPT · CLIP W8A16",
+    "自定义提示词 · CLIP W8A16",
+    "カスタムプロンプト · CLIP W8A16"
+  ],
+  [
+    "Guardian robot in the city",
+    "城市守护机器人",
+    "街を守るロボット"
+  ],
+  [
+    "Travellers at the station",
+    "车站里的旅伴",
+    "駅にいる旅人たち"
+  ],
+  [
+    "Airship above the clouds",
+    "云海之上的飞艇",
+    "雲海の上の飛行船"
+  ],
+  [
+    "Cat by the garden window",
+    "花园窗边的猫",
+    "庭を眺める窓辺の猫"
+  ],
+  [
+    "Lighthouse on the cliffs",
+    "海崖灯塔",
+    "海崖の灯台"
+  ],
+  [
+    "CAMERA EXPORT ON / OFF",
+    "相机导出：开启 / 关闭",
+    "カメラ出力：オン / オフ"
+  ],
+  [
+    "Cranes in the wetlands",
+    "湿地上的丹顶鹤",
+    "湿地のタンチョウ"
+  ],
+  [
+    "Friends at the seaside",
+    "海边的朋友",
+    "海辺の友人たち"
+  ],
+  [
+    "Pilot above the planet",
+    "行星上空的飞行员",
+    "惑星上空のパイロット"
+  ],
+  [
+    "Mountain lake morning",
+    "清晨山间湖泊",
+    "山の湖の朝"
+  ],
+  [
+    "Photo synchronization",
+    "照片同步",
+    "写真同期"
+  ],
+  [
+    "Snowy railway village",
+    "雪中的铁路小镇",
+    "雪の鉄道の町"
+  ],
+  [
+    "Local inference: OFF",
+    "本地推理：关闭",
+    "ローカル推論：オフ"
+  ],
+  [
+    "PERFORMANCE / INPUTS",
+    "性能 / 输入",
+    "パフォーマンス / 入力"
+  ],
+  [
+    "APPLY CUSTOM PROMPT",
+    "应用自定义提示词",
+    "カスタムプロンプトを適用"
+  ],
+  [
+    "Local inference: ON",
+    "本地推理：开启",
+    "ローカル推論：オン"
+  ],
+  [
+    "Mecha in the hangar",
+    "机库中的机甲",
+    "格納庫のメカ"
+  ],
+  [
+    "Night city crossing",
+    "夜色中的城市路口",
+    "夜の街の交差点"
+  ],
+  [
+    "PHOTO INIT ON / OFF",
+    "照片初始化：开启 / 关闭",
+    "写真から初期化：オン / オフ"
+  ],
+  [
+    "Path through bamboo",
+    "竹林小径",
+    "竹林の小道"
+  ],
+  [
+    "Tabby in a bookshop",
+    "书店里的虎斑猫",
+    "本屋のキジトラ猫"
+  ],
+  [
+    "Autumn street cafe",
+    "秋日街角咖啡馆",
+    "秋の街角カフェ"
+  ],
+  [
+    "CLIP text encoding",
+    "CLIP 文本编码",
+    "CLIP テキストエンコード"
+  ],
+  [
+    "Camera export: OFF",
+    "相机导出：关闭",
+    "カメラ出力：オフ"
+  ],
+  [
+    "Mage in the forest",
+    "森林中的魔法师",
+    "森の魔法使い"
+  ],
+  [
+    "Submission: up to ",
+    "每帧最多提交 ",
+    "1フレームあたり最大 "
+  ],
+  [
+    "VAE photo encoding",
+    "VAE 照片编码",
+    "VAE 写真エンコード"
+  ],
+  [
+    "Camera export: ON",
+    "相机导出：开启",
+    "カメラ出力：オン"
+  ],
+  [
+    "Corgi in the park",
+    "公园里的柯基",
+    "公園のコーギー"
+  ],
+  [
+    "Denoise strength ",
+    "去噪强度 ",
+    "ノイズ除去強度 "
+  ],
+  [
+    "Fox in fresh snow",
+    "雪地里的狐狸",
+    "新雪の中のキツネ"
+  ],
+  [
+    "Wildflower meadow",
+    "野花草甸",
+    "野花の草原"
+  ],
+  [
+    " Shader passes/s",
+    " 着色器 Pass/秒",
+    " シェーダーパス/秒"
+  ],
+  [
+    "CAMERA SAVE ZONE",
+    "相机拍摄区",
+    "カメラ撮影エリア"
+  ],
+  [
+    "NEGATIVE PROMPT",
+    "负向提示词",
+    "負のプロンプト"
+  ],
+  [
+    "PHOTO INIT: OFF",
+    "照片初始化：关闭",
+    "写真から初期化：オフ"
+  ],
+  [
+    "POSITIVE PROMPT",
+    "正向提示词",
+    "正のプロンプト"
+  ],
+  [
+    "PREVIOUS PRESET",
+    "上一个预设",
+    "前のプリセット"
+  ],
+  [
+    "Rainy city walk",
+    "雨中漫步",
+    "雨の街を歩く人"
+  ],
+  [
+    " denoise steps",
+    " 去噪步数",
+    " ノイズ除去ステップ"
+  ],
+  [
+    "Old town canal",
+    "古镇运河",
+    "古い町の運河"
+  ],
+  [
+    "PHOTO INIT: ON",
+    "照片初始化：开启",
+    "写真から初期化：オン"
+  ],
+  [
+    "Quiet portrait",
+    "窗边静谧肖像",
+    "窓辺の静かな肖像"
+  ],
+  [
+    " ms CPU/frame",
+    " 毫秒 CPU/帧",
+    " ms CPU/フレーム"
+  ],
+  [
+    "PROMPT FORMAT",
+    "提示词格式",
+    "プロンプト形式"
+  ],
+  [
+    "STRENGTH 0.35",
+    "强度 0.35",
+    "強度 0.35"
+  ],
+  [
+    "STRENGTH 0.60",
+    "强度 0.60",
+    "強度 0.60"
+  ],
+  [
+    "STRENGTH 0.85",
+    "强度 0.85",
+    "強度 0.85"
+  ],
+  [
+    "Spring coast",
+    "春日海岸",
+    "春の海岸"
+  ],
+  [
+    "VAE decoding",
+    "VAE 解码",
+    "VAE デコード"
+  ],
+  [
+    " | alpha = ",
+    " | α = ",
+    " | α = "
+  ],
+  [
+    "CUSTOM TEXT",
+    "自定义文本",
+    "カスタムテキスト"
+  ],
+  [
+    "NEXT PRESET",
+    "下一个预设",
+    "次のプリセット"
+  ],
+  [
+    "PHOTO INPUT",
+    "照片输入",
+    "写真入力"
+  ],
+  [
+    " s/step | ",
+    " 秒/步 | ",
+    " 秒/ステップ | "
+  ],
+  [
+    "Denoising",
+    "去噪中",
+    "ノイズ除去中"
+  ],
+  [
+    "PROGRESS ",
+    "进度 ",
+    "進捗 "
+  ],
+  [
+    "Complete",
+    "完成",
+    "完了"
+  ],
+  [
+    "Active ",
+    "运行 ",
+    "稼働 "
+  ],
+  [
+    "PRESET ",
+    "预设 ",
+    "プリセット "
+  ],
+  [
+    "Stage: ",
+    "阶段：",
+    "段階："
+  ],
+  [
+    " s | ",
+    " 秒 | ",
+    " 秒 | "
+  ],
+  [
+    "/s | ",
+    "/秒 | ",
+    "/秒 | "
+  ],
+  [
+    "t = ",
+    "步数 t = ",
+    "ステップ t = "
+  ],
+  [
     "LIVE OPERATOR GRAPH · cyan: active · gold: skip · signed range ±3",
     "实时算子图 · 青色：当前 · 金色：Skip · 正负范围 ±3",
     "演算グラフ · 青：実行中 · 金：skip · 色範囲 ±3"

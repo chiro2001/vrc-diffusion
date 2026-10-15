@@ -31,6 +31,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SourceImage:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SourceLatent:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _State:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -43,13 +51,14 @@ Material:
     m_Floats:
     - _Alpha: 0.998296
     - _Guidance: 7.5
-    - _LatentSize: 64
-    - _Mode: 6
+    - _LatentSize: 32
+    - _Mode: 5
     - _NextAlpha: 0.99915
     - _RGBShift: 10
-    - _RGBSize: 512
+    - _RGBSize: 256
     - _SeedHi: 0
-    - _SeedLo: 3457
-    - _Timestep: 951
+    - _SeedLo: 1234
+    - _SourceAspect: 1
+    - _Timestep: 1
     m_Colors: []
   m_BuildTextureStacks: []

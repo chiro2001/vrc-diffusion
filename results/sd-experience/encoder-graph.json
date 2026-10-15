@@ -1,0 +1,64 @@
+{
+  "status": "complete",
+  "nodes": 87,
+  "draws": 5337,
+  "seconds": 38.1985622,
+  "rows": [
+    {
+      "node": 0,
+      "name": "encoder.conv_in",
+      "rmse": 0.0001788346948899545,
+      "relativeRMSE": 0.00050636871478604263,
+      "maxAbs": 0.001953125,
+      "nonFinite": 0
+    },
+    {
+      "node": 4,
+      "name": "encoder.down_blocks.0.resnets.0.norm2",
+      "rmse": 0.0053963130509834274,
+      "relativeRMSE": 0.0057674597467615241,
+      "maxAbs": 0.171875,
+      "nonFinite": 0
+    },
+    {
+      "node": 10,
+      "name": "encoder.down_blocks.0.resnets.1.conv1",
+      "rmse": 0.058232204317697434,
+      "relativeRMSE": 0.028589428862488581,
+      "maxAbs": 0.984375,
+      "nonFinite": 0
+    },
+    {
+      "node": 20,
+      "name": "encoder.down_blocks.1.resnets.0.silu2",
+      "rmse": 0.01756188329179029,
+      "relativeRMSE": 0.058393524192008238,
+      "maxAbs": 0.83203125,
+      "nonFinite": 0
+    },
+    {
+      "node": 40,
+      "name": "encoder.down_blocks.2.resnets.1.norm1",
+      "rmse": 0.1168132293840709,
+      "relativeRMSE": 0.11344669114815868,
+      "maxAbs": 1.67480469,
+      "nonFinite": 0
+    },
+    {
+      "node": 60,
+      "name": "encoder.down_blocks.3.resnets.1.conv2",
+      "rmse": 0.75274565893456424,
+      "relativeRMSE": 0.089841561027947325,
+      "maxAbs": 32.4765625,
+      "nonFinite": 0
+    },
+    {
+      "node": 86,
+      "name": "quant_conv",
+      "rmse": 0.404306944675091,
+      "relativeRMSE": 0.027264775110173584,
+      "maxAbs": 2.7265625,
+      "nonFinite": 0
+    }
+  ]
+}

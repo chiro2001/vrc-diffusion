@@ -10,11 +10,12 @@ from sd_graph import build_graphs
 def away(x):return x.sign()*torch.floor(x.abs()+.5)
 
 class Executor:
-    def __init__(self,module,graph,quantized=False,taps=()):
+    def __init__(self,module,graph,quantized=False,taps=(),activation_quantized=True):
         self.state=module.state_dict();self.graph=graph;self.quantized=quantized
+        self.activation_quantized=activation_quantized
         for key,value in list(self.state.items()):
             for modern,old in [(".to_q.",".query."),(".to_k.",".key."),(".to_v.",".value."),(".to_out.0.",".proj_attn.")]:
-                if "decoder.mid_block.attentions" in key and modern in key:self.state[key.replace(modern,old)]=value
+                if any(p in key for p in ("decoder.mid_block.attentions","encoder.mid_block.attentions")) and modern in key:self.state[key.replace(modern,old)]=value
         self.qweights={};self.taps=set(taps);self.saved={}
         self.last={}
         for i,n in enumerate(graph['nodes']):
@@ -37,10 +38,12 @@ class Executor:
             z=vals[n['a']];b=vals.get(n['b']);op=n['op'];name=n.get('weight')
             if op==0:
                 bias=self.state.get(name+'.bias');kernel=n['kernel']
+                if name.startswith('encoder.') and '.downsamplers.' in name:z=F.pad(z,(0,1,0,1))
                 # Matrix rows are represented as [1,C,77,1] in this graph.
                 if self.quantized:
                     scale=z.float().abs().amax().clamp_min(1e-10)/127
                     qa=away(z.float()/scale).clamp(-127,127)
+                    if not self.activation_quantized:qa=z.float();scale=1
                     qw,ws=self.weight(name)
                     if kernel==1 and qw.ndim==2:qw=qw[:,:,None,None]
                     accum=F.conv2d(qa,qw.float(),stride=n['stride'],padding=n['padding'])
@@ -58,7 +61,7 @@ class Executor:
                     v=F.group_norm(z.float(),n['groups'],gamma,beta,n['epsilon']).half()
                 else:
                     v=F.layer_norm(z.permute(0,2,3,1).float(),(z.shape[1],),gamma,beta,n['epsilon']).permute(0,3,1,2).half()
-            elif op==2:v=F.silu(z.float()).half() if n['activation']==1 else F.gelu(z.float()).half()
+            elif op==2:v=F.silu(z.float()).half() if n['activation']==1 else (z.float()*torch.sigmoid(1.702*z.float())).half() if n['activation']==3 else F.gelu(z.float()).half()
             elif op==3:v=(z.float()+b.float()).half()
             elif op==4:v=torch.cat([z,b],1)
             elif op==5:v=F.interpolate(z,scale_factor=2,mode='nearest')
@@ -66,10 +69,14 @@ class Executor:
                 heads=n['heads'];c=vals[n['c']];d=z.shape[1]//heads
                 def seq(t):return t.reshape(1,heads,d,-1).transpose(2,3)
                 # SDPA implementation uses stable tiled softmax and never saves N*N scores.
-                v=F.scaled_dot_product_attention(seq(z),seq(b),seq(c)).transpose(2,3).reshape_as(z)
+                v=F.scaled_dot_product_attention(seq(z),seq(b),seq(c),is_causal=bool(n.get('causal',False))).transpose(2,3).reshape_as(z)
             elif op==7:
                 a,g=z.chunk(2,1);v=(a.float()*F.gelu(g.float())).half()
             elif op==8:v=(z.float()*n['multiplier']).half()
+            elif op==9:
+                ids=z[:,0,:,0].long();tok=F.embedding(ids,self.state['text_model.embeddings.token_embedding.weight'])
+                pos=self.state['text_model.embeddings.position_embedding.weight'][None,:,:]
+                v=(tok.float()+pos.float()).half().permute(0,2,1).unsqueeze(-1)
             else:raise ValueError(op)
             if tuple(v.shape)!=(1,n['channels'],n['h'],n['w']):raise ValueError((i,n['name'],v.shape,n))
             vals[i]=v

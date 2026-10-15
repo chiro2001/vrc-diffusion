@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "nodes": 146,
+  "draws": 628,
+  "seconds": 5.8534486,
+  "rows": [
+    {
+      "node": 0,
+      "name": "text_model.embeddings",
+      "rmse": 1.9639237325795995E-05,
+      "relativeRMSE": 0.00053204843185778036,
+      "maxAbs": 0.00048828125,
+      "nonFinite": 0
+    },
+    {
+      "node": 1,
+      "name": "text_model.encoder.layers.0.layer_norm1",
+      "rmse": 0.00062570509739046055,
+      "relativeRMSE": 0.00058034315084327459,
+      "maxAbs": 0.015625,
+      "nonFinite": 0
+    },
+    {
+      "node": 5,
+      "name": "text_model.encoder.layers.0.self_attn.causal_softmax",
+      "rmse": 0.00034587367736511535,
+      "relativeRMSE": 0.0015580436268063033,
+      "maxAbs": 0.00390625,
+      "nonFinite": 0
+    },
+    {
+      "node": 7,
+      "name": "text_model.encoder.layers.0.residual1",
+      "rmse": 0.00018839800653035416,
+      "relativeRMSE": 0.0016498269320114477,
+      "maxAbs": 0.0029296875,
+      "nonFinite": 0
+    },
+    {
+      "node": 12,
+      "name": "text_model.encoder.layers.0.residual2",
+      "rmse": 0.0046346774134807343,
+      "relativeRMSE": 0.00094211982100285288,
+      "maxAbs": 1.0,
+      "nonFinite": 0
+    },
+    {
+      "node": 60,
+      "name": "text_model.encoder.layers.4.residual2",
+      "rmse": 0.016250159249378251,
+      "relativeRMSE": 0.0032986604074926864,
+      "maxAbs": 3.0,
+      "nonFinite": 0
+    },
+    {
+      "node": 120,
+      "name": "text_model.encoder.layers.9.residual2",
+      "rmse": 0.031087143882872186,
+      "relativeRMSE": 0.0062538088024647063,
+      "maxAbs": 6.5,
+      "nonFinite": 0
+    },
+    {
+      "node": 145,
+      "name": "text_model.final_layer_norm",
+      "rmse": 0.0036140547624313253,
+      "relativeRMSE": 0.0035338678511103788,
+      "maxAbs": 0.09375,
+      "nonFinite": 0
+    }
+  ]
+}

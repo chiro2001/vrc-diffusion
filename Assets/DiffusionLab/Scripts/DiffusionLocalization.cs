@@ -14,6 +14,8 @@ public class DiffusionLocalization : UdonSharpBehaviour {
     public string[] englishPhrases,chinesePhrases,japanesePhrases;
     public Image[] languageButtons;
     private float nextSync;
+    private string[] lastSources;
+    private int lastLanguage=-1,lastOverride=-99;
     private void Start() { SetLanguage(); }
     private int Resolve(string lang) {
         if(lang==null) return 0;
@@ -37,15 +39,17 @@ public class DiffusionLocalization : UdonSharpBehaviour {
     }
     public void Refresh() {
         if(sources==null) return;
+        if(lastSources==null||lastSources.Length!=sources.Length){lastSources=new string[sources.Length];lastLanguage=-1;}
+        bool changed=lastLanguage!=languageIndex;
         for(int i=0;i<sources.Length;i++) {
-            english[i].gameObject.SetActive(languageIndex==0);
-            chinese[i].gameObject.SetActive(languageIndex==1);
-            japanese[i].gameObject.SetActive(languageIndex==2);
+            if(changed){english[i].gameObject.SetActive(languageIndex==0);chinese[i].gameObject.SetActive(languageIndex==1);japanese[i].gameObject.SetActive(languageIndex==2);}
+            string raw=sources[i].text;if(!changed&&lastSources[i]==raw)continue;lastSources[i]=raw;
             var target=languageIndex==0?english[i]:languageIndex==1?chinese[i]:japanese[i];
-            string text=Translate(sources[i].text);
+            string text=Translate(raw);
             if(target.text!=text) target.text=text;
         }
-        if(languageButtons!=null) for(int i=0;i<languageButtons.Length;i++)
+        if(languageButtons!=null&&(changed||lastOverride!=languageOverride)) for(int i=0;i<languageButtons.Length;i++)
             languageButtons[i].color=(i-1==languageOverride)?new Color(.08f,.46f,.46f):new Color(.07f,.19f,.26f);
+        lastLanguage=languageIndex;lastOverride=languageOverride;
     }
 }

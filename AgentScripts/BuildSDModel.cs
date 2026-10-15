@@ -69,16 +69,17 @@ public static class BuildSDModel {
         for(int i=0;i<5;i++)FloatTexture(Root+"/Conditions/Embedding"+i+".asset",Data+"/conditions/embedding-"+i+".bytes",77*768/4);
         AssetDatabase.SaveAssets();return new{pngs,parameters};
     }
-    static SDGraphData Graph(Transform parent,JObject spec,string part,int size){
+    public static SDGraphData Graph(Transform parent,JObject spec,string part,int size,string data=Data){
         string dir=Root+"/"+size+"/"+part;Folder(dir+"/Memory");Folder(dir+"/Operators");
         var old=parent.Find(part+size);var go=old!=null?old.gameObject:new GameObject(part+size);go.transform.SetParent(parent,false);
         var g=go.GetComponent<SDGraphData>()??go.AddUdonSharpComponent<SDGraphData>();
         var graph=spec["graphs"][size.ToString()][part];var nodes=(JArray)graph["nodes"];int length=nodes.Count;
+        g.externalShift=(int?)graph["externalShift"]??6;
         g.displayName=part;g.nativeSize=size;g.weightLayout=(string)spec["weightLayout"]=="KY_KX_IC4_OC_LANES"?1:0;g.outputNode=(int)graph["output"];
         g.operators=new Material[length];g.nodeNames=new string[length];g.op=new int[length];g.inputA=new int[length];g.inputB=new int[length];g.inputC=new int[length];g.memoryIndex=new int[length];g.shifts=new int[length];g.counts=new int[length];g.inH=new int[length];g.inW=new int[length];g.inChannels=new int[length];g.outChannels=new int[length];g.groups=new int[length];g.heads=new int[length];g.keyRows=new int[length];
         int[] last=Enumerable.Repeat(-1,length).ToArray();for(int i=0;i<length;i++)foreach(string k in new[]{"a","b","c"}){int dep=(int)nodes[i][k];if(dep>=0)last[dep]=i;}last[g.outputNode]=length;
         var capacities=new List<int>();var availableAfter=new List<int>();var pool=new List<RenderTexture>();var shifts=new List<int>();
-        int maxInput=1,maxOutput=1,maxPartial=1,maxStats=1,maxScore=1,maxAttStats=1,maxAttAccum=1;
+        int maxInput=1,maxOutput=1,maxPartial=1,maxStats=1,maxScore=1,maxAttStats=1,maxAttAccum=1;g.estimatedBlits=0;
         for(int i=0;i<length;i++){
             var n=nodes[i];int h=(int)n["h"],w=(int)n["w"],c=(int)n["channels"],count=h*w*((c+3)/4);
             int slot=-1,best=int.MaxValue;for(int p=0;p<pool.Count;p++)if(availableAfter[p]<i&&capacities[p]>=count&&capacities[p]<best){slot=p;best=capacities[p];}
@@ -87,16 +88,18 @@ public static class BuildSDModel {
             g.nodeNames[i]=(string)n["name"];g.op[i]=(int)n["op"];g.inputA[i]=(int)n["a"];g.inputB[i]=(int)n["b"];g.inputC[i]=(int)n["c"];
             g.inH[i]=(int)n["inH"];g.inW[i]=(int)n["inW"];g.inChannels[i]=(int)n["inChannels"];g.outChannels[i]=c;
             g.groups[i]=(int?)n["groups"]??0;g.heads[i]=(int?)n["heads"]??0;g.keyRows[i]=(int?)n["keyRows"]??0;
+            int tiles=(count+8191)/8192;g.estimatedBlits+=g.op[i]==0?3+2*tiles+(tiles%2):g.op[i]==1?3:g.op[i]==6?3*((g.keyRows[i]+63)/64)+1:1;
             var mat=Asset(dir+"/Operators/Node"+i.ToString("D3")+".mat",()=>new Material(Shader.Find("DiffusionLab/SDTensor")));mat.shader=Shader.Find("DiffusionLab/SDTensor");g.operators[i]=mat;
             string[] names={"InH","InW","InC","OutH","OutW","OutC","BH","BW","BC","Kernel","Stride","Padding","Groups","Activation","Heads","KeyRows","Op"};
             string[] keys={"inH","inW","inChannels","h","w","channels","bH","bW","bChannels","kernel","stride","padding","groups","activation","heads","keyRows","op"};
             for(int j=0;j<keys.Length;j++)mat.SetInt("_"+names[j],(int?)n[keys[j]]??0);
             mat.SetInt("_Count",g.inH[i]*g.inW[i]*((g.inChannels[i]+3)/4));mat.SetInt("_OutCount",count);
             mat.SetFloat("_Epsilon",(float?)n["epsilon"]??.00001f);mat.SetFloat("_Multiplier",(float?)n["multiplier"]??1);
+            mat.SetInt("_Causal",(int?)n["causal"]??0);
             if(n["weight"]!=null){
                 string key=part+"."+(string)n["weight"],stem=key.Replace('.','_');var weight=spec["weights"][key];
                 var par=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Parameters/"+stem+".asset");mat.SetTexture("_Params",par);mat.SetInt("_ParamShift",Shift(par.width));
-                if(weight["weightFile"]!=null){var wt=AssetDatabase.LoadAssetAtPath<Texture2D>(Data+"/"+(string)weight["weightFile"]);mat.SetTexture("_Weights",wt);mat.SetInt("_WeightShift",Shift(wt.width));mat.SetInt("_WeightHeight",wt.height);mat.SetInt("_WeightLayout",(string)spec["weightLayout"]=="KY_KX_IC4_OC_LANES"?1:0);}
+                if(weight["weightFile"]!=null){var wt=AssetDatabase.LoadAssetAtPath<Texture2D>(data+"/"+(string)weight["weightFile"]);mat.SetTexture("_Weights",wt);mat.SetInt("_WeightShift",Shift(wt.width));mat.SetInt("_WeightHeight",wt.height);mat.SetInt("_WeightLayout",(string)spec["weightLayout"]=="KY_KX_IC4_OC_LANES"?1:0);}
             }
             EditorUtility.SetDirty(mat);
             maxInput=Math.Max(maxInput,g.inH[i]*g.inW[i]*((g.inChannels[i]+3)/4));maxOutput=Math.Max(maxOutput,count);
@@ -143,5 +146,63 @@ public static class BuildSDModel {
         c.embeddings=Enumerable.Range(0,5).Select(i=>AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Conditions/Embedding"+i+".asset")).ToArray();c.presetNames=new[]{"Anime portrait","Coastal village","Autumn cafe","Garden cat"};c.alpha=spec["alphaCumprod"].ToObject<float[]>();c.protocol=1;c.phase=0;c.resolution=0;c.totalSteps=20;
         Save(executor);Save(c);AssetDatabase.SaveAssets();EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);
         return new{sizes,unetNodes=c.unetGraphs[0].operators.Length,vaeNodes=c.vaeGraphs[0].operators.Length,weightTextures=((JObject)spec["weights"]).Properties().Count(p=>p.Value["weightFile"]!=null),memorySlots=c.unetGraphs.Select(g=>g.memory.Length).ToArray()};
+    }
+    public static object PrepareExtensions(){
+        if(EditorApplication.isPlaying)throw new Exception("EditMode required");Folder(Root+"/Programs");
+        foreach(string name in new[]{"SDInputs","SDTokenizer","SDPerformance","SDPolaroidBridge","DiffusionPlayerSetup"}){
+            var program=Asset(Root+"/Programs/"+name+".asset",()=>ScriptableObject.CreateInstance<UdonSharpProgramAsset>());
+            program.sourceCsScript=AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/DiffusionLab/Scripts/"+name+".cs");EditorUtility.SetDirty(program);
+        }
+        AssetDatabase.SaveAssets();UdonSharpProgramAsset.CompileAllCsPrograms(true,true);return new{requested=true};
+    }
+    public static object ImportExtensions(){
+        if(EditorApplication.isPlaying)throw new Exception("EditMode required");const string data=Data+"/Extensions";
+        var spec=JObject.Parse(File.ReadAllText(data+"/extensions.json"));int count=0;
+        foreach(var property in ((JObject)spec["weights"]).Properties()){
+            var w=property.Value;if((string)w["kind"]=="embedding")continue;
+            string file=(string)w["weightFile"];
+            if(file!=null){var im=(TextureImporter)AssetImporter.GetAtPath(data+"/"+file);if(im==null)throw new Exception("Unimported "+file);
+                im.sRGBTexture=false;im.alphaIsTransparency=false;im.mipmapEnabled=false;im.npotScale=TextureImporterNPOTScale.None;im.isReadable=false;
+                im.textureCompression=TextureImporterCompression.Uncompressed;im.filterMode=FilterMode.Point;im.wrapMode=TextureWrapMode.Clamp;im.maxTextureSize=8192;im.alphaSource=TextureImporterAlphaSource.FromInput;
+                im.SetPlatformTextureSettings(new TextureImporterPlatformSettings{name="Standalone",overridden=true,format=TextureImporterFormat.RGBA32,maxTextureSize=8192,textureCompression=TextureImporterCompression.Uncompressed});im.SaveAndReimport();
+            }
+            FloatTexture(Root+"/Parameters/"+property.Name.Replace('.','_')+".asset",data+"/"+(string)w["parameterFile"],(int)w["channels"]);count++;
+        }
+        foreach(string name in new[]{"token_embedding","position_embedding"}){
+            var w=spec["weights"][name];int width=(int)w["width"],height=(int)w["height"];
+            var texture=Asset(Root+"/Parameters/"+name+".asset",()=>new Texture2D(width,height,TextureFormat.RGBAHalf,false,true));
+            texture.LoadRawTextureData(File.ReadAllBytes(data+"/"+(string)w["file"]));texture.filterMode=FilterMode.Point;texture.wrapMode=TextureWrapMode.Clamp;texture.Apply(false,false);EditorUtility.SetDirty(texture);
+        }
+        var catalog=JObject.Parse(File.ReadAllText(Data+"/conditions/catalog.json"));var entries=(JArray)catalog["conditions"];
+        if(entries==null)entries=(JArray)catalog["entries"];if(entries==null)throw new Exception("Missing prompt entries");
+        foreach(var entry in entries){int index=(int)entry["index"];FloatTexture(Root+"/Conditions/Embedding"+index+".asset",Data+"/conditions/embedding-"+index+".bytes",77*768/4);}
+        AssetDatabase.SaveAssets();return new{weights=count,prompts=entries.Count};
+    }
+    public static object BuildExtensions(){
+        if(EditorApplication.isPlaying)throw new Exception("EditMode required");const string data=Data+"/Extensions";
+        var c=Object.FindObjectOfType<SDController>();var tr=c.transform.Find("SD Inputs");var go=tr!=null?tr.gameObject:new GameObject("SD Inputs");go.transform.SetParent(c.transform,false);
+        var input=go.GetComponent<SDInputs>()??go.AddUdonSharpComponent<SDInputs>();c.inputs=input;input.controller=c;
+        var tg=go.transform.Find("Tokenizer");var tokenizerObject=tg!=null?tg.gameObject:new GameObject("Tokenizer");tokenizerObject.transform.SetParent(go.transform,false);
+        var tokenizer=tokenizerObject.GetComponent<SDTokenizer>()??tokenizerObject.AddUdonSharpComponent<SDTokenizer>();input.tokenizer=tokenizer;
+        tokenizer.vocabulary=AssetDatabase.LoadAssetAtPath<TextAsset>(data+"/vocab.json");tokenizer.merges=AssetDatabase.LoadAssetAtPath<TextAsset>(data+"/merges.json");tokenizer.byteEncoder=AssetDatabase.LoadAssetAtPath<TextAsset>(data+"/byte-encoder.txt");
+        tokenizer.tokenTexture=Asset(Root+"/Conditions/TokenIds.asset",()=>new Texture2D(128,1,TextureFormat.RGBAFloat,false,true));
+        tokenizer.tokenTexture.filterMode=FilterMode.Point;tokenizer.tokenTexture.Apply(false,false);
+        var spec=JObject.Parse(File.ReadAllText(data+"/extensions.json"));input.textGraph=Graph(go.transform,spec,"clip",256,data);input.textGraph.floatActivation=true;
+        input.textGraph.operators[0].SetTexture("_TokenEmbedding",AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Parameters/token_embedding.asset"));
+        input.textGraph.operators[0].SetTexture("_PositionEmbedding",AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Parameters/position_embedding.asset"));EditorUtility.SetDirty(input.textGraph.operators[0]);
+        input.encoderGraphs=new SDGraphData[3];input.packedPhotos=new RenderTexture[3];int[] sizes={256,384,512};
+        for(int i=0;i<3;i++){input.encoderGraphs[i]=Graph(go.transform,spec,"encoder",sizes[i],data);input.packedPhotos[i]=RT(Root+"/Shared","PhotoPacked"+sizes[i],sizes[i]*sizes[i],RenderTextureFormat.ARGBHalf,out int sh);}
+        input.positiveCondition=RT(Root+"/Shared","CustomPositive",77*192,RenderTextureFormat.ARGBHalf,out int shift);input.negativeCondition=RT(Root+"/Shared","CustomNegative",77*192,RenderTextureFormat.ARGBHalf,out shift);
+        input.photo=RT(Root+"/Shared","Photograph",512*512,RenderTextureFormat.ARGBHalf,out shift,512);input.photo.filterMode=FilterMode.Bilinear;
+        input.photoLatentTexture=Asset(Root+"/Shared/PhotoLatent.asset",()=>new Texture2D(64,64,TextureFormat.RGBAFloat,false,true));input.photoLatentTexture.filterMode=FilterMode.Point;input.photoLatentTexture.Apply(false,false);
+        var catalog=JObject.Parse(File.ReadAllText(Data+"/conditions/catalog.json"));var entries=(JArray)(catalog["conditions"]??catalog["entries"]);
+        c.embeddings=entries.Select(v=>AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Conditions/Embedding"+(int)v["index"]+".asset")).ToArray();
+        c.presetNames=entries.Skip(1).Select(v=>(string)(v["name"]?["en"]??v["label"])).ToArray();input.presetPrompts=entries.Skip(1).Select(v=>(string)v["prompt"]).ToArray();input.defaultNegative=(string)entries[0]["prompt"];
+        c.positivePrompt=input.presetPrompts[c.preset];c.negativePrompt=input.defaultNegative;c.customPrompt=false;c.usePhoto=false;c.phase=0;c.epoch=0;c.authorityId=-1;c.localEpoch=-1;c.localInference=false;
+        foreach(var g in c.unetGraphs.Concat(c.vaeGraphs).Concat(input.encoderGraphs).Concat(new[]{input.textGraph})){
+            g.estimatedBlits=0;for(int i=0;i<g.op.Length;i++){int tiles=(g.counts[i]+8191)/8192;g.estimatedBlits+=g.op[i]==0?(g.floatActivation?0:3)+2*tiles+tiles%2:g.op[i]==1?3:g.op[i]==6?3*((g.keyRows[i]+63)/64)+1:1;}Save(g);
+        }
+        Save(tokenizer);Save(input);Save(c);AssetDatabase.SaveAssets();var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);
+        return new{clipNodes=input.textGraph.op.Length,clipPrecision="W8A16",encoderNodes=input.encoderGraphs[0].op.Length,presets=c.presetNames.Length};
     }
 }

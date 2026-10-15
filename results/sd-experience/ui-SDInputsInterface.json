@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "buttons": 12,
+  "tmpLabels": 66,
+  "maxPlaneDistanceMeters": 0.00999999,
+  "rayHits": [
+    "PreviousPreset0",
+    "ApplyPrompt0",
+    "NextPreset0",
+    "TogglePhoto0",
+    "SetStrength35",
+    "SetStrength60",
+    "SetStrength85",
+    "SetSpeed4",
+    "SetSpeed16",
+    "SetSpeed32",
+    "ToggleExport0",
+    "RequestControl0"
+  ],
+  "actualClick": false
+}

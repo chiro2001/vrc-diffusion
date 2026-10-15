@@ -3,7 +3,8 @@ using UnityEngine;
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 public class SDGraphData : UdonSharpBehaviour {
     public string displayName;
-    public int nativeSize,weightLayout=1;
+    public int nativeSize,weightLayout=1,externalShift=6,estimatedBlits=1;
+    public bool floatActivation;
     public Material[] operators;
     public string[] nodeNames;
     public int[] op,inputA,inputB,inputC,memoryIndex,shifts,counts,inH,inW,inChannels,outChannels,groups,heads,keyRows;

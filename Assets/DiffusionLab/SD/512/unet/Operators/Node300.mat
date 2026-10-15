@@ -51,6 +51,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _PositionEmbedding:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Previous:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,6 +71,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TokenEmbedding:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Weights:
         m_Texture: {fileID: 2800000, guid: 99eb94a3b1042164cac717bf203578ae, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -80,10 +88,12 @@ Material:
     - _BShift: 0
     - _BW: 0
     - _CShift: 0
+    - _Causal: 0
     - _Chunks: 2
     - _Count: 320
     - _Epsilon: 0.00001
     - _FirstBlock: 1
+    - _FloatActivation: 0
     - _Groups: 0
     - _Heads: 0
     - _InC: 1280

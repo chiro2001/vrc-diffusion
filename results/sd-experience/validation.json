@@ -1,0 +1,58 @@
+{
+  "hardware": "RTX 5080 / D3D11 / Unity 2022.3.22f1",
+  "model": "Counterfeit-V3.0",
+  "precision": "U-Net, VAE decoder/encoder Conv and Linear W8A8 INT32; CLIP projections W8A16; mixed floating nonlinear/attention/norm/sampling",
+  "run": {
+    "resolution": 256,
+    "seed": 1234,
+    "scheduleSteps": 20,
+    "strength": 0.85,
+    "executedDenoiseSteps": 17,
+    "wallSeconds": 74.9496155,
+    "activeSeconds": 75.01137,
+    "customPrompt": true,
+    "actualPolaroidPhoto": true,
+    "progress": 1.0,
+    "photoLatentPayloadBytes": 8192,
+    "details": false,
+    "intermediateVaePreviews": false,
+    "passesPerFrame": 32,
+    "cpuSubmissionBudgetMs": 8
+  },
+  "ui": {
+    "rayButtons": 32,
+    "languages": 3,
+    "initialAuthority": 1,
+    "jumpImpulse": 3.5,
+    "mnistLockedButtonsChecked": 27,
+    "independentLocks": true,
+    "floorScale": [
+      100,
+      0.2,
+      100
+    ]
+  },
+  "encoderShaderRelativeRMSE": 0.027264775110173584,
+  "clipShaderRelativeRMSE": 0.003533867851110379,
+  "cameraExport": {
+    "rmse": 0.0,
+    "letterboxBlack": true,
+    "normalViewDifference": 0.21605036624367813,
+    "outsideZoneDifference": 0.10790960001048688,
+    "mode": "Simulated VRChat shader globals; native client still pending",
+    "playMode": true
+  },
+  "sceneBlueprintId": {
+    "beforeTask": "",
+    "afterTask": "",
+    "source": "Saved user scene baseline before task; left unchanged"
+  },
+  "limitations": [
+    "Native VRChat photo-camera trigger and actual photo save not tested in the native client.",
+    "Actual multi-client ownership transfer, late join and photo-latent serialization not tested.",
+    "Photo initialization validated at 256 only; 384/512 encoder graphs constructed, not separately sampled.",
+    "English plain prompts recommended; max 75 content tokens and 512 characters per field. A1111 weights/scheduling unsupported.",
+    "W8A8 is not lossless and has no confirmed speed advantage over a floating Shader backend.",
+    "No SDK build, upload or Android validation in this task."
+  ]
+}

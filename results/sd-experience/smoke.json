@@ -1,0 +1,9 @@
+{
+  "playerId": 1,
+  "sdAuthority": 1,
+  "mnistAuthority": 1,
+  "jumpImpulse": 3.5,
+  "lockedMnistButtons": 27,
+  "disabled": true,
+  "independentLocks": true
+}

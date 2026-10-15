@@ -47,11 +47,11 @@ class Graph:
         assert q.c==k.c==v.c and q.c%heads==0
         return self.emit(name,6,q,k,v,heads=heads,keyRows=k.h*k.w)
     def resnet(self,name,a,time=None):
-        z=self.act(name+'.silu1',self.norm(name+'.norm1',a,eps=1e-6 if name.startswith('decoder.') else 1e-5))
+        z=self.act(name+'.silu1',self.norm(name+'.norm1',a,eps=1e-6 if name.startswith(('decoder.','encoder.')) else 1e-5))
         z=self.affine(name+'.conv1',z)
         if time is not None:
             z=self.add(name+'.time_add',z,self.affine(name+'.time_emb_proj',time))
-        z=self.act(name+'.silu2',self.norm(name+'.norm2',z,eps=1e-6 if name.startswith('decoder.') else 1e-5))
+        z=self.act(name+'.silu2',self.norm(name+'.norm2',z,eps=1e-6 if name.startswith(('decoder.','encoder.')) else 1e-5))
         z=self.affine(name+'.conv2',z)
         shortcut=self.affine(name+'.conv_shortcut',a) if name+'.conv_shortcut.weight' in self.shapes else a
         return self.add(name+'.residual',z,shortcut)
@@ -110,6 +110,43 @@ class Graph:
             if i<3:z=self.affine(f'decoder.up_blocks.{i}.upsamplers.0.conv',self.resize(f'decoder.up_blocks.{i}.resize',z))
         z=self.affine('decoder.conv_out',self.act('decoder.conv_norm_out.silu',self.norm('decoder.conv_norm_out',z,eps=1e-6)))
         return z
+
+    def encoder(self):
+        """VAE mean encoder. Downsamplers pad only the right/bottom edge."""
+        image=Tensor(-1,self.size,self.size,3)
+        z=self.affine('encoder.conv_in',image)
+        for i in range(4):
+            for j in range(2):z=self.resnet(f'encoder.down_blocks.{i}.resnets.{j}',z)
+            if i<3:
+                before=z
+                z=self.affine(f'encoder.down_blocks.{i}.downsamplers.0.conv',z,stride=2,padding=0)
+                self.nodes[-1]['h']=before.h//2;self.nodes[-1]['w']=before.w//2
+                z=Tensor(z.node,before.h//2,before.w//2,z.c)
+        z=self.resnet('encoder.mid_block.resnets.0',z)
+        n='encoder.mid_block.attentions.0'
+        qn=self.norm(n+'.group_norm',z,eps=1e-6)
+        q=self.affine(n+'.query',qn);k=self.affine(n+'.key',qn);v=self.affine(n+'.value',qn)
+        z=self.add(n+'.residual',self.affine(n+'.proj_attn',self.attn(n+'.online_softmax',q,k,v,1)),z)
+        z=self.resnet('encoder.mid_block.resnets.1',z)
+        z=self.affine('encoder.conv_out',self.act('encoder.conv_norm_out.silu',self.norm('encoder.conv_norm_out',z,eps=1e-6)))
+        return self.affine('quant_conv',z)
+
+    def clip(self):
+        tokens=Tensor(-1,77,1,1)
+        z=self.emit('text_model.embeddings',9,tokens,shape=(77,1,768))
+        for i in range(12):
+            n=f'text_model.encoder.layers.{i}'
+            qn=self.norm(n+'.layer_norm1',z,groups=0)
+            q=self.affine(n+'.self_attn.q_proj',qn)
+            k=self.affine(n+'.self_attn.k_proj',qn)
+            v=self.affine(n+'.self_attn.v_proj',qn)
+            a=self.attn(n+'.self_attn.causal_softmax',q,k,v,12)
+            self.nodes[-1]['causal']=1
+            z=self.add(n+'.residual1',z,self.affine(n+'.self_attn.out_proj',a))
+            a=self.affine(n+'.mlp.fc1',self.norm(n+'.layer_norm2',z,groups=0))
+            a=self.act(n+'.mlp.quick_gelu',a,kind=3)
+            z=self.add(n+'.residual2',z,self.affine(n+'.mlp.fc2',a))
+        return self.norm('text_model.final_layer_norm',z,groups=0)
 
 def shapes_from_file(path):
     import json,struct
