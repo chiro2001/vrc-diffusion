@@ -89,6 +89,20 @@ public static class TestSDExperience {
         try{camera.transform.position=new Vector3(-9.8f,3.1f,-8);camera.transform.LookAt(new Vector3(-9.8f,2.8f,3.14f));camera.fieldOfView=34;camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color(.018f,.025f,.04f);camera.targetTexture=rt;camera.Render();Png("experience-world.png",rt);return new{path=Root+"/experience-world.png"};}
         finally{camera.targetTexture=null;Object.DestroyImmediate(rt);Object.DestroyImmediate(go);}
     }
+    public static object CameraStations(){
+        World();
+        var go=new GameObject("Temporary rear save station screenshot");var camera=go.AddComponent<Camera>();
+        var rt=new RenderTexture(1280,960,24,RenderTextureFormat.ARGBHalf,RenderTextureReadWrite.Linear);
+        try{
+            var spawn=GameObject.Find("Spawn").transform;var zone=GameObject.Find("SD Camera Save Zone").transform;
+            camera.transform.position=spawn.position+Vector3.up*1.6f;
+            camera.transform.LookAt(zone.position+Vector3.down*.45f);
+            camera.fieldOfView=60;camera.clearFlags=CameraClearFlags.SolidColor;
+            camera.backgroundColor=new Color(.018f,.025f,.04f);camera.targetTexture=rt;
+            camera.Render();Png("rear-save-station.png",rt);
+            return new{sdView=Root+"/experience-world.png",rearView=Root+"/rear-save-station.png"};
+        }finally{camera.targetTexture=null;Object.DestroyImmediate(rt);Object.DestroyImmediate(go);}
+    }
     public static object ColorTransfer(){
         var m=new Material(Object.FindObjectOfType<SDController>().sampler);var source=new Texture2D(1,1,TextureFormat.RGBAFloat,false,true);var decoded=new Texture2D(1,1,TextureFormat.RGBAFloat,false,true);var packed=new RenderTexture(1024,1,0,RenderTextureFormat.ARGBHalf,RenderTextureReadWrite.Linear);var display=new RenderTexture(1,1,0,RenderTextureFormat.ARGBHalf,RenderTextureReadWrite.Linear);
         try{var rgb=new Color(.25f,.5f,.75f,1);source.SetPixel(0,0,rgb);source.Apply();decoded.SetPixel(0,0,new Color(-.5f,0,.5f,0));decoded.Apply();m.SetTexture("_SourceImage",source);m.SetFloat("_SourceAspect",1);m.SetInt("_RGBSize",1);m.SetInt("_Mode",11);Graphics.Blit(null,packed,m);var p=Read(packed);var expected=QualitySettings.activeColorSpace==ColorSpace.Linear?rgb.gamma:rgb;float inputError=0;for(int i=0;i<3;i++)inputError=Mathf.Max(inputError,Mathf.Abs(p[i]-(expected[i]*2-1)));

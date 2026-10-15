@@ -85,7 +85,7 @@ public static class BuildSDUserExperience {
         var sign=new GameObject("CameraSaveInstructions",typeof(RectTransform),typeof(Canvas));sign.transform.SetParent(world,false);sign.transform.position=new Vector3(-7,.6f,1.2f);sign.transform.localScale=Vector3.one*.002f;sign.GetComponent<Canvas>().renderMode=RenderMode.WorldSpace;sign.GetComponent<RectTransform>().sizeDelta=new Vector2(1300,300);canvas=sign.transform;
         var signBack=GameObject.CreatePrimitive(PrimitiveType.Quad);signBack.name="CameraSaveBackboard";signBack.transform.SetParent(world,false);signBack.transform.position=new Vector3(-7,.6f,1.21f);signBack.transform.localScale=new Vector3(2.65f,.65f,1);signBack.GetComponent<Renderer>().sharedMaterial=AssetDatabase.LoadAssetAtPath<Material>("Assets/DiffusionLab/Materials/Panel.mat");Object.DestroyImmediate(signBack.GetComponent<Collider>());
         Text("Title","CAMERA SAVE ZONE",0,100,1260,60,32);Text("Help","Move your VRChat photo camera into the marked zone. The output fills its view. Press the native shutter to save to your photo folder.",0,-20,1260,150,25);
-        Save(c);AssetDatabase.SaveAssets();var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);return new{prefab=path,photoSize=bridge.photographs[0].width,zone=zone.transform.position,radius=.65};
+        Save(c);PositionCameraStations();AssetDatabase.SaveAssets();return new{prefab=path,photoSize=bridge.photographs[0].width,zone=zone.transform.position,radius=.65};
     }
     public static object CameraStand(){
         if(EditorApplication.isPlaying)throw new Exception("EditMode required");var world=GameObject.Find("DiffusionLabWorld").transform;
@@ -94,14 +94,49 @@ public static class BuildSDUserExperience {
         if(zone.Find("LensFrame")==null){var frame=new GameObject("LensFrame");frame.transform.SetParent(zone,false);var mat=AssetDatabase.LoadAssetAtPath<Material>(Root+"CameraZone.mat");if(mat==null){mat=new Material(Shader.Find("Unlit/Color"));mat.color=new Color(.03f,.7f,.75f);AssetDatabase.CreateAsset(mat,Root+"CameraZone.mat");}
             for(int i=0;i<4;i++){var edge=GameObject.CreatePrimitive(PrimitiveType.Cube);edge.name="Edge"+i;edge.transform.SetParent(frame.transform,false);edge.transform.localPosition=i<2?new Vector3(i==0?-.5f:.5f,0,0):new Vector3(0,i==2?-.5f:.5f,0);edge.transform.localScale=i<2?new Vector3(.012f,1.012f,.012f):new Vector3(1.012f,.012f,.012f);edge.GetComponent<Renderer>().sharedMaterial=mat;Object.DestroyImmediate(edge.GetComponent<Collider>());}
         }
-        AssetDatabase.SaveAssets();var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);return new{cameraStand=true,visibleLensFrame=true};
+        PositionCameraStations();AssetDatabase.SaveAssets();return new{cameraStand=true,visibleLensFrame=true};
     }
     public static object Polish(){
         if(EditorApplication.isPlaying)throw new Exception("EditMode required");
-        var zone=GameObject.Find("SD Camera Save Zone");zone.transform.position=new Vector3(-16.6f,1.5f,.4f);
-        var controller=Object.FindObjectOfType<SDController>();controller.photoExport.SetVector("_StationCenter",zone.transform.position);EditorUtility.SetDirty(controller.photoExport);
-        foreach(string name in new[]{"CameraSaveInstructions","CameraSaveBackboard"}){var t=GameObject.Find(name).transform;var p=t.position;p.x=-16.6f;t.position=p;}
         GameObject.Find("HistoryExplanation").GetComponent<Text>().text="VAE PREVIEWS OFF: LINEAR LATENT. ON: REAL RGB. FINAL: FULL VAE DECODE.";
-        AssetDatabase.SaveAssets();var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);return new{saveZone=zone.transform.position,historyCaptionAccurate=true};
+        return PositionCameraStations();
+    }
+    public static object PositionCameraStations(){
+        if(EditorApplication.isPlaying)throw new Exception("EditMode required");
+        var spawn=GameObject.Find("Spawn").transform;
+        var forward=Vector3.ProjectOnPlane(spawn.forward,Vector3.up).normalized;
+        if(forward.sqrMagnitude<.9f)throw new Exception("Spawn needs a horizontal forward direction");
+        var camera=GameObject.Find("SD Polaroid").transform;
+        var stand=GameObject.Find("Polaroid Stand");
+        var zone=GameObject.Find("SD Camera Save Zone").transform;
+        var sign=GameObject.Find("CameraSaveInstructions").transform;
+        var back=GameObject.Find("CameraSaveBackboard").transform;
+        var inputBoard=GameObject.Find("SDInputsInterface").transform;
+        var material=Object.FindObjectOfType<SDController>().photoExport;
+        Undo.RecordObjects(new Object[]{camera,zone,sign,back,material},"Position SD camera stations");
+        if(stand!=null)Undo.RecordObject(stand.transform,"Position SD camera stand");
+        // The camera sits at the seam between the two SD boards, within easy reach.
+        var cameraPosition=new Vector3(-9.9f,1.1f,inputBoard.position.z-1.15f);
+        camera.position=cameraPosition;
+        PrefabUtility.RecordPrefabInstancePropertyModifications(camera);
+        if(stand!=null)stand.transform.position=cameraPosition+Vector3.down*.56f;
+        var center=spawn.position-forward*3;center.y=1.5f;
+        zone.SetPositionAndRotation(center,Quaternion.LookRotation(-forward,Vector3.up));
+        var signPosition=center+forward*.8f;signPosition.y=.6f;
+        sign.SetPositionAndRotation(signPosition,zone.rotation);
+        back.SetPositionAndRotation(signPosition+sign.forward*.01f,sign.rotation);
+        material.SetVector("_StationCenter",new Vector4(center.x,center.y,center.z,0));
+        EditorUtility.SetDirty(material);AssetDatabase.SaveAssetIfDirty(material);
+        var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        EditorSceneManager.MarkSceneDirty(scene);
+        if(!EditorSceneManager.SaveScene(scene))throw new Exception("Could not save camera station layout");
+        return InspectCameraStations();
+    }
+    public static object InspectCameraStations(){
+        var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        return Newtonsoft.Json.JsonConvert.SerializeObject(new{scene=scene.path,dirty=scene.isDirty,playMode=EditorApplication.isPlaying,
+            objects=new[]{"Spawn","SD Polaroid","Polaroid Stand","SD Camera Save Zone","CameraSaveInstructions","CameraSaveBackboard","SDInputsInterface","Floor"}.Select(name=>{
+                var t=GameObject.Find(name).transform;return new{name,position=new[]{t.position.x,t.position.y,t.position.z},rotation=new[]{t.eulerAngles.x,t.eulerAngles.y,t.eulerAngles.z},forward=new[]{t.forward.x,t.forward.y,t.forward.z},scale=new[]{t.localScale.x,t.localScale.y,t.localScale.z}};}).ToArray(),
+            stationCenter=Object.FindObjectOfType<SDController>().photoExport.GetVector("_StationCenter").ToString()});
     }
 }

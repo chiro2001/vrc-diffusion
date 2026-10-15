@@ -34,7 +34,9 @@ BOOTH 许可允许个人用途修改，也允许在一次性付费项目中使�
 
 ## 原生 VRChat 拍照相机输出
 
-实现使用 clip-space 全屏 Quad。`_VRChatCameraMode` 为相机/截图模式、镜面模式为零，且当前渲染相机位于半径 0.65 米的标记区内时，才覆盖其画面。区域中心为 `(-16.6, 1.5, 0.4)`，位于输入板左侧，以青色框标记。按相机宽高比保留完整方形图及黑边，用投影方向修正 RenderTexture 的上下翻转；普通眼睛视角、镜面和区域外相机不会被覆盖。
+可拾取 Polaroid 和台座位于 SD 面板与输入板之间，靠近 SD 面板。原生拍照相机的保存标记区位于玩家出生点后方约 3 米，说明牌朝向出生点。实现使用 clip-space 全屏 Quad。`_VRChatCameraMode` 为相机/截图模式、镜面模式为零，且当前渲染相机位于半径 0.65 米的标记区内时，才覆盖其画面。标记区以青色框标记。按相机宽高比保留完整方形图及黑边，用投影方向修正 RenderTexture 的上下翻转；普通眼睛视角、镜面和区域外相机不会被覆盖。
+
+当前保存区中心为 `(0, 1.5, -6.5)`，相机初始位置为 `(-9.9, 1.1, 1.99)`。编辑器入口 `BuildSDUserExperience.PositionCameraStations()` 同步移动相机、台座、标记区和说明牌，并更新材质中的检测中心；保存区位置按出生点的水平朝向计算。
 
 Udon 可通过 `VRCCameraSettings.PhotoCamera` 查询相机是否活动、位置、朝向、FOV 和宽高比，但 VRChat 不向世界脚本暴露原生相机的 `Camera` 组件或其 RenderTexture。`PhotoCamera` 属性指向预览相机；它不能作为原生照片的像素输入。世界也没有 Udon 自动把截图写入玩家磁盘的接口。玩家看到铺满相机画面的生成图后，仍需按 VRChat 原生快门保存照片。
 
@@ -51,3 +53,5 @@ Udon 可通过 `VRCCameraSettings.PhotoCamera` 查询相机是否活动、位置
 已在 PlayMode 通过原包真实 `SetPhotoIndex` 拍摄、512 RT 桥接、256 VAE 编码、加噪和完整图生图；20 步日程、strength=0.85 执行 17 步，约 75 秒。输入照片 latent 载荷为 8192 bytes。32 个 SD 按钮的射线命中、三语切换、真实 UI→Udon 开关、初始控制权及跳跃也已检查。
 
 以模拟 VRChat shader globals 的相机渲染验证：方形输出与生成 RT 的 RMSE 为 0，宽屏黑边、普通视角及区域外隐藏均通过。此检查不等同于原生 VRChat 相机触发和磁盘保存；后者、实际多客户端 latent 同步、ownership handoff 与晚加入仍待真实客户端验证。照片初始化本轮仅完整测试 256，384/512 encoder 已构建但未单独采样。证据见 [validation.json](../results/sd-experience/validation.json)。
+
+2026-10-15 调整布局后，在编辑模式复核了位置、说明牌朝向与区域门控，没有重跑扩散推理。记录见 [layout.json](../results/camera-layout/layout.json)、[SD 面板和相机](../results/camera-layout/sd-camera.png)、[出生点回望保存区](../results/camera-layout/rear-save-station.png)及 [photo-export.json](../results/camera-layout/photo-export.json)。

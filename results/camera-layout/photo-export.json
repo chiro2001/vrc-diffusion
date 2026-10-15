@@ -1,0 +1,8 @@
+{
+  "rmse": 0.0,
+  "letterboxBlack": true,
+  "normalViewDifference": 0.083710892538874759,
+  "outsideZoneDifference": 0.087659358416203759,
+  "mode": "Simulated VRChat shader globals; native client still pending",
+  "playMode": false
+}
