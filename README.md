@@ -2,6 +2,10 @@
 
 在 VRChat world 中观察并运行 MNIST 与 SD1.x 动漫扩散模型。Udon 调度 fragment shader，通过 `VRCGraphics.Blit` 把算子结果写入本机 GPU 的 RenderTexture（MNIST 用 RFloat，SD 用 RGBA8 打包整数与 ARGBHalf）；各玩家同步生成配置和进度，各自在本机计算图像。
 
+![VRChat 内的 SD1.x 生成界面、提示词面板与生成结果](results/vrchat-world-sd-2026-10-16.webp)
+
+*VRChat 实机画面：Counterfeit-V3.0 在 384×384 下完成 18 步生成，左侧为本机性能、提示词与照片输入面板。*
+
 MNIST 面板有两种可选模型：保留的 32×32 Legacy 小型模型，以及默认选中的 MIT TeaPearce 28×28 预训练模型。模型原生推理尺寸和输出显示尺寸分开标注；选择 32、64 或 128 输出只会最近邻放大，不会增加原生细节。完整架构、数据格式和同步边界见[模型设计](docs/model-design.md)。
 
 Unity 工程位于 Windows 主机 `192.168.101.5` 的 `D:\Projects\VRChatProjects2\vrc-diffusion`，Linux 工作区是 Git 镜像。项目使用 Unity 2022.3.22f1 与 VRChat Worlds SDK 3.10.5。
