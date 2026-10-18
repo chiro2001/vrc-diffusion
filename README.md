@@ -6,6 +6,8 @@ MNIST 面板有两种可选模型：保留的 32×32 Legacy 小型模型，以�
 
 Unity 工程位于 Windows 主机 `192.168.101.5` 的 `D:\Projects\VRChatProjects2\vrc-diffusion`，Linux 工作区是 Git 镜像。项目使用 Unity 2022.3.22f1 与 VRChat Worlds SDK 3.10.5。
 
+模型权重和生成纹理约 1.27 GiB，不进入 Git 历史。当前 GitHub 私有仓库只包含源码、Unity `.meta` 与模型清单；模型归档尚未发布 Release。获取、恢复和重新打包说明见[模型数据](docs/model-data.md)。
+
 ## World 操作
 
 1. 按 **REQUEST CONTROL** 申请控制权。没有控制者时会直接取得控制；已有控制者时会进入请求队列，由当前控制者按 **GRANT** 移交。

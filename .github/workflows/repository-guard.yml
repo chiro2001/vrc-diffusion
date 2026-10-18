@@ -1,0 +1,42 @@
+name: Repository guard
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reject large blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          bad="$(git rev-list --objects --all |
+            git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
+            awk '$1 == "blob" && $3 >= 52428800 { print }')"
+          if [[ -n "$bad" ]]; then
+            echo "Blobs at or above 50 MiB are not allowed:"
+            echo "$bad"
+            exit 1
+          fi
+
+      - name: Reject model data paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          bad="$(git rev-list --objects --all |
+            cut -d' ' -f2- |
+            grep -E '^(Assets/DiffusionLab/Data/.*\.(png|bytes)|Assets/DiffusionLab/SD/Parameters/.*\.asset|Assets/DiffusionLab/Textures/(Weights|Tea/.*)\.asset)$' || true)"
+          if [[ -n "$bad" ]]; then
+            echo "Model data must remain outside Git history:"
+            echo "$bad"
+            exit 1
+          fi
+
+      - name: Validate model data lock
+        run: python3 -m json.tool model-assets.lock.json > /dev/null

@@ -1,0 +1,12 @@
+*.png binary
+*.bytes binary
+*.ttf binary
+*.otf binary
+*.fbx binary
+*.unitypackage binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.zip binary
+*.gif binary
+*.mp4 binary

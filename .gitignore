@@ -132,3 +132,11 @@ __pycache__/
 *.tar.gz
 .DS_Store
 Thumbs.db
+
+# Large model data is archived outside Git. Keep the corresponding .meta files
+# tracked so restoring the archives preserves Unity GUID references.
+/Assets/DiffusionLab/Data/**/*.png
+/Assets/DiffusionLab/Data/**/*.bytes
+/Assets/DiffusionLab/SD/Parameters/**/*.asset
+/Assets/DiffusionLab/Textures/Weights.asset
+/Assets/DiffusionLab/Textures/Tea/**/*.asset
